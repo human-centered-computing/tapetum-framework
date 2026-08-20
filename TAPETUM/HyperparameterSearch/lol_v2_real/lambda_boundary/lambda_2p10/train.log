@@ -1,0 +1,99 @@
+
+
+===== PROCESS START 2026-08-10T11:11:46+00:00 =====
+COMMAND: /usr/bin/python3 -u train.py
+DEVICE: cuda
+TRAIN_LOW_DIR : /content/drive/MyDrive/TAPETUM/datasets/LOL-v2/Real_captured/Train/Low
+TRAIN_HIGH_DIR: /content/drive/MyDrive/TAPETUM/datasets/LOL-v2/Real_captured/Train/Normal
+VAL_LOW_DIR   : /content/drive/MyDrive/TAPETUM/datasets/LOL-v2/Real_captured/Val/Low
+VAL_HIGH_DIR  : /content/drive/MyDrive/TAPETUM/datasets/LOL-v2/Real_captured/Val/Normal
+CKPT_DIR      : /content/retinextapetum_lambda_boundary/lambda_2p10/checkpoints
+USE_TRAIN_VAL_SPLIT: True
+VAL_RATIO     : 0.1
+SPLIT_SEED    : 42
+BASE_CHANNELS : 128
+BATCH_SIZE    : 2
+EPOCHS        : 30
+LR            : 0.0006620890956705852
+MIN_LR        : 4.082960740748955e-05
+W_LPIPS       : 0.08
+BEST_METRIC   : psnr
+RESUME        : True
+RESUME_CKPT   : last.pth
+TRAIN_LOG_INTERVAL: 0
+VAL_LOG_INTERVAL  : 0
+WARNING: When changing train/validation split settings, use RETINEX_TAPETUM_RESUME=0 for a clean experimental run.
+DRIVE_CKPT_MIRROR_DIR: /content/drive/MyDrive/TAPETUM/HyperparameterSearch/lol_v2_real/lambda_boundary/lambda_2p10/checkpoints
+Total paired train images: 689
+Train split images: 620
+Val split images: 69
+VAL_RATIO: 0.10
+SPLIT_SEED: 42
+[Dataset] /content/drive/MyDrive/TAPETUM/datasets/LOL-v2/Real_captured/Train/Low
+Mode: train
+Split file_list: yes
+Paired samples: 620
+[Dataset] /content/drive/MyDrive/TAPETUM/datasets/LOL-v2/Real_captured/Train/Low
+Mode: val/test
+Split file_list: yes
+Paired samples: 69
+Train batches: 310
+Val batches  : 69
+Trainable params: 536,463
+Setting up [LPIPS] perceptual loss: trunk [alex], v[0.1], spatial [off]
+/usr/local/lib/python3.12/dist-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.12/dist-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=AlexNet_Weights.IMAGENET1K_V1`. You can also use `weights=AlexNet_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+Loading model from: /usr/local/lib/python3.12/dist-packages/lpips/weights/v0.1/alex.pth
+LPIPS training loss: enabled (alex, weight=0.08)
+Loading resume checkpoint: /content/retinextapetum_lambda_boundary/lambda_2p10/checkpoints/last.pth
+Resume state -> completed_epoch: 25, next_epoch: 26, best_epoch: 0, best_psnr: -1.0000, no_improve: 0
+
+===== TRAIN START =====
+
+Epoch 026/030 train start
+Epoch 026/030 validation start
+Epoch 026 | train_loss 0.2972 | val_loss 0.2883 | val_psnr 19.93 | val_lpips 0.1625 | val_lpips_full 0.2330 | edge 0.0315 | dark_noise 0.0129 | chroma 0.0980 | decomp 0.0803 | smooth_enh 0.0186 | lambda_mean 1.8557 | lambda_min 1.1301 | lambda_max 2.0912
+Best model updated -> Epoch: 26, psnr: 19.9279, PSNR: 19.9279, LPIPS@loss: 0.1625, LPIPS full: 0.2330
+
+Epoch 027/030 train start
+Epoch 027/030 validation start
+Epoch 027 | train_loss 0.2946 | val_loss 0.2941 | val_psnr 20.75 | val_lpips 0.1425 | val_lpips_full 0.2134 | edge 0.0320 | dark_noise 0.0130 | chroma 0.0901 | decomp 0.0994 | smooth_enh 0.0212 | lambda_mean 1.8133 | lambda_min 1.0437 | lambda_max 2.0782
+Best model updated -> Epoch: 27, psnr: 20.7459, PSNR: 20.7459, LPIPS@loss: 0.1425, LPIPS full: 0.2134
+
+Epoch 028/030 train start
+Epoch 028/030 validation start
+Epoch 028 | train_loss 0.2936 | val_loss 0.2823 | val_psnr 20.30 | val_lpips 0.1528 | val_lpips_full 0.2265 | edge 0.0312 | dark_noise 0.0129 | chroma 0.0925 | decomp 0.0812 | smooth_enh 0.0182 | lambda_mean 1.8511 | lambda_min 1.1212 | lambda_max 2.0914
+
+Epoch 029/030 train start
+Epoch 029/030 validation start
+Epoch 029 | train_loss 0.2893 | val_loss 0.2812 | val_psnr 20.33 | val_lpips 0.1406 | val_lpips_full 0.2122 | edge 0.0311 | dark_noise 0.0129 | chroma 0.0889 | decomp 0.0835 | smooth_enh 0.0192 | lambda_mean 1.8477 | lambda_min 1.0870 | lambda_max 2.0902
+
+Epoch 030/030 train start
+Epoch 030/030 validation start
+Epoch 030 | train_loss 0.2892 | val_loss 0.2952 | val_psnr 20.66 | val_lpips 0.1595 | val_lpips_full 0.2258 | edge 0.0314 | dark_noise 0.0130 | chroma 0.0928 | decomp 0.0969 | smooth_enh 0.0197 | lambda_mean 1.8157 | lambda_min 1.0624 | lambda_max 2.0815
+===== TRAIN FINISHED =====
+Best epoch: 27
+Best psnr: 20.745862834123038
+Best PSNR: 20.745862834123038
+Best LPIPS@loss: 0.14254235022741815
+Best LPIPS full: 0.21340496276599774
+Best checkpoint: /content/retinextapetum_lambda_boundary/lambda_2p10/checkpoints/best.pth
+Last checkpoint: /content/retinextapetum_lambda_boundary/lambda_2p10/checkpoints/last.pth
+===== PROCESS END 2026-08-10T11:23:35+00:00 | return_code=0 =====
+
+
+===== PROCESS START 2026-08-10T11:23:35+00:00 =====
+COMMAND: /usr/bin/python3 -u lambda_boundary_diagnostics.py
+Total paired train images: 689
+Train split images: 620
+Val split images: 69
+VAL_RATIO: 0.10
+SPLIT_SEED: 42
+[Dataset] /content/drive/MyDrive/TAPETUM/datasets/LOL-v2/Real_captured/Train/Low
+Mode: val/test
+Split file_list: yes
+Paired samples: 69
+BOUNDARY_DIAGNOSTICS_JSON={"blue_bias": 0.008616358412168203, "checkpoint_epoch": 27, "green_bias": 0.0018126456593365772, "lambda_max_configured": 2.1, "lambda_utilization": 0.863492571131125, "luminance_bias": 0.0017457671030728227, "luminance_mae": 0.08287649820356266, "output_high_clip_ratio": 0.00607604674248079, "output_low_clip_ratio": 0.0, "red_bias": -0.0008125006013711834, "rgb_mae": 0.08696391905887403, "target_high_clip_ratio": 0.008495752830429516, "validation_images": 69}
+===== PROCESS END 2026-08-10T11:23:49+00:00 | return_code=0 =====

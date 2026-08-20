@@ -1,0 +1,79 @@
+{
+  "dataset": {
+    "key": "lol_v2_real",
+    "data_name": "LOL-v2",
+    "data_variant": "Real_captured"
+  },
+  "stage": "lambda_boundary",
+  "reason": "The previous illumination search selected its upper boundary (2.0).",
+  "analysis_evidence": {
+    "median_brightness_gain": 7.7078,
+    "mean_dark_pixel_ratio": 0.9324,
+    "mean_dark_noise_proxy": 0.005,
+    "mean_color_shift": 0.1138,
+    "median_detail_gain": 3.9914
+  },
+  "candidates": [
+    2.0,
+    2.1,
+    2.2,
+    2.3,
+    2.4
+  ],
+  "selection_rule": {
+    "psnr_tolerance_db": 0.15,
+    "ssim_tolerance": 0.002,
+    "then": "minimum_lpips"
+  },
+  "psnr_tolerance_pool": [
+    2.0,
+    2.1,
+    2.2,
+    2.3,
+    2.4
+  ],
+  "ssim_tolerance_pool": [
+    2.0,
+    2.2,
+    2.3,
+    2.4
+  ],
+  "selected_lambda_max": 2.0,
+  "psnr": 20.802905714396434,
+  "ssim": 0.8106805172519408,
+  "lpips": 0.14391066711665929,
+  "best_epoch": 30,
+  "source_epoch": 25,
+  "target_epoch": 30,
+  "scheduler_horizon": 120,
+  "split_protocol": "main_hpo_seed42_round_620_69",
+  "train_count": 620,
+  "val_count": 69,
+  "effective_params": {
+    "BATCH_SIZE": 2,
+    "CROP_SIZE": 256,
+    "BASE_CHANNELS": 128,
+    "W_L1": 1.0,
+    "W_RECON_LOW": 1.0,
+    "W_RECON_HIGH": 0.85,
+    "W_REFLECT": 0.06,
+    "W_SMOOTH_LOW": 0.08,
+    "W_SMOOTH_HIGH": 0.08,
+    "W_SMOOTH_ENH": 0.06,
+    "LR": 0.0006620890956705852,
+    "MIN_LR": 4.082960740748955e-05,
+    "GRAD_CLIP_NORM": 3.0,
+    "LAMBDA_MAX": 2.0,
+    "W_SSIM": 0.35,
+    "W_LPIPS": 0.08,
+    "W_COLOR": 0.06,
+    "W_CHROMA": 0.12,
+    "W_EDGE": 0.04,
+    "W_DARK_NOISE": 0.01,
+    "W_ATTN": 0.012
+  },
+  "selected_last_checkpoint": "/content/drive/MyDrive/TAPETUM/HyperparameterSearch/lol_v2_real/lambda_boundary/selected_last.pth",
+  "selected_best_checkpoint": "/content/drive/MyDrive/TAPETUM/HyperparameterSearch/lol_v2_real/lambda_boundary/selected_best.pth",
+  "requires_downstream_rerun": false,
+  "created_at": "2026-08-10T12:00:09+00:00"
+}

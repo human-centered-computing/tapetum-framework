@@ -1,0 +1,421 @@
+DEVICE: cuda
+TRAIN_LOW_DIR : /content/drive/MyDrive/TAPETUM/datasets/UHD-LL down4/Train/Low
+TRAIN_HIGH_DIR: /content/drive/MyDrive/TAPETUM/datasets/UHD-LL down4/Train/Normal
+VAL_LOW_DIR   : /content/drive/MyDrive/TAPETUM/datasets/UHD-LL down4/Val/Low
+VAL_HIGH_DIR  : /content/drive/MyDrive/TAPETUM/datasets/UHD-LL down4/Val/Normal
+CKPT_DIR      : /content/retinextapetum_hpo/projects/uhd_ll_down4/final/hpo_candidate_02_trial_0005_c6633c4117_seed_3407/run/checkpoints
+USE_TRAIN_VAL_SPLIT: True
+VAL_RATIO     : 0.05
+SPLIT_SEED    : 42
+BASE_CHANNELS : 128
+BATCH_SIZE    : 2
+EPOCHS        : 120
+LR            : 0.0007873952428969634
+MIN_LR        : 1.667796398728883e-05
+W_LPIPS       : 0.05
+BEST_METRIC   : psnr
+RESUME        : False
+RESUME_CKPT   : last.pth
+TRAIN_LOG_INTERVAL: 0
+VAL_LOG_INTERVAL  : 0
+DRIVE_CKPT_MIRROR_DIR: /content/drive/MyDrive/TAPETUM/HyperparameterSearch/uhd_ll_down4/final_confirmation/hpo_candidate_02_trial_0005_c6633c4117/seed_3407
+Split manifest: /content/drive/MyDrive/TAPETUM/HyperparameterSearch/uhd_ll_down4/split_manifest.json
+Train split images: 1884
+Val split images: 116
+[Dataset] /content/drive/MyDrive/TAPETUM/datasets/UHD-LL down4/Train/Low
+Mode: train
+Split file_list: yes
+Paired samples: 1884
+[Dataset] /content/drive/MyDrive/TAPETUM/datasets/UHD-LL down4/Train/Low
+Mode: val/test
+Split file_list: yes
+Paired samples: 116
+Train batches: 942
+Val batches  : 116
+Trainable params: 536,463
+Setting up [LPIPS] perceptual loss: trunk [alex], v[0.1], spatial [off]
+/usr/local/lib/python3.12/dist-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.12/dist-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=AlexNet_Weights.IMAGENET1K_V1`. You can also use `weights=AlexNet_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+Loading model from: /usr/local/lib/python3.12/dist-packages/lpips/weights/v0.1/alex.pth
+LPIPS training loss: enabled (alex, weight=0.05)
+Resume disabled: RETINEX_TAPETUM_RESUME=0/config.RESUME_TRAINING=False
+
+===== TRAIN START =====
+
+Epoch 001/120 train start
+Epoch 001/120 validation start
+Epoch 001 | train_loss 0.3190 | val_loss 0.2748 | val_psnr 21.60 | val_lpips 0.1338 | val_lpips_full 0.1862 | edge 0.0239 | dark_noise 0.0042 | chroma 0.0706 | decomp 0.0975 | smooth_enh 0.0219 | lambda_mean 1.3055 | lambda_min 0.3827 | lambda_max 1.8821
+Best model updated -> Epoch: 1, psnr: 21.6004, PSNR: 21.6004, LPIPS@loss: 0.1338, LPIPS full: 0.1862
+
+Epoch 002/120 train start
+Epoch 002/120 validation start
+Epoch 002 | train_loss 0.2374 | val_loss 0.2018 | val_psnr 22.88 | val_lpips 0.0903 | val_lpips_full 0.1342 | edge 0.0223 | dark_noise 0.0041 | chroma 0.0558 | decomp 0.0510 | smooth_enh 0.0163 | lambda_mean 1.2846 | lambda_min 0.6193 | lambda_max 1.8678
+Best model updated -> Epoch: 2, psnr: 22.8845, PSNR: 22.8845, LPIPS@loss: 0.0903, LPIPS full: 0.1342
+
+Epoch 003/120 train start
+Epoch 003/120 validation start
+Epoch 003 | train_loss 0.2165 | val_loss 0.1845 | val_psnr 24.00 | val_lpips 0.0810 | val_lpips_full 0.1202 | edge 0.0210 | dark_noise 0.0041 | chroma 0.0557 | decomp 0.0515 | smooth_enh 0.0141 | lambda_mean 1.2687 | lambda_min 0.6060 | lambda_max 1.8295
+Best model updated -> Epoch: 3, psnr: 24.0010, PSNR: 24.0010, LPIPS@loss: 0.0810, LPIPS full: 0.1202
+
+Epoch 004/120 train start
+Epoch 004/120 validation start
+Epoch 004 | train_loss 0.2038 | val_loss 0.1836 | val_psnr 24.28 | val_lpips 0.0772 | val_lpips_full 0.1187 | edge 0.0206 | dark_noise 0.0041 | chroma 0.0533 | decomp 0.0554 | smooth_enh 0.0120 | lambda_mean 1.2252 | lambda_min 0.5886 | lambda_max 1.8153
+Best model updated -> Epoch: 4, psnr: 24.2806, PSNR: 24.2806, LPIPS@loss: 0.0772, LPIPS full: 0.1187
+
+Epoch 005/120 train start
+Epoch 005/120 validation start
+Epoch 005 | train_loss 0.1997 | val_loss 0.1686 | val_psnr 25.52 | val_lpips 0.0652 | val_lpips_full 0.1050 | edge 0.0201 | dark_noise 0.0042 | chroma 0.0473 | decomp 0.0518 | smooth_enh 0.0122 | lambda_mean 1.2581 | lambda_min 0.6174 | lambda_max 1.8259
+Best model updated -> Epoch: 5, psnr: 25.5208, PSNR: 25.5208, LPIPS@loss: 0.0652, LPIPS full: 0.1050
+
+Epoch 006/120 train start
+Epoch 006/120 validation start
+Epoch 006 | train_loss 0.1919 | val_loss 0.1794 | val_psnr 23.92 | val_lpips 0.0770 | val_lpips_full 0.1143 | edge 0.0203 | dark_noise 0.0043 | chroma 0.0601 | decomp 0.0438 | smooth_enh 0.0129 | lambda_mean 1.2685 | lambda_min 0.5757 | lambda_max 1.8248
+
+Epoch 007/120 train start
+Epoch 007/120 validation start
+Epoch 007 | train_loss 0.1928 | val_loss 0.1649 | val_psnr 24.69 | val_lpips 0.0620 | val_lpips_full 0.1004 | edge 0.0199 | dark_noise 0.0041 | chroma 0.0442 | decomp 0.0417 | smooth_enh 0.0114 | lambda_mean 1.2742 | lambda_min 0.5955 | lambda_max 1.7912
+
+Epoch 008/120 train start
+Epoch 008/120 validation start
+Epoch 008 | train_loss 0.1860 | val_loss 0.1743 | val_psnr 23.89 | val_lpips 0.0640 | val_lpips_full 0.0990 | edge 0.0197 | dark_noise 0.0041 | chroma 0.0436 | decomp 0.0368 | smooth_enh 0.0108 | lambda_mean 1.2855 | lambda_min 0.5930 | lambda_max 1.7812
+
+Epoch 009/120 train start
+Epoch 009/120 validation start
+Epoch 009 | train_loss 0.1849 | val_loss 0.1633 | val_psnr 24.82 | val_lpips 0.0655 | val_lpips_full 0.0998 | edge 0.0195 | dark_noise 0.0041 | chroma 0.0548 | decomp 0.0437 | smooth_enh 0.0111 | lambda_mean 1.3024 | lambda_min 0.6015 | lambda_max 1.7836
+
+Epoch 010/120 train start
+Epoch 010/120 validation start
+Epoch 010 | train_loss 0.1823 | val_loss 0.1596 | val_psnr 25.48 | val_lpips 0.0621 | val_lpips_full 0.0976 | edge 0.0192 | dark_noise 0.0041 | chroma 0.0481 | decomp 0.0416 | smooth_enh 0.0109 | lambda_mean 1.3059 | lambda_min 0.5892 | lambda_max 1.7885
+
+Epoch 011/120 train start
+Epoch 011/120 validation start
+Epoch 011 | train_loss 0.1825 | val_loss 0.1855 | val_psnr 22.94 | val_lpips 0.0642 | val_lpips_full 0.0978 | edge 0.0197 | dark_noise 0.0041 | chroma 0.0473 | decomp 0.0379 | smooth_enh 0.0102 | lambda_mean 1.3035 | lambda_min 0.6143 | lambda_max 1.7555
+
+Epoch 012/120 train start
+Epoch 012/120 validation start
+Epoch 012 | train_loss 0.1788 | val_loss 0.1578 | val_psnr 25.06 | val_lpips 0.0592 | val_lpips_full 0.0962 | edge 0.0194 | dark_noise 0.0040 | chroma 0.0431 | decomp 0.0421 | smooth_enh 0.0092 | lambda_mean 1.3426 | lambda_min 0.6526 | lambda_max 1.7356
+
+Epoch 013/120 train start
+Epoch 013/120 validation start
+Epoch 013 | train_loss 0.1737 | val_loss 0.1642 | val_psnr 24.70 | val_lpips 0.0571 | val_lpips_full 0.0918 | edge 0.0191 | dark_noise 0.0040 | chroma 0.0432 | decomp 0.0405 | smooth_enh 0.0096 | lambda_mean 1.3288 | lambda_min 0.6467 | lambda_max 1.7519
+
+Epoch 014/120 train start
+Epoch 014/120 validation start
+Epoch 014 | train_loss 0.1759 | val_loss 0.1626 | val_psnr 26.13 | val_lpips 0.0549 | val_lpips_full 0.0861 | edge 0.0192 | dark_noise 0.0042 | chroma 0.0441 | decomp 0.0578 | smooth_enh 0.0101 | lambda_mean 1.3370 | lambda_min 0.6583 | lambda_max 1.7510
+Best model updated -> Epoch: 14, psnr: 26.1288, PSNR: 26.1288, LPIPS@loss: 0.0549, LPIPS full: 0.0861
+
+Epoch 015/120 train start
+Epoch 015/120 validation start
+Epoch 015 | train_loss 0.1744 | val_loss 0.1516 | val_psnr 26.28 | val_lpips 0.0533 | val_lpips_full 0.0842 | edge 0.0191 | dark_noise 0.0041 | chroma 0.0427 | decomp 0.0439 | smooth_enh 0.0097 | lambda_mean 1.3135 | lambda_min 0.6260 | lambda_max 1.7199
+Best model updated -> Epoch: 15, psnr: 26.2843, PSNR: 26.2843, LPIPS@loss: 0.0533, LPIPS full: 0.0842
+
+Epoch 016/120 train start
+Epoch 016/120 validation start
+Epoch 016 | train_loss 0.1751 | val_loss 0.1634 | val_psnr 24.26 | val_lpips 0.0602 | val_lpips_full 0.0927 | edge 0.0199 | dark_noise 0.0041 | chroma 0.0437 | decomp 0.0324 | smooth_enh 0.0103 | lambda_mean 1.3452 | lambda_min 0.6586 | lambda_max 1.7245
+
+Epoch 017/120 train start
+Epoch 017/120 validation start
+Epoch 017 | train_loss 0.1732 | val_loss 0.1629 | val_psnr 24.41 | val_lpips 0.0658 | val_lpips_full 0.1002 | edge 0.0191 | dark_noise 0.0040 | chroma 0.0502 | decomp 0.0383 | smooth_enh 0.0100 | lambda_mean 1.3728 | lambda_min 0.6380 | lambda_max 1.7561
+
+Epoch 018/120 train start
+Epoch 018/120 validation start
+Epoch 018 | train_loss 0.1723 | val_loss 0.1473 | val_psnr 26.04 | val_lpips 0.0518 | val_lpips_full 0.0864 | edge 0.0188 | dark_noise 0.0040 | chroma 0.0395 | decomp 0.0385 | smooth_enh 0.0094 | lambda_mean 1.3478 | lambda_min 0.6207 | lambda_max 1.7197
+
+Epoch 019/120 train start
+Epoch 019/120 validation start
+Epoch 019 | train_loss 0.1706 | val_loss 0.1527 | val_psnr 25.20 | val_lpips 0.0544 | val_lpips_full 0.0858 | edge 0.0191 | dark_noise 0.0041 | chroma 0.0435 | decomp 0.0350 | smooth_enh 0.0090 | lambda_mean 1.3174 | lambda_min 0.6397 | lambda_max 1.6894
+
+Epoch 020/120 train start
+Epoch 020/120 validation start
+Epoch 020 | train_loss 0.1672 | val_loss 0.1493 | val_psnr 25.81 | val_lpips 0.0545 | val_lpips_full 0.0862 | edge 0.0191 | dark_noise 0.0040 | chroma 0.0412 | decomp 0.0400 | smooth_enh 0.0096 | lambda_mean 1.3371 | lambda_min 0.6333 | lambda_max 1.7106
+
+Epoch 021/120 train start
+Epoch 021/120 validation start
+Epoch 021 | train_loss 0.1685 | val_loss 0.1525 | val_psnr 25.58 | val_lpips 0.0563 | val_lpips_full 0.0896 | edge 0.0188 | dark_noise 0.0040 | chroma 0.0419 | decomp 0.0356 | smooth_enh 0.0089 | lambda_mean 1.2991 | lambda_min 0.5717 | lambda_max 1.6582
+
+Epoch 022/120 train start
+Epoch 022/120 validation start
+Epoch 022 | train_loss 0.1677 | val_loss 0.1600 | val_psnr 26.14 | val_lpips 0.0506 | val_lpips_full 0.0843 | edge 0.0189 | dark_noise 0.0042 | chroma 0.0448 | decomp 0.0554 | smooth_enh 0.0093 | lambda_mean 1.3017 | lambda_min 0.5818 | lambda_max 1.6788
+
+Epoch 023/120 train start
+Epoch 023/120 validation start
+Epoch 023 | train_loss 0.1674 | val_loss 0.1456 | val_psnr 26.56 | val_lpips 0.0514 | val_lpips_full 0.0823 | edge 0.0191 | dark_noise 0.0042 | chroma 0.0416 | decomp 0.0443 | smooth_enh 0.0096 | lambda_mean 1.3320 | lambda_min 0.6291 | lambda_max 1.6901
+Best model updated -> Epoch: 23, psnr: 26.5630, PSNR: 26.5630, LPIPS@loss: 0.0514, LPIPS full: 0.0823
+
+Epoch 024/120 train start
+Epoch 024/120 validation start
+Epoch 024 | train_loss 0.1659 | val_loss 0.1496 | val_psnr 26.25 | val_lpips 0.0487 | val_lpips_full 0.0826 | edge 0.0187 | dark_noise 0.0041 | chroma 0.0403 | decomp 0.0458 | smooth_enh 0.0095 | lambda_mean 1.3526 | lambda_min 0.6462 | lambda_max 1.7107
+
+Epoch 025/120 train start
+Epoch 025/120 validation start
+Epoch 025 | train_loss 0.1652 | val_loss 0.1512 | val_psnr 25.77 | val_lpips 0.0522 | val_lpips_full 0.0855 | edge 0.0189 | dark_noise 0.0040 | chroma 0.0401 | decomp 0.0407 | smooth_enh 0.0092 | lambda_mean 1.3329 | lambda_min 0.6066 | lambda_max 1.6894
+
+Epoch 026/120 train start
+Epoch 026/120 validation start
+Epoch 026 | train_loss 0.1650 | val_loss 0.1452 | val_psnr 26.68 | val_lpips 0.0487 | val_lpips_full 0.0805 | edge 0.0187 | dark_noise 0.0041 | chroma 0.0416 | decomp 0.0433 | smooth_enh 0.0091 | lambda_mean 1.3288 | lambda_min 0.6131 | lambda_max 1.6767
+Best model updated -> Epoch: 26, psnr: 26.6821, PSNR: 26.6821, LPIPS@loss: 0.0487, LPIPS full: 0.0805
+
+Epoch 027/120 train start
+Epoch 027/120 validation start
+Epoch 027 | train_loss 0.1664 | val_loss 0.1482 | val_psnr 25.61 | val_lpips 0.0492 | val_lpips_full 0.0816 | edge 0.0188 | dark_noise 0.0041 | chroma 0.0389 | decomp 0.0385 | smooth_enh 0.0097 | lambda_mean 1.3804 | lambda_min 0.6670 | lambda_max 1.7192
+
+Epoch 028/120 train start
+Epoch 028/120 validation start
+Epoch 028 | train_loss 0.1650 | val_loss 0.1466 | val_psnr 26.56 | val_lpips 0.0479 | val_lpips_full 0.0791 | edge 0.0186 | dark_noise 0.0040 | chroma 0.0407 | decomp 0.0462 | smooth_enh 0.0090 | lambda_mean 1.3264 | lambda_min 0.6091 | lambda_max 1.6654
+
+Epoch 029/120 train start
+Epoch 029/120 validation start
+Epoch 029 | train_loss 0.1630 | val_loss 0.1464 | val_psnr 26.05 | val_lpips 0.0494 | val_lpips_full 0.0807 | edge 0.0189 | dark_noise 0.0041 | chroma 0.0424 | decomp 0.0408 | smooth_enh 0.0093 | lambda_mean 1.3445 | lambda_min 0.6308 | lambda_max 1.6728
+
+Epoch 030/120 train start
+Epoch 030/120 validation start
+Epoch 030 | train_loss 0.1642 | val_loss 0.1458 | val_psnr 25.83 | val_lpips 0.0495 | val_lpips_full 0.0828 | edge 0.0187 | dark_noise 0.0041 | chroma 0.0403 | decomp 0.0365 | smooth_enh 0.0091 | lambda_mean 1.3785 | lambda_min 0.6751 | lambda_max 1.7074
+
+Epoch 031/120 train start
+Epoch 031/120 validation start
+Epoch 031 | train_loss 0.1620 | val_loss 0.1459 | val_psnr 26.22 | val_lpips 0.0488 | val_lpips_full 0.0804 | edge 0.0188 | dark_noise 0.0041 | chroma 0.0402 | decomp 0.0407 | smooth_enh 0.0091 | lambda_mean 1.3487 | lambda_min 0.6449 | lambda_max 1.6885
+
+Epoch 032/120 train start
+Epoch 032/120 validation start
+Epoch 032 | train_loss 0.1630 | val_loss 0.1460 | val_psnr 26.11 | val_lpips 0.0484 | val_lpips_full 0.0791 | edge 0.0187 | dark_noise 0.0041 | chroma 0.0399 | decomp 0.0406 | smooth_enh 0.0092 | lambda_mean 1.3640 | lambda_min 0.6598 | lambda_max 1.6976
+
+Epoch 033/120 train start
+Epoch 033/120 validation start
+Epoch 033 | train_loss 0.1651 | val_loss 0.1505 | val_psnr 26.07 | val_lpips 0.0502 | val_lpips_full 0.0815 | edge 0.0187 | dark_noise 0.0041 | chroma 0.0406 | decomp 0.0434 | smooth_enh 0.0094 | lambda_mean 1.3599 | lambda_min 0.6716 | lambda_max 1.7012
+
+Epoch 034/120 train start
+Epoch 034/120 validation start
+Epoch 034 | train_loss 0.1621 | val_loss 0.1568 | val_psnr 25.20 | val_lpips 0.0502 | val_lpips_full 0.0828 | edge 0.0186 | dark_noise 0.0041 | chroma 0.0405 | decomp 0.0432 | smooth_enh 0.0096 | lambda_mean 1.3868 | lambda_min 0.6694 | lambda_max 1.7187
+
+Epoch 035/120 train start
+Epoch 035/120 validation start
+Epoch 035 | train_loss 0.1594 | val_loss 0.1427 | val_psnr 26.63 | val_lpips 0.0458 | val_lpips_full 0.0769 | edge 0.0187 | dark_noise 0.0041 | chroma 0.0391 | decomp 0.0403 | smooth_enh 0.0094 | lambda_mean 1.3623 | lambda_min 0.6399 | lambda_max 1.6819
+
+Epoch 036/120 train start
+Epoch 036/120 validation start
+Epoch 036 | train_loss 0.1626 | val_loss 0.1453 | val_psnr 26.23 | val_lpips 0.0489 | val_lpips_full 0.0805 | edge 0.0186 | dark_noise 0.0042 | chroma 0.0411 | decomp 0.0355 | smooth_enh 0.0090 | lambda_mean 1.3546 | lambda_min 0.6321 | lambda_max 1.6577
+
+Epoch 037/120 train start
+Epoch 037/120 validation start
+Epoch 037 | train_loss 0.1607 | val_loss 0.1449 | val_psnr 26.63 | val_lpips 0.0503 | val_lpips_full 0.0812 | edge 0.0186 | dark_noise 0.0041 | chroma 0.0412 | decomp 0.0452 | smooth_enh 0.0090 | lambda_mean 1.3463 | lambda_min 0.6302 | lambda_max 1.6736
+
+Epoch 038/120 train start
+Epoch 038/120 validation start
+Epoch 038 | train_loss 0.1577 | val_loss 0.1422 | val_psnr 26.26 | val_lpips 0.0472 | val_lpips_full 0.0786 | edge 0.0187 | dark_noise 0.0041 | chroma 0.0384 | decomp 0.0369 | smooth_enh 0.0089 | lambda_mean 1.3489 | lambda_min 0.6012 | lambda_max 1.6656
+
+Epoch 039/120 train start
+Epoch 039/120 validation start
+Epoch 039 | train_loss 0.1589 | val_loss 0.1461 | val_psnr 26.08 | val_lpips 0.0493 | val_lpips_full 0.0776 | edge 0.0191 | dark_noise 0.0041 | chroma 0.0430 | decomp 0.0395 | smooth_enh 0.0093 | lambda_mean 1.3412 | lambda_min 0.6099 | lambda_max 1.6793
+
+Epoch 040/120 train start
+Epoch 040/120 validation start
+Epoch 040 | train_loss 0.1622 | val_loss 0.1608 | val_psnr 25.31 | val_lpips 0.0494 | val_lpips_full 0.0805 | edge 0.0187 | dark_noise 0.0041 | chroma 0.0435 | decomp 0.0504 | smooth_enh 0.0094 | lambda_mean 1.3821 | lambda_min 0.6795 | lambda_max 1.7071
+
+Epoch 041/120 train start
+Epoch 041/120 validation start
+Epoch 041 | train_loss 0.1571 | val_loss 0.1488 | val_psnr 26.17 | val_lpips 0.0494 | val_lpips_full 0.0814 | edge 0.0185 | dark_noise 0.0042 | chroma 0.0422 | decomp 0.0424 | smooth_enh 0.0086 | lambda_mean 1.3376 | lambda_min 0.6134 | lambda_max 1.6596
+
+Epoch 042/120 train start
+Epoch 042/120 validation start
+Epoch 042 | train_loss 0.1577 | val_loss 0.1496 | val_psnr 25.20 | val_lpips 0.0482 | val_lpips_full 0.0764 | edge 0.0190 | dark_noise 0.0041 | chroma 0.0387 | decomp 0.0357 | smooth_enh 0.0098 | lambda_mean 1.3954 | lambda_min 0.6581 | lambda_max 1.6978
+
+Epoch 043/120 train start
+Epoch 043/120 validation start
+Epoch 043 | train_loss 0.1588 | val_loss 0.1637 | val_psnr 25.14 | val_lpips 0.0465 | val_lpips_full 0.0772 | edge 0.0186 | dark_noise 0.0042 | chroma 0.0379 | decomp 0.0515 | smooth_enh 0.0095 | lambda_mean 1.3763 | lambda_min 0.6468 | lambda_max 1.6938
+
+Epoch 044/120 train start
+Epoch 044/120 validation start
+Epoch 044 | train_loss 0.1581 | val_loss 0.1400 | val_psnr 26.90 | val_lpips 0.0445 | val_lpips_full 0.0737 | edge 0.0186 | dark_noise 0.0041 | chroma 0.0384 | decomp 0.0410 | smooth_enh 0.0091 | lambda_mean 1.3481 | lambda_min 0.6153 | lambda_max 1.6679
+Best model updated -> Epoch: 44, psnr: 26.9019, PSNR: 26.9019, LPIPS@loss: 0.0445, LPIPS full: 0.0737
+
+Epoch 045/120 train start
+Epoch 045/120 validation start
+Epoch 045 | train_loss 0.1582 | val_loss 0.1530 | val_psnr 25.38 | val_lpips 0.0499 | val_lpips_full 0.0833 | edge 0.0185 | dark_noise 0.0041 | chroma 0.0389 | decomp 0.0411 | smooth_enh 0.0089 | lambda_mean 1.3777 | lambda_min 0.6602 | lambda_max 1.6760
+
+Epoch 046/120 train start
+Epoch 046/120 validation start
+Epoch 046 | train_loss 0.1564 | val_loss 0.1544 | val_psnr 24.89 | val_lpips 0.0503 | val_lpips_full 0.0805 | edge 0.0187 | dark_noise 0.0041 | chroma 0.0392 | decomp 0.0348 | smooth_enh 0.0086 | lambda_mean 1.3525 | lambda_min 0.6188 | lambda_max 1.6336
+
+Epoch 047/120 train start
+Epoch 047/120 validation start
+Epoch 047 | train_loss 0.1566 | val_loss 0.1506 | val_psnr 25.27 | val_lpips 0.0490 | val_lpips_full 0.0801 | edge 0.0186 | dark_noise 0.0041 | chroma 0.0393 | decomp 0.0359 | smooth_enh 0.0091 | lambda_mean 1.4037 | lambda_min 0.6253 | lambda_max 1.6942
+
+Epoch 048/120 train start
+Epoch 048/120 validation start
+Epoch 048 | train_loss 0.1567 | val_loss 0.1472 | val_psnr 25.72 | val_lpips 0.0450 | val_lpips_full 0.0750 | edge 0.0185 | dark_noise 0.0041 | chroma 0.0375 | decomp 0.0388 | smooth_enh 0.0090 | lambda_mean 1.3850 | lambda_min 0.6407 | lambda_max 1.6735
+
+Epoch 049/120 train start
+Epoch 049/120 validation start
+Epoch 049 | train_loss 0.1564 | val_loss 0.1510 | val_psnr 25.31 | val_lpips 0.0485 | val_lpips_full 0.0801 | edge 0.0184 | dark_noise 0.0040 | chroma 0.0394 | decomp 0.0396 | smooth_enh 0.0087 | lambda_mean 1.3875 | lambda_min 0.6406 | lambda_max 1.6751
+
+Epoch 050/120 train start
+Epoch 050/120 validation start
+Epoch 050 | train_loss 0.1553 | val_loss 0.1438 | val_psnr 26.16 | val_lpips 0.0445 | val_lpips_full 0.0742 | edge 0.0186 | dark_noise 0.0041 | chroma 0.0376 | decomp 0.0376 | smooth_enh 0.0091 | lambda_mean 1.3809 | lambda_min 0.6319 | lambda_max 1.6854
+
+Epoch 051/120 train start
+Epoch 051/120 validation start
+Epoch 051 | train_loss 0.1571 | val_loss 0.1453 | val_psnr 25.82 | val_lpips 0.0464 | val_lpips_full 0.0775 | edge 0.0184 | dark_noise 0.0041 | chroma 0.0386 | decomp 0.0384 | smooth_enh 0.0090 | lambda_mean 1.3899 | lambda_min 0.6695 | lambda_max 1.6756
+
+Epoch 052/120 train start
+Epoch 052/120 validation start
+Epoch 052 | train_loss 0.1566 | val_loss 0.1536 | val_psnr 25.02 | val_lpips 0.0473 | val_lpips_full 0.0756 | edge 0.0188 | dark_noise 0.0042 | chroma 0.0405 | decomp 0.0374 | smooth_enh 0.0097 | lambda_mean 1.4068 | lambda_min 0.6532 | lambda_max 1.6977
+
+Epoch 053/120 train start
+Epoch 053/120 validation start
+Epoch 053 | train_loss 0.1554 | val_loss 0.1418 | val_psnr 25.84 | val_lpips 0.0433 | val_lpips_full 0.0700 | edge 0.0185 | dark_noise 0.0041 | chroma 0.0371 | decomp 0.0333 | smooth_enh 0.0086 | lambda_mean 1.3717 | lambda_min 0.6493 | lambda_max 1.6628
+
+Epoch 054/120 train start
+Epoch 054/120 validation start
+Epoch 054 | train_loss 0.1549 | val_loss 0.1470 | val_psnr 25.63 | val_lpips 0.0455 | val_lpips_full 0.0761 | edge 0.0183 | dark_noise 0.0041 | chroma 0.0369 | decomp 0.0385 | smooth_enh 0.0087 | lambda_mean 1.3838 | lambda_min 0.6623 | lambda_max 1.6813
+
+Epoch 055/120 train start
+Epoch 055/120 validation start
+Epoch 055 | train_loss 0.1527 | val_loss 0.1433 | val_psnr 25.97 | val_lpips 0.0456 | val_lpips_full 0.0759 | edge 0.0183 | dark_noise 0.0040 | chroma 0.0377 | decomp 0.0378 | smooth_enh 0.0089 | lambda_mean 1.3990 | lambda_min 0.6497 | lambda_max 1.6986
+
+Epoch 056/120 train start
+Epoch 056/120 validation start
+Epoch 056 | train_loss 0.1543 | val_loss 0.1443 | val_psnr 26.04 | val_lpips 0.0451 | val_lpips_full 0.0734 | edge 0.0185 | dark_noise 0.0041 | chroma 0.0388 | decomp 0.0389 | smooth_enh 0.0087 | lambda_mean 1.3708 | lambda_min 0.6263 | lambda_max 1.6523
+
+Epoch 057/120 train start
+Epoch 057/120 validation start
+Epoch 057 | train_loss 0.1544 | val_loss 0.1475 | val_psnr 25.55 | val_lpips 0.0439 | val_lpips_full 0.0722 | edge 0.0185 | dark_noise 0.0041 | chroma 0.0387 | decomp 0.0389 | smooth_enh 0.0090 | lambda_mean 1.3790 | lambda_min 0.6621 | lambda_max 1.6658
+
+Epoch 058/120 train start
+Epoch 058/120 validation start
+Epoch 058 | train_loss 0.1538 | val_loss 0.1496 | val_psnr 25.38 | val_lpips 0.0451 | val_lpips_full 0.0734 | edge 0.0189 | dark_noise 0.0041 | chroma 0.0371 | decomp 0.0377 | smooth_enh 0.0095 | lambda_mean 1.3903 | lambda_min 0.6505 | lambda_max 1.6747
+
+Epoch 059/120 train start
+Epoch 059/120 validation start
+Epoch 059 | train_loss 0.1527 | val_loss 0.1455 | val_psnr 26.30 | val_lpips 0.0409 | val_lpips_full 0.0684 | edge 0.0185 | dark_noise 0.0041 | chroma 0.0369 | decomp 0.0434 | smooth_enh 0.0089 | lambda_mean 1.3621 | lambda_min 0.6261 | lambda_max 1.6520
+
+Epoch 060/120 train start
+Epoch 060/120 validation start
+Epoch 060 | train_loss 0.1553 | val_loss 0.1452 | val_psnr 25.91 | val_lpips 0.0437 | val_lpips_full 0.0710 | edge 0.0186 | dark_noise 0.0041 | chroma 0.0380 | decomp 0.0395 | smooth_enh 0.0090 | lambda_mean 1.3791 | lambda_min 0.6611 | lambda_max 1.6524
+
+Epoch 061/120 train start
+Epoch 061/120 validation start
+Epoch 061 | train_loss 0.1542 | val_loss 0.1510 | val_psnr 25.99 | val_lpips 0.0424 | val_lpips_full 0.0710 | edge 0.0184 | dark_noise 0.0041 | chroma 0.0378 | decomp 0.0473 | smooth_enh 0.0088 | lambda_mean 1.3598 | lambda_min 0.6208 | lambda_max 1.6652
+
+Epoch 062/120 train start
+Epoch 062/120 validation start
+Epoch 062 | train_loss 0.1519 | val_loss 0.1602 | val_psnr 25.20 | val_lpips 0.0437 | val_lpips_full 0.0722 | edge 0.0185 | dark_noise 0.0042 | chroma 0.0372 | decomp 0.0495 | smooth_enh 0.0093 | lambda_mean 1.3796 | lambda_min 0.6406 | lambda_max 1.6819
+
+Epoch 063/120 train start
+Epoch 063/120 validation start
+Epoch 063 | train_loss 0.1522 | val_loss 0.1454 | val_psnr 26.13 | val_lpips 0.0443 | val_lpips_full 0.0726 | edge 0.0183 | dark_noise 0.0041 | chroma 0.0387 | decomp 0.0407 | smooth_enh 0.0089 | lambda_mean 1.3864 | lambda_min 0.6435 | lambda_max 1.6753
+
+Epoch 064/120 train start
+Epoch 064/120 validation start
+Epoch 064 | train_loss 0.1519 | val_loss 0.1457 | val_psnr 25.30 | val_lpips 0.0437 | val_lpips_full 0.0703 | edge 0.0184 | dark_noise 0.0041 | chroma 0.0373 | decomp 0.0344 | smooth_enh 0.0090 | lambda_mean 1.3990 | lambda_min 0.6223 | lambda_max 1.6754
+
+Epoch 065/120 train start
+Epoch 065/120 validation start
+Epoch 065 | train_loss 0.1520 | val_loss 0.1450 | val_psnr 25.97 | val_lpips 0.0422 | val_lpips_full 0.0696 | edge 0.0183 | dark_noise 0.0041 | chroma 0.0383 | decomp 0.0414 | smooth_enh 0.0087 | lambda_mean 1.3728 | lambda_min 0.6149 | lambda_max 1.6531
+
+Epoch 066/120 train start
+Epoch 066/120 validation start
+Epoch 066 | train_loss 0.1506 | val_loss 0.1471 | val_psnr 25.81 | val_lpips 0.0421 | val_lpips_full 0.0700 | edge 0.0183 | dark_noise 0.0041 | chroma 0.0360 | decomp 0.0404 | smooth_enh 0.0087 | lambda_mean 1.3813 | lambda_min 0.6467 | lambda_max 1.6532
+
+Epoch 067/120 train start
+Epoch 067/120 validation start
+Epoch 067 | train_loss 0.1538 | val_loss 0.1530 | val_psnr 25.21 | val_lpips 0.0445 | val_lpips_full 0.0735 | edge 0.0183 | dark_noise 0.0041 | chroma 0.0380 | decomp 0.0426 | smooth_enh 0.0090 | lambda_mean 1.4066 | lambda_min 0.6538 | lambda_max 1.6862
+
+Epoch 068/120 train start
+Epoch 068/120 validation start
+Epoch 068 | train_loss 0.1500 | val_loss 0.1472 | val_psnr 25.21 | val_lpips 0.0436 | val_lpips_full 0.0701 | edge 0.0184 | dark_noise 0.0041 | chroma 0.0396 | decomp 0.0351 | smooth_enh 0.0090 | lambda_mean 1.4063 | lambda_min 0.6402 | lambda_max 1.6757
+
+Epoch 069/120 train start
+Epoch 069/120 validation start
+Epoch 069 | train_loss 0.1508 | val_loss 0.1514 | val_psnr 25.38 | val_lpips 0.0434 | val_lpips_full 0.0710 | edge 0.0186 | dark_noise 0.0042 | chroma 0.0375 | decomp 0.0406 | smooth_enh 0.0093 | lambda_mean 1.4005 | lambda_min 0.6606 | lambda_max 1.6803
+
+Epoch 070/120 train start
+Epoch 070/120 validation start
+Epoch 070 | train_loss 0.1489 | val_loss 0.1452 | val_psnr 25.77 | val_lpips 0.0430 | val_lpips_full 0.0720 | edge 0.0182 | dark_noise 0.0041 | chroma 0.0360 | decomp 0.0395 | smooth_enh 0.0083 | lambda_mean 1.3803 | lambda_min 0.6379 | lambda_max 1.6506
+
+Epoch 071/120 train start
+Epoch 071/120 validation start
+Epoch 071 | train_loss 0.1498 | val_loss 0.1513 | val_psnr 25.48 | val_lpips 0.0445 | val_lpips_full 0.0741 | edge 0.0184 | dark_noise 0.0042 | chroma 0.0375 | decomp 0.0426 | smooth_enh 0.0090 | lambda_mean 1.3927 | lambda_min 0.6381 | lambda_max 1.6648
+
+Epoch 072/120 train start
+Epoch 072/120 validation start
+Epoch 072 | train_loss 0.1497 | val_loss 0.1466 | val_psnr 25.58 | val_lpips 0.0423 | val_lpips_full 0.0697 | edge 0.0184 | dark_noise 0.0041 | chroma 0.0355 | decomp 0.0358 | smooth_enh 0.0088 | lambda_mean 1.3976 | lambda_min 0.6218 | lambda_max 1.6673
+
+Epoch 073/120 train start
+Epoch 073/120 validation start
+Epoch 073 | train_loss 0.1485 | val_loss 0.1473 | val_psnr 25.73 | val_lpips 0.0410 | val_lpips_full 0.0680 | edge 0.0183 | dark_noise 0.0041 | chroma 0.0355 | decomp 0.0399 | smooth_enh 0.0088 | lambda_mean 1.3833 | lambda_min 0.6193 | lambda_max 1.6593
+
+Epoch 074/120 train start
+Epoch 074/120 validation start
+Epoch 074 | train_loss 0.1498 | val_loss 0.1461 | val_psnr 25.94 | val_lpips 0.0418 | val_lpips_full 0.0703 | edge 0.0183 | dark_noise 0.0041 | chroma 0.0370 | decomp 0.0426 | smooth_enh 0.0090 | lambda_mean 1.3897 | lambda_min 0.6303 | lambda_max 1.6703
+
+Epoch 075/120 train start
+Epoch 075/120 validation start
+Epoch 075 | train_loss 0.1489 | val_loss 0.1490 | val_psnr 25.68 | val_lpips 0.0413 | val_lpips_full 0.0693 | edge 0.0183 | dark_noise 0.0041 | chroma 0.0357 | decomp 0.0432 | smooth_enh 0.0088 | lambda_mean 1.3856 | lambda_min 0.6347 | lambda_max 1.6612
+
+Epoch 076/120 train start
+Epoch 076/120 validation start
+Epoch 076 | train_loss 0.1458 | val_loss 0.1478 | val_psnr 25.57 | val_lpips 0.0423 | val_lpips_full 0.0706 | edge 0.0183 | dark_noise 0.0041 | chroma 0.0360 | decomp 0.0398 | smooth_enh 0.0088 | lambda_mean 1.3950 | lambda_min 0.6216 | lambda_max 1.6715
+
+Epoch 077/120 train start
+Epoch 077/120 validation start
+Epoch 077 | train_loss 0.1485 | val_loss 0.1473 | val_psnr 25.84 | val_lpips 0.0418 | val_lpips_full 0.0696 | edge 0.0183 | dark_noise 0.0041 | chroma 0.0366 | decomp 0.0415 | smooth_enh 0.0090 | lambda_mean 1.3888 | lambda_min 0.6048 | lambda_max 1.6693
+
+Epoch 078/120 train start
+Epoch 078/120 validation start
+Epoch 078 | train_loss 0.1489 | val_loss 0.1432 | val_psnr 25.83 | val_lpips 0.0408 | val_lpips_full 0.0679 | edge 0.0183 | dark_noise 0.0040 | chroma 0.0357 | decomp 0.0379 | smooth_enh 0.0088 | lambda_mean 1.3951 | lambda_min 0.6155 | lambda_max 1.6666
+
+Epoch 079/120 train start
+Epoch 079/120 validation start
+Epoch 079 | train_loss 0.1472 | val_loss 0.1527 | val_psnr 25.11 | val_lpips 0.0438 | val_lpips_full 0.0718 | edge 0.0183 | dark_noise 0.0041 | chroma 0.0370 | decomp 0.0401 | smooth_enh 0.0089 | lambda_mean 1.3982 | lambda_min 0.5994 | lambda_max 1.6703
+
+Epoch 080/120 train start
+Epoch 080/120 validation start
+Epoch 080 | train_loss 0.1477 | val_loss 0.1479 | val_psnr 25.73 | val_lpips 0.0415 | val_lpips_full 0.0691 | edge 0.0184 | dark_noise 0.0042 | chroma 0.0360 | decomp 0.0406 | smooth_enh 0.0091 | lambda_mean 1.3992 | lambda_min 0.6175 | lambda_max 1.6658
+
+Epoch 081/120 train start
+Epoch 081/120 validation start
+Epoch 081 | train_loss 0.1465 | val_loss 0.1626 | val_psnr 24.48 | val_lpips 0.0455 | val_lpips_full 0.0729 | edge 0.0185 | dark_noise 0.0041 | chroma 0.0370 | decomp 0.0418 | smooth_enh 0.0090 | lambda_mean 1.4097 | lambda_min 0.6272 | lambda_max 1.6831
+
+Epoch 082/120 train start
+Epoch 082/120 validation start
+Epoch 082 | train_loss 0.1454 | val_loss 0.1552 | val_psnr 25.27 | val_lpips 0.0429 | val_lpips_full 0.0707 | edge 0.0183 | dark_noise 0.0041 | chroma 0.0364 | decomp 0.0438 | smooth_enh 0.0090 | lambda_mean 1.3969 | lambda_min 0.6331 | lambda_max 1.6755
+
+Epoch 083/120 train start
+Epoch 083/120 validation start
+Epoch 083 | train_loss 0.1478 | val_loss 0.1585 | val_psnr 24.85 | val_lpips 0.0443 | val_lpips_full 0.0727 | edge 0.0183 | dark_noise 0.0041 | chroma 0.0362 | decomp 0.0427 | smooth_enh 0.0091 | lambda_mean 1.4084 | lambda_min 0.6399 | lambda_max 1.6849
+
+Epoch 084/120 train start
+Epoch 084/120 validation start
+Epoch 084 | train_loss 0.1462 | val_loss 0.1492 | val_psnr 25.47 | val_lpips 0.0414 | val_lpips_full 0.0686 | edge 0.0184 | dark_noise 0.0041 | chroma 0.0361 | decomp 0.0401 | smooth_enh 0.0088 | lambda_mean 1.3957 | lambda_min 0.6266 | lambda_max 1.6654
+
+Epoch 085/120 train start
+Epoch 085/120 validation start
+Epoch 085 | train_loss 0.1466 | val_loss 0.1503 | val_psnr 25.18 | val_lpips 0.0420 | val_lpips_full 0.0684 | edge 0.0183 | dark_noise 0.0041 | chroma 0.0368 | decomp 0.0380 | smooth_enh 0.0090 | lambda_mean 1.4087 | lambda_min 0.6090 | lambda_max 1.6755
+
+Epoch 086/120 train start
+Epoch 086/120 validation start
+Epoch 086 | train_loss 0.1459 | val_loss 0.1545 | val_psnr 25.05 | val_lpips 0.0439 | val_lpips_full 0.0729 | edge 0.0183 | dark_noise 0.0041 | chroma 0.0359 | decomp 0.0409 | smooth_enh 0.0089 | lambda_mean 1.4089 | lambda_min 0.6172 | lambda_max 1.6832
+
+Epoch 087/120 train start
+Epoch 087/120 validation start
+Epoch 087 | train_loss 0.1472 | val_loss 0.1472 | val_psnr 25.53 | val_lpips 0.0412 | val_lpips_full 0.0683 | edge 0.0182 | dark_noise 0.0041 | chroma 0.0368 | decomp 0.0393 | smooth_enh 0.0085 | lambda_mean 1.4005 | lambda_min 0.6187 | lambda_max 1.6622
+
+Epoch 088/120 train start
+Epoch 088/120 validation start
+Epoch 088 | train_loss 0.1451 | val_loss 0.1571 | val_psnr 25.09 | val_lpips 0.0424 | val_lpips_full 0.0692 | edge 0.0186 | dark_noise 0.0042 | chroma 0.0358 | decomp 0.0439 | smooth_enh 0.0090 | lambda_mean 1.4004 | lambda_min 0.6155 | lambda_max 1.6691
+
+Epoch 089/120 train start
+Epoch 089/120 validation start
+Epoch 089 | train_loss 0.1473 | val_loss 0.1511 | val_psnr 25.45 | val_lpips 0.0417 | val_lpips_full 0.0696 | edge 0.0183 | dark_noise 0.0041 | chroma 0.0350 | decomp 0.0418 | smooth_enh 0.0090 | lambda_mean 1.3998 | lambda_min 0.6102 | lambda_max 1.6712
+Early stopping at epoch 89
+Best epoch: 44 | Best psnr: 26.9019 | Best PSNR: 26.9019 | Best LPIPS@loss: 0.0445 | Best LPIPS full: 0.0737
+===== TRAIN FINISHED =====
+Best epoch: 44
+Best psnr: 26.901945010954076
+Best PSNR: 26.901945010954076
+Best LPIPS@loss: 0.044467425479649984
+Best LPIPS full: 0.07371868405105739
+Best checkpoint: /content/retinextapetum_hpo/projects/uhd_ll_down4/final/hpo_candidate_02_trial_0005_c6633c4117_seed_3407/run/checkpoints/best.pth
+Last checkpoint: /content/retinextapetum_hpo/projects/uhd_ll_down4/final/hpo_candidate_02_trial_0005_c6633c4117_seed_3407/run/checkpoints/last.pth

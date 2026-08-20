@@ -1,0 +1,390 @@
+{
+  "uhd_ll_down4": {
+    "dataset": {
+      "key": "uhd_ll_down4",
+      "data_name": "UHD-LL down4",
+      "data_variant": null,
+      "relative_root": "UHD-LL down4",
+      "val_ratio": 0.05,
+      "val_max": 100,
+      "group_block_size": 25,
+      "stage_epochs": {
+        "optimizer": 8,
+        "illumination": 10,
+        "fidelity": 12,
+        "detail": 15
+      },
+      "budget_rationale": "UHD-LL down4 contains 2,000 paired training images. With a five-percent validation target, approximately 1,900 pairs remain for optimization; therefore, shorter epoch targets provide an optimizer-step budget comparable to the longer schedules used for the smaller LOL datasets."
+    },
+    "analysis": {
+      "dataset_key": "uhd_ll_down4",
+      "data_name": "UHD-LL down4",
+      "data_variant": null,
+      "data_root": "/content/drive/MyDrive/TAPETUM/datasets/UHD-LL down4",
+      "analysis_scope": "fixed training partition only",
+      "paired_count": 2000,
+      "train_partition_count": 1884,
+      "validation_partition_count": 116,
+      "val_ratio": 0.05,
+      "val_max": 100,
+      "group_block_size": 25,
+      "analyzed_pair_count": 256,
+      "analysis_max_pairs": 256,
+      "analysis_thumbnail_size": 256,
+      "metrics": {
+        "width": {
+          "mean": 960.0,
+          "median": 960.0,
+          "std": 0.0,
+          "p10": 960.0,
+          "p90": 960.0
+        },
+        "height": {
+          "mean": 540.0,
+          "median": 540.0,
+          "std": 0.0,
+          "p10": 540.0,
+          "p90": 540.0
+        },
+        "pair_size_mismatch": {
+          "mean": 0.0,
+          "median": 0.0,
+          "std": 0.0,
+          "p10": 0.0,
+          "p90": 0.0
+        },
+        "low_luminance_mean": {
+          "mean": 0.1784663580256165,
+          "median": 0.1658492311835289,
+          "std": 0.09150257134025203,
+          "p10": 0.06183198466897011,
+          "p90": 0.31493671238422394
+        },
+        "high_luminance_mean": {
+          "mean": 0.482228642096743,
+          "median": 0.4738975167274475,
+          "std": 0.06524145097148334,
+          "p10": 0.4071258306503296,
+          "p90": 0.5706228017807007
+        },
+        "brightness_gain": {
+          "mean": 3.703580468893051,
+          "median": 2.817828059196472,
+          "std": 2.4075470622833524,
+          "p10": 1.5333691239356995,
+          "p90": 7.304531574249268
+        },
+        "dark_pixel_ratio": {
+          "mean": 0.5251121520996094,
+          "median": 0.4876708984375,
+          "std": 0.30857680506757146,
+          "p10": 0.10572645399305555,
+          "p90": 0.9705403645833334
+        },
+        "shadow_pixel_ratio": {
+          "mean": 0.7516131930881076,
+          "median": 0.8288438585069444,
+          "std": 0.2572622803047791,
+          "p10": 0.3495686848958333,
+          "p90": 1.0
+        },
+        "target_clip_ratio": {
+          "mean": 0.0007398393419053819,
+          "median": 0.0,
+          "std": 0.003592147370691831,
+          "p10": 0.0,
+          "p90": 0.0006239149305555555
+        },
+        "low_contrast": {
+          "mean": 0.0951731932182156,
+          "median": 0.08636520802974701,
+          "std": 0.050769860254051384,
+          "p10": 0.038556428626179695,
+          "p90": 0.16576825827360153
+        },
+        "high_contrast": {
+          "mean": 0.18270201087580062,
+          "median": 0.18238907307386398,
+          "std": 0.0467400788145949,
+          "p10": 0.1212746910750866,
+          "p90": 0.24160023778676987
+        },
+        "low_edge_strength": {
+          "mean": 0.012835621908379835,
+          "median": 0.010655479039996862,
+          "std": 0.007862644059657269,
+          "p10": 0.005000147502869368,
+          "p90": 0.02330788318067789
+        },
+        "high_edge_strength": {
+          "mean": 0.0254804836713447,
+          "median": 0.024639791809022427,
+          "std": 0.011421178927839708,
+          "p10": 0.011887041851878166,
+          "p90": 0.041218824684619904
+        },
+        "detail_gain": {
+          "mean": 2.37530255526299,
+          "median": 1.9462008359852048,
+          "std": 1.2557244722982812,
+          "p10": 1.256973071967248,
+          "p90": 4.063819443752302
+        },
+        "color_shift": {
+          "mean": 0.02281030452019195,
+          "median": 0.013417352922260761,
+          "std": 0.025606141154449206,
+          "p10": 0.002744863391853869,
+          "p90": 0.05601886846125126
+        },
+        "target_chroma_strength": {
+          "mean": 0.037748589187685866,
+          "median": 0.02856428176164627,
+          "std": 0.029291811687778793,
+          "p10": 0.013100345619022846,
+          "p90": 0.07192905992269516
+        },
+        "dark_noise_proxy": {
+          "mean": 0.00881921435257027,
+          "median": 0.007144255330786109,
+          "std": 0.006761588472277576,
+          "p10": 0.002433924120850861,
+          "p90": 0.017078100703656673
+        },
+        "spatial_darkness_variation": {
+          "mean": 0.05854660668668518,
+          "median": 0.04971027031472175,
+          "std": 0.03628348527856494,
+          "p10": 0.019500971113473806,
+          "p90": 0.10578830766472919
+        }
+      },
+      "created_at": "2026-08-16T04:49:06"
+    },
+    "adaptive_search_plan": {
+      "stages": {
+        "optimizer": {
+          "LR": {
+            "type": "float",
+            "low": 0.0001,
+            "high": 0.0008,
+            "log": true,
+            "explanation": "The dataset has a moderate enhancement/noise profile and a standard range around the source baseline is appropriate."
+          },
+          "MIN_LR_RATIO": {
+            "type": "float",
+            "low": 0.02,
+            "high": 0.15,
+            "log": true,
+            "explanation": "The minimum learning rate is searched as a ratio of LR so the cosine schedule remains internally consistent."
+          },
+          "GRAD_CLIP_NORM": {
+            "type": "categorical",
+            "choices": [
+              3.0,
+              5.0,
+              8.0
+            ],
+            "explanation": "Gradient clipping candidates are selected from the observed enhancement severity to control unstable updates."
+          }
+        },
+        "illumination": {
+          "LAMBDA_MAX": {
+            "type": "float",
+            "low": 1.15,
+            "high": 1.9,
+            "log": false,
+            "explanation": "The measured brightness gain is moderate-to-strong, so the amplification ceiling is searched around the baseline.",
+            "step": 0.05
+          }
+        },
+        "fidelity": {
+          "W_SSIM": {
+            "type": "float",
+            "low": 0.3,
+            "high": 0.75,
+            "log": false,
+            "explanation": "The SSIM-loss range is raised because target images show substantial structural/detail demand.",
+            "step": 0.05
+          },
+          "W_LPIPS": {
+            "type": "float",
+            "low": 0.02,
+            "high": 0.12,
+            "log": false,
+            "explanation": "Perceptual weight is searched independently because LPIPS is also measured by a separate metric network.",
+            "step": 0.01
+          }
+        },
+        "detail": {
+          "W_EDGE": {
+            "type": "float",
+            "low": 0.0,
+            "high": 0.08,
+            "log": false,
+            "explanation": "The normal-light targets contain more or stronger edges than the low-light inputs.",
+            "step": 0.01
+          },
+          "W_DARK_NOISE": {
+            "type": "float",
+            "low": 0.0,
+            "high": 0.05,
+            "log": false,
+            "explanation": "Dark-region coverage or high-frequency activity justifies searching the chroma-noise penalty.",
+            "step": 0.01
+          },
+          "W_ATTN": {
+            "type": "float",
+            "low": 0.001,
+            "high": 0.012,
+            "log": false,
+            "explanation": "The amount or spatial variation of darkness justifies tuning attention regularization.",
+            "step": 0.001
+          }
+        }
+      },
+      "searched_parameters": [
+        "GRAD_CLIP_NORM",
+        "LAMBDA_MAX",
+        "LR",
+        "MIN_LR_RATIO",
+        "W_ATTN",
+        "W_DARK_NOISE",
+        "W_EDGE",
+        "W_LPIPS",
+        "W_SSIM"
+      ],
+      "fixed_parameters": [
+        "BASE_CHANNELS",
+        "BATCH_SIZE",
+        "CROP_SIZE",
+        "W_CHROMA",
+        "W_COLOR",
+        "W_L1",
+        "W_RECON_HIGH",
+        "W_RECON_LOW",
+        "W_REFLECT",
+        "W_SMOOTH_ENH",
+        "W_SMOOTH_HIGH",
+        "W_SMOOTH_LOW"
+      ],
+      "decision_flags": {
+        "severe_enhancement": false,
+        "large_dataset": false,
+        "noisy_dataset": false,
+        "structure_demand": true,
+        "color_search": false,
+        "edge_search": true,
+        "noise_search": true,
+        "attention_search": true
+      },
+      "decision_explanations": [
+        "W_COLOR and W_CHROMA remain at baseline values because measured color shift and target chroma are limited.",
+        "W_EDGE enabled by measured detail demand.",
+        "W_DARK_NOISE enabled by darkness/noise statistics.",
+        "W_ATTN enabled by spatial darkness statistics."
+      ]
+    },
+    "search_seed": 42,
+    "split_seed": 42,
+    "scheduler_horizon": 120,
+    "expected_trainable_params": 536463,
+    "search_lpips_resize": 256,
+    "progressive_stage_resume": true,
+    "selected_search_hyperparameters": {
+      "BATCH_SIZE": 2,
+      "CROP_SIZE": 256,
+      "BASE_CHANNELS": 128,
+      "W_L1": 1.0,
+      "W_RECON_LOW": 1.0,
+      "W_RECON_HIGH": 0.85,
+      "W_REFLECT": 0.06,
+      "W_SMOOTH_LOW": 0.08,
+      "W_SMOOTH_HIGH": 0.08,
+      "W_SMOOTH_ENH": 0.06,
+      "LR": 0.0007873952428969634,
+      "MIN_LR": 1.667796398728883e-05,
+      "GRAD_CLIP_NORM": 8.0,
+      "LAMBDA_MAX": 1.9,
+      "W_SSIM": 0.55,
+      "W_LPIPS": 0.05,
+      "W_COLOR": 0.06,
+      "W_CHROMA": 0.12,
+      "W_EDGE": 0.06,
+      "W_DARK_NOISE": 0.01,
+      "W_ATTN": 0.010000000000000002
+    },
+    "status": "final_confirmation_complete",
+    "final": {
+      "dataset": {
+        "key": "uhd_ll_down4",
+        "data_name": "UHD-LL down4",
+        "data_variant": null,
+        "relative_root": "UHD-LL down4",
+        "val_ratio": 0.05,
+        "val_max": 100,
+        "group_block_size": 25,
+        "stage_epochs": {
+          "optimizer": 8,
+          "illumination": 10,
+          "fidelity": 12,
+          "detail": 15
+        },
+        "budget_rationale": "UHD-LL down4 contains 2,000 paired training images. With a five-percent validation target, approximately 1,900 pairs remain for optimization; therefore, shorter epoch targets provide an optimizer-step budget comparable to the longer schedules used for the smaller LOL datasets."
+      },
+      "selected_candidate": {
+        "candidate": "source_profile_baseline",
+        "is_source_baseline": true,
+        "psnr": 27.03537689566153,
+        "psnr_std": 0.17792951991058603,
+        "ssim": 0.9262932847286093,
+        "ssim_std": 0.0021313532810240273,
+        "lpips": 0.06698321734405198,
+        "lpips_std": 0.0026888193613546535,
+        "seeds": [
+          42,
+          123,
+          3407
+        ]
+      },
+      "hyperparameters": {
+        "BATCH_SIZE": 2,
+        "CROP_SIZE": 256,
+        "BASE_CHANNELS": 128,
+        "W_L1": 1.0,
+        "W_RECON_LOW": 1.0,
+        "W_RECON_HIGH": 0.85,
+        "W_REFLECT": 0.06,
+        "W_SMOOTH_LOW": 0.08,
+        "W_SMOOTH_HIGH": 0.08,
+        "W_SMOOTH_ENH": 0.06,
+        "LR": 0.00046948014087030786,
+        "MIN_LR": 2.12826357198832e-05,
+        "GRAD_CLIP_NORM": 3.0,
+        "LAMBDA_MAX": 1.35,
+        "W_SSIM": 0.35,
+        "W_LPIPS": 0.08,
+        "W_COLOR": 0.06,
+        "W_CHROMA": 0.12,
+        "W_EDGE": 0.04,
+        "W_DARK_NOISE": 0.01,
+        "W_ATTN": 0.012
+      },
+      "final_epochs": 120,
+      "final_seeds": [
+        42,
+        123,
+        3407
+      ],
+      "source_baseline_included": true,
+      "hpo_candidates_requested": 2,
+      "expected_trainable_params": 536463,
+      "lpips_resize": 512,
+      "selection_rule": {
+        "psnr_tolerance_db": 0.15,
+        "ssim_tolerance": 0.002,
+        "then": "minimum_mean_lpips"
+      }
+    }
+  }
+}

@@ -1,0 +1,264 @@
+% RetinexTapetum: hyperparameter selection and result tables
+% Required packages:
+% \usepackage{amsmath}
+% \usepackage{booktabs}
+% \usepackage{threeparttable}
+% \usepackage{adjustbox}
+
+% -----------------------------------------------------------------------------
+% Configuration-selection rule (insert after the HPO description)
+% -----------------------------------------------------------------------------
+\paragraph{Configuration selection rule.}
+Let $\bar{P}_c$, $\bar{S}_c$, and $\bar{L}_c$ denote the mean validation
+PSNR, SSIM, and LPIPS, respectively, of candidate configuration $c$ over seeds
+$\{42,123,3407\}$. We first retain configurations whose mean PSNR is within
+$\delta_P=0.15$~dB of the best observed value,
+\begin{equation}
+  \mathcal{C}_{P}
+  = \left\{c:\bar{P}_c \geq \max_j \bar{P}_j-0.15\right\}.
+  \label{eq:hpo-psnr-tolerance}
+\end{equation}
+Among these configurations, we retain those whose mean SSIM is within
+$\delta_S=0.002$ of the highest SSIM in $\mathcal{C}_{P}$,
+\begin{equation}
+  \mathcal{C}_{S}
+  = \left\{c\in\mathcal{C}_{P}:\bar{S}_c
+  \geq \max_{j\in\mathcal{C}_{P}}\bar{S}_j-0.002\right\}.
+  \label{eq:hpo-ssim-tolerance}
+\end{equation}
+The final configuration is the member of $\mathcal{C}_{S}$ with the lowest
+mean LPIPS,
+\begin{equation}
+  c^{\star}=\arg\min_{c\in\mathcal{C}_{S}}\bar{L}_c.
+  \label{eq:hpo-lpips-selection}
+\end{equation}
+This lexicographic tolerance rule avoids an arbitrary weighted sum: PSNR is
+treated as the primary fidelity criterion, SSIM resolves configurations with
+practically similar PSNR, and LPIPS resolves the remaining perceptually similar
+candidates. The exact source-profile baseline is evaluated together with the
+two leading HPO candidates, so optimization is retained only when it improves
+upon the baseline under the same rule. Within each individual training run,
+the stored checkpoint is the epoch with the highest validation PSNR. The
+official test partitions are not consulted during configuration, seed, or
+checkpoint selection.
+
+% -----------------------------------------------------------------------------
+% Table 1: fixed parameters shared by all datasets
+% -----------------------------------------------------------------------------
+\begin{table}[t]
+  \centering
+  \caption{Training, architecture, and loss parameters fixed across all
+  RetinexTapetum experiments.}
+  \label{tab:retinextapetum-fixed-hyperparameters}
+  \small
+  \begin{threeparttable}
+    \begin{adjustbox}{max width=\columnwidth}
+      \begin{tabular}{lll}
+        \toprule
+        Category & Parameter & Fixed value \\
+        \midrule
+        Training & Maximum epochs & 120 \\
+        Training & Batch size & 2 \\
+        Training & Crop size & $256\!\times\!256$ \\
+        Architecture & Base channels & 128 \\
+        Architecture & Trainable parameters & 536,463 \\
+        Optimizer & Optimizer & Adam \\
+        Optimizer & $(\beta_1,\beta_2)$ & $(0.9,0.999)$ \\
+        Optimizer & Learning-rate schedule & Cosine annealing \\
+        Enhancement loss & $w_{\mathrm{L1}}$ & 1.00 \\
+        Decomposition loss & $w_{\mathrm{recon\text{-}low}}$ & 1.00 \\
+        Decomposition loss & $w_{\mathrm{recon\text{-}high}}$ & 0.85 \\
+        Decomposition loss & $w_{\mathrm{reflect}}$ & 0.06 \\
+        Decomposition loss & $w_{\mathrm{smooth\text{-}low}}$ & 0.08 \\
+        Decomposition loss & $w_{\mathrm{smooth\text{-}high}}$ & 0.08 \\
+        Enhancement loss & $w_{\mathrm{smooth\text{-}enh}}$ & 0.06 \\
+        Final confirmation & Random seeds & $\{42,123,3407\}$ \\
+        \bottomrule
+      \end{tabular}
+    \end{adjustbox}
+    \begin{tablenotes}[flushleft]
+      \footnotesize
+      \item The 120-epoch value is the maximum training horizon. A run may end
+      earlier, but only validation-selected checkpoints are used for reporting.
+    \end{tablenotes}
+  \end{threeparttable}
+\end{table}
+
+% -----------------------------------------------------------------------------
+% Table 2: selected dataset-specific parameters
+% -----------------------------------------------------------------------------
+\begin{table*}[t]
+  \centering
+  \caption{Dataset-specific hyperparameters selected for RetinexTapetum.}
+  \label{tab:retinextapetum-hyperparameters}
+  \small
+  \begin{threeparttable}
+    \begin{adjustbox}{max width=\textwidth}
+      \begin{tabular}{lcccc}
+        \toprule
+        Hyperparameter
+          & LOL-v1
+          & LOL-v2 Real
+          & LOL-v2 Synthetic
+          & UHD-LL (down4) \\
+        \midrule
+        Initial learning rate
+          & $6.9063\!\times\!10^{-4}$
+          & $6.6209\!\times\!10^{-4}$
+          & $6.9916\!\times\!10^{-4}$
+          & $4.6948\!\times\!10^{-4}$ \\
+        Minimum learning rate
+          & $1.4628\!\times\!10^{-5}$
+          & $4.0830\!\times\!10^{-5}$
+          & $5.0238\!\times\!10^{-5}$
+          & $2.1283\!\times\!10^{-5}$ \\
+        Gradient-clipping norm
+          & 3 & 3 & 8 & 3 \\
+        $\lambda_{\max}$
+          & 1.80 & 2.00 & 1.30 & 1.35 \\
+        $w_{\mathrm{SSIM}}$
+          & 0.50 & 0.45 & 0.65 & 0.35 \\
+        $w_{\mathrm{LPIPS}}$
+          & 0.10 & 0.12 & 0.08 & 0.08 \\
+        $w_{\mathrm{color}}$
+          & 0.04 & 0.02 & 0.14 & 0.06 \\
+        $w_{\mathrm{chroma}}$
+          & 0.04 & 0.14 & 0.12 & 0.12 \\
+        $w_{\mathrm{edge}}$
+          & 0.07 & 0.02 & 0.00 & 0.04 \\
+        $w_{\mathrm{dark\text{-}noise}}$
+          & 0.03 & 0.01 & 0.05 & 0.01 \\
+        $w_{\mathrm{attn}}$
+          & 0.009 & 0.010 & 0.007 & 0.012 \\
+        \bottomrule
+      \end{tabular}
+    \end{adjustbox}
+    \begin{tablenotes}[flushleft]
+      \footnotesize
+      \item Parameters not listed here are fixed as reported in
+      Table~\ref{tab:retinextapetum-fixed-hyperparameters}. The UHD-LL down4
+      column corresponds to the source-profile baseline because it remained the
+      best configuration after final three-seed confirmation.
+    \end{tablenotes}
+  \end{threeparttable}
+\end{table*}
+
+% -----------------------------------------------------------------------------
+% Table 3: final three-seed configuration-selection results
+% -----------------------------------------------------------------------------
+\begin{table*}[t]
+  \centering
+  \caption{Three-seed validation performance of the selected configurations.}
+  \label{tab:retinextapetum-hpo-three-seed}
+  \small
+  \begin{threeparttable}
+    \begin{adjustbox}{max width=\textwidth}
+      \begin{tabular}{llccc}
+        \toprule
+        Dataset & Selected source
+          & PSNR $\uparrow$ & SSIM $\uparrow$ & LPIPS $\downarrow$ \\
+        \midrule
+        LOL-v1
+          & HPO-C2
+          & $21.907 \pm 0.077$
+          & $0.8652 \pm 0.0022$
+          & $0.1256 \pm 0.0055$ \\
+        LOL-v2 Real
+          & HPO-C2
+          & $21.576 \pm 0.037$
+          & $0.8317 \pm 0.0004$
+          & $0.1615 \pm 0.0059$ \\
+        LOL-v2 Synthetic
+          & HPO-C1
+          & $25.173 \pm 0.045$
+          & $0.9357 \pm 0.0014$
+          & $0.0554 \pm 0.0011$ \\
+        UHD-LL (down4)
+          & Source baseline
+          & $27.035 \pm 0.178$
+          & $0.9263 \pm 0.0021$
+          & $0.0670 \pm 0.0027$ \\
+        \bottomrule
+      \end{tabular}
+    \end{adjustbox}
+    \begin{tablenotes}[flushleft]
+      \footnotesize
+      \item Values are mean $\pm$ standard deviation over seeds
+      $\{42,123,3407\}$. Configuration selection uses
+      Eqs.~\eqref{eq:hpo-psnr-tolerance}--\eqref{eq:hpo-lpips-selection}.
+      Final-confirmation LPIPS is evaluated after resizing to 512 pixels.
+    \end{tablenotes}
+  \end{threeparttable}
+\end{table*}
+
+% -----------------------------------------------------------------------------
+% Table 4: selected-checkpoint training/validation and independent test results
+% -----------------------------------------------------------------------------
+\begin{table*}[t]
+  \centering
+  \caption{Training diagnostics, validation performance, and independent
+  test-set performance of the selected RetinexTapetum checkpoints.}
+  \label{tab:retinextapetum-train-test}
+  \scriptsize
+  \setlength{\tabcolsep}{3.2pt}
+  \begin{threeparttable}
+    \begin{adjustbox}{max width=\textwidth}
+      \begin{tabular}{lcccccccccccc}
+        \toprule
+        & & &
+        \multicolumn{2}{c}{Loss at best epoch} &
+        \multicolumn{4}{c}{Validation split} &
+        \multicolumn{4}{c}{Independent test split} \\
+        \cmidrule(lr){4-5}
+        \cmidrule(lr){6-9}
+        \cmidrule(lr){10-13}
+        Dataset
+          & Seed
+          & Best/completed
+          & Train
+          & Val.
+          & $N$
+          & PSNR $\uparrow$
+          & SSIM $\uparrow$
+          & LPIPS $\downarrow$
+          & $N$
+          & PSNR $\uparrow$
+          & SSIM $\uparrow$
+          & LPIPS $\downarrow$ \\
+        \midrule
+        LOL-v1
+          & 42 & 88/120
+          & 0.2779 & 0.2713
+          & 48 & 22.009 & 0.8681 & 0.1185
+          & 15 & 21.039 & 0.8316 & 0.1357 \\
+        LOL-v2 Real
+          & 123 & 74/119
+          & 0.2819 & 0.2864
+          & 69 & 21.598 & 0.8318 & 0.1532
+          & 100 & 20.019 & 0.8405 & 0.1258 \\
+        LOL-v2 Synthetic
+          & 3407 & 111/120
+          & 0.1780 & 0.1809
+          & 90 & 25.117 & 0.9375 & 0.0538
+          & 100 & 25.053 & 0.9322 & 0.0577 \\
+        UHD-LL (down4)
+          & 3407 & 96/120
+          & 0.1587 & 0.1554
+          & 116 & 27.259 & 0.9281 & 0.0652
+          & 150 & 24.711 & 0.9115 & 0.0884 \\
+        \bottomrule
+      \end{tabular}
+    \end{adjustbox}
+    \begin{tablenotes}[flushleft]
+      \footnotesize
+      \item Best/completed reports the selected checkpoint epoch and the number
+      of completed training epochs. The training pipeline logs train loss but
+      not train-split PSNR, SSIM, or LPIPS. Validation metrics correspond to
+      the same seed and checkpoint used for test evaluation. Validation LPIPS
+      is evaluated with 512-pixel resizing, whereas test LPIPS is taken from
+      the paper-metric evaluation output; validation--test LPIPS differences
+      should therefore be interpreted cautiously. The test partitions are used
+      only after all HPO and checkpoint-selection decisions are complete.
+    \end{tablenotes}
+  \end{threeparttable}
+\end{table*}

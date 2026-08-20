@@ -1,0 +1,101 @@
+\subsection{Dataset-Adaptive Hyperparameter Selection and Training Configuration}
+\label{subsec:implementation_details}
+
+Hyperparameter optimization is performed independently for LOL-v1, LOL-v2
+Real-Captured, LOL-v2 Synthetic, and UHD-LL down4. Rather than applying a
+single configuration to all datasets, we construct a dataset-specific search
+space from measurable properties of each training partition. The analyzed
+properties include target-to-input luminance gain, dark-pixel coverage,
+dark-region high-frequency activity, normalized color shift, target chroma,
+detail gain, edge strength, and spatial variation in darkness. These
+measurements are used only to activate relevant parameter groups and constrain
+their candidate domains; they do not directly determine the final
+hyperparameter values. The activation thresholds are prespecified engineering
+rules rather than learned decision boundaries.
+
+All data partitions are fixed before optimization. Using split seed 42, the
+485 training pairs of LOL-v1 are divided into 437 optimization and 48
+validation pairs, the 689 LOL-v2 Real-Captured pairs into 620 and 69 pairs,
+and the 900 LOL-v2 Synthetic pairs into 810 and 90 pairs, respectively. For
+UHD-LL down4, 2,000 training pairs are divided into 1,884 optimization and
+116 validation pairs. The UHD-LL split additionally keeps related numeric
+filename blocks in the same partition to reduce leakage between closely
+indexed images. Dataset statistics used to construct the search spaces are
+computed exclusively from the optimization partition, using a deterministic
+sample of at most 256 paired images. Validation targets are reserved for
+candidate comparison, while the official test partitions are excluded from
+both search-space construction and hyperparameter selection.
+
+Optimization is organized into four progressive stages. The optimizer stage
+searches the initial learning rate, the minimum-to-initial learning-rate ratio,
+and the gradient-clipping norm. The illumination stage searches
+$\lambda_{\max}$. The fidelity stage searches the SSIM and LPIPS loss weights,
+and the detail stage searches the activated color, chroma, edge, dark-region
+noise, and tapetum-attention weights. Parameters whose dataset-level activation
+criteria are not satisfied remain fixed at their source-profile values. The
+source-profile value of every optimized parameter is also retained within its
+candidate domain, and the complete source profile is included as a control
+configuration.
+
+The staged searches use 10, 10, 12, and 14 target trials for the optimizer,
+illumination, fidelity, and detail stages, respectively. For LOL-v1 and LOL-v2
+Real-Captured, the corresponding cumulative epoch targets are 25, 30, 35, and
+40 epochs. LOL-v2 Synthetic uses cumulative targets of 20, 25, 30, and 35
+epochs. Because UHD-LL down4 contains substantially more optimization pairs,
+its cumulative targets are reduced to 8, 10, 12, and 15 epochs to provide a
+comparable number of optimizer updates. At each stage, the configurations of
+the next stage branch from the selected configuration's final checkpoint.
+Model weights, Adam state, scheduler state, and the completed-epoch index are
+preserved during this progressive continuation, whereas the best-metric
+history is reset at each stage boundary so that newly introduced
+hyperparameters are evaluated only on epochs produced under the updated
+configuration.
+
+% Contains the mathematical selection rule, the fixed-parameter table, the
+% dataset-specific parameter table, the three-seed HPO table, and the selected
+% checkpoint training/validation/test table.
+\input{RetinexTapetum_LaTeX_Tables}
+
+Following the staged search, the exact source-profile baseline and the two
+leading distinct HPO configurations are independently trained from scratch
+with seeds $\{42,123,3407\}$ for up to 120 epochs. These runs do not inherit
+the staged-search checkpoints, thereby preserving independence across seeds.
+The final dataset-specific configuration is selected by applying
+Eqs.~\eqref{eq:hpo-psnr-tolerance}--\eqref{eq:hpo-lpips-selection} to the
+three-seed mean validation metrics. As reported in
+Table~\ref{tab:retinextapetum-hpo-three-seed}, the selected configurations
+obtain $21.907\pm0.077$~dB PSNR, $0.8652\pm0.0022$ SSIM, and
+$0.1256\pm0.0055$ LPIPS on LOL-v1; $21.576\pm0.037$~dB,
+$0.8317\pm0.0004$, and $0.1615\pm0.0059$ on LOL-v2 Real-Captured;
+and $25.173\pm0.045$~dB, $0.9357\pm0.0014$, and
+$0.0554\pm0.0011$ on LOL-v2 Synthetic. For UHD-LL down4, the
+source-profile baseline remains the selected configuration, achieving
+$27.035\pm0.178$~dB, $0.9263\pm0.0021$, and
+$0.0670\pm0.0027$, respectively.
+
+RetinexTapetum is implemented in PyTorch and contains 536,463 trainable
+parameters. All experiments use a base channel width of 128, a batch size of
+2, $256\times256$ training crops, and the Adam optimizer with
+$\beta_1=0.9$ and $\beta_2=0.999$. The learning rate is reduced using cosine
+annealing over a 120-epoch horizon. The parameters held constant across all
+datasets are summarized in
+Table~\ref{tab:retinextapetum-fixed-hyperparameters}, whereas the selected
+dataset-specific learning rates, minimum learning rates, gradient-clipping
+norms, amplification limits, and enhancement-loss weights are reported in
+Table~\ref{tab:retinextapetum-hyperparameters}. Thus, each dataset is trained
+with its own selected configuration rather than receiving parameters
+transferred from another dataset.
+
+Within every training run, the checkpoint with the highest validation PSNR is
+retained. SSIM and LPIPS are monitored as complementary structural and
+perceptual indicators but do not determine the within-run checkpoint epoch.
+LPIPS is evaluated after resizing to 256 pixels during the preliminary staged
+search and to 512 pixels during final multi-seed confirmation. The test LPIPS
+values are obtained from the paper-metric evaluation pipeline and are
+therefore not used for direct validation--test checkpoint comparisons.
+Training diagnostics, validation performance, and independent test results for
+the selected checkpoints are reported in
+Table~\ref{tab:retinextapetum-train-test}. The official test partitions are
+evaluated only after configuration and checkpoint selection. No test-time
+hyperparameter tuning, post-hoc color restoration, or dataset-specific output
+correction is applied.

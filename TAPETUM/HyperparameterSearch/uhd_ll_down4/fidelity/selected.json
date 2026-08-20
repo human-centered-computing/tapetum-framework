@@ -1,0 +1,76 @@
+{
+  "dataset": {
+    "key": "uhd_ll_down4",
+    "data_name": "UHD-LL down4",
+    "data_variant": null,
+    "relative_root": "UHD-LL down4",
+    "val_ratio": 0.05,
+    "val_max": 100,
+    "group_block_size": 25,
+    "stage_epochs": {
+      "optimizer": 8,
+      "illumination": 10,
+      "fidelity": 12,
+      "detail": 15
+    },
+    "budget_rationale": "UHD-LL down4 contains 2,000 paired training images. With a five-percent validation target, approximately 1,900 pairs remain for optimization; therefore, shorter epoch targets provide an optimizer-step budget comparable to the longer schedules used for the smaller LOL datasets."
+  },
+  "stage": "fidelity",
+  "study_name": "retinextapetum_uhd_ll_down4_fidelity_9d957e1f31",
+  "study_context": "9d957e1f31",
+  "analysis_generated_search_space": {
+    "W_SSIM": {
+      "type": "float",
+      "low": 0.3,
+      "high": 0.75,
+      "log": false,
+      "explanation": "The SSIM-loss range is raised because target images show substantial structural/detail demand.",
+      "step": 0.05
+    },
+    "W_LPIPS": {
+      "type": "float",
+      "low": 0.02,
+      "high": 0.12,
+      "log": false,
+      "explanation": "Perceptual weight is searched independently because LPIPS is also measured by a separate metric network.",
+      "step": 0.01
+    }
+  },
+  "target_completed_trials": 12,
+  "actual_completed_trials": 12,
+  "selected_trial": 7,
+  "psnr": 25.708147066590026,
+  "ssim": 0.9183039264432316,
+  "lpips": 0.054401512843845735,
+  "selection_rule": {
+    "psnr_tolerance_db": 0.15,
+    "ssim_tolerance": 0.002,
+    "then": "minimum_lpips"
+  },
+  "effective_params": {
+    "BATCH_SIZE": 2,
+    "CROP_SIZE": 256,
+    "BASE_CHANNELS": 128,
+    "W_L1": 1.0,
+    "W_RECON_LOW": 1.0,
+    "W_RECON_HIGH": 0.85,
+    "W_REFLECT": 0.06,
+    "W_SMOOTH_LOW": 0.08,
+    "W_SMOOTH_HIGH": 0.08,
+    "W_SMOOTH_ENH": 0.06,
+    "LR": 0.0007873952428969634,
+    "MIN_LR": 1.667796398728883e-05,
+    "GRAD_CLIP_NORM": 8.0,
+    "LAMBDA_MAX": 1.9,
+    "W_SSIM": 0.55,
+    "W_LPIPS": 0.05,
+    "W_COLOR": 0.06,
+    "W_CHROMA": 0.12,
+    "W_EDGE": 0.04,
+    "W_DARK_NOISE": 0.01,
+    "W_ATTN": 0.012
+  },
+  "progressive_stage_resume": true,
+  "selected_checkpoint": "/content/drive/MyDrive/TAPETUM/HyperparameterSearch/uhd_ll_down4/fidelity/selected_last.pth",
+  "selected_checkpoint_epoch": 12
+}

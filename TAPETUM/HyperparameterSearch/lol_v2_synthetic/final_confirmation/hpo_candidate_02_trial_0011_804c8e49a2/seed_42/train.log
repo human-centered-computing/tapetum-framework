@@ -1,0 +1,147 @@
+DEVICE: cuda
+TRAIN_LOW_DIR : /content/drive/MyDrive/TAPETUM/datasets/LOL-v2/Synthetic/Train/Low
+TRAIN_HIGH_DIR: /content/drive/MyDrive/TAPETUM/datasets/LOL-v2/Synthetic/Train/Normal
+VAL_LOW_DIR   : /content/drive/MyDrive/TAPETUM/datasets/LOL-v2/Synthetic/Val/Low
+VAL_HIGH_DIR  : /content/drive/MyDrive/TAPETUM/datasets/LOL-v2/Synthetic/Val/Normal
+CKPT_DIR      : /content/retinextapetum_hpo/projects/lol_v2_synthetic/final/hpo_candidate_02_trial_0011_804c8e49a2_seed_42/run/checkpoints
+USE_TRAIN_VAL_SPLIT: True
+VAL_RATIO     : 0.1
+SPLIT_SEED    : 42
+BASE_CHANNELS : 128
+BATCH_SIZE    : 2
+EPOCHS        : 120
+LR            : 0.0006991561452271401
+MIN_LR        : 5.0237973942179794e-05
+W_LPIPS       : 0.08
+BEST_METRIC   : psnr
+RESUME        : True
+RESUME_CKPT   : last.pth
+TRAIN_LOG_INTERVAL: 0
+VAL_LOG_INTERVAL  : 0
+WARNING: When changing train/validation split settings, use RETINEX_TAPETUM_RESUME=0 for a clean experimental run.
+DRIVE_CKPT_MIRROR_DIR: /content/drive/MyDrive/TAPETUM/HyperparameterSearch/lol_v2_synthetic/final_confirmation/hpo_candidate_02_trial_0011_804c8e49a2/seed_42
+Split manifest: /content/drive/MyDrive/TAPETUM/HyperparameterSearch/lol_v2_synthetic/split_manifest.json
+Train split images: 810
+Val split images: 90
+[Dataset] /content/drive/MyDrive/TAPETUM/datasets/LOL-v2/Synthetic/Train/Low
+Mode: train
+Split file_list: yes
+Paired samples: 810
+[Dataset] /content/drive/MyDrive/TAPETUM/datasets/LOL-v2/Synthetic/Train/Low
+Mode: val/test
+Split file_list: yes
+Paired samples: 90
+Train batches: 405
+Val batches  : 90
+Trainable params: 536,463
+Setting up [LPIPS] perceptual loss: trunk [alex], v[0.1], spatial [off]
+/usr/local/lib/python3.12/dist-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.12/dist-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=AlexNet_Weights.IMAGENET1K_V1`. You can also use `weights=AlexNet_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+Downloading: "https://download.pytorch.org/models/alexnet-owt-7be5be79.pth" to /root/.cache/torch/hub/checkpoints/alexnet-owt-7be5be79.pth
+
+  0%|          | 0.00/233M [00:00<?, ?B/s]
+  4%|▎         | 8.25M/233M [00:00<00:02, 86.1MB/s]
+ 12%|█▏        | 28.1M/233M [00:00<00:01, 158MB/s] 
+ 20%|██        | 47.2M/233M [00:00<00:01, 177MB/s]
+ 28%|██▊       | 66.4M/233M [00:00<00:00, 186MB/s]
+ 37%|███▋      | 85.2M/233M [00:00<00:00, 190MB/s]
+ 45%|████▍     | 104M/233M [00:00<00:00, 191MB/s] 
+ 53%|█████▎    | 123M/233M [00:00<00:00, 193MB/s]
+ 61%|██████    | 141M/233M [00:00<00:00, 191MB/s]
+ 68%|██████▊   | 159M/233M [00:00<00:00, 191MB/s]
+ 76%|███████▋  | 178M/233M [00:01<00:00, 192MB/s]
+ 85%|████████▍ | 197M/233M [00:01<00:00, 194MB/s]
+ 93%|█████████▎| 216M/233M [00:01<00:00, 194MB/s]
+100%|██████████| 233M/233M [00:01<00:00, 188MB/s]
+Loading model from: /usr/local/lib/python3.12/dist-packages/lpips/weights/v0.1/alex.pth
+LPIPS training loss: enabled (alex, weight=0.08)
+Loading resume checkpoint: /content/retinextapetum_hpo/projects/lol_v2_synthetic/final/hpo_candidate_02_trial_0011_804c8e49a2_seed_42/run/checkpoints/last.pth
+Resume state -> completed_epoch: 101, next_epoch: 102, best_epoch: 88, best_psnr: 25.3251, no_improve: 13
+
+===== TRAIN START =====
+
+Epoch 102/120 train start
+Epoch 102/120 validation start
+Epoch 102 | train_loss 0.1793 | val_loss 0.1818 | val_psnr 24.36 | val_lpips 0.0423 | val_lpips_full 0.0552 | edge 0.0188 | dark_noise 0.0086 | chroma 0.0440 | decomp 0.0540 | smooth_enh 0.0190 | lambda_mean 0.8268 | lambda_min 0.0076 | lambda_max 1.2587
+
+Epoch 103/120 train start
+Epoch 103/120 validation start
+Epoch 103 | train_loss 0.1805 | val_loss 0.1829 | val_psnr 25.14 | val_lpips 0.0415 | val_lpips_full 0.0548 | edge 0.0189 | dark_noise 0.0088 | chroma 0.0448 | decomp 0.0617 | smooth_enh 0.0191 | lambda_mean 0.8186 | lambda_min 0.0087 | lambda_max 1.2550
+
+Epoch 104/120 train start
+Epoch 104/120 validation start
+Epoch 104 | train_loss 0.1805 | val_loss 0.1827 | val_psnr 24.52 | val_lpips 0.0422 | val_lpips_full 0.0552 | edge 0.0190 | dark_noise 0.0087 | chroma 0.0442 | decomp 0.0551 | smooth_enh 0.0189 | lambda_mean 0.8253 | lambda_min 0.0078 | lambda_max 1.2560
+
+Epoch 105/120 train start
+Epoch 105/120 validation start
+Epoch 105 | train_loss 0.1789 | val_loss 0.1833 | val_psnr 24.76 | val_lpips 0.0423 | val_lpips_full 0.0555 | edge 0.0190 | dark_noise 0.0087 | chroma 0.0441 | decomp 0.0575 | smooth_enh 0.0193 | lambda_mean 0.8209 | lambda_min 0.0084 | lambda_max 1.2559
+
+Epoch 106/120 train start
+Epoch 106/120 validation start
+Epoch 106 | train_loss 0.1788 | val_loss 0.1809 | val_psnr 24.80 | val_lpips 0.0404 | val_lpips_full 0.0535 | edge 0.0188 | dark_noise 0.0087 | chroma 0.0422 | decomp 0.0567 | smooth_enh 0.0192 | lambda_mean 0.8267 | lambda_min 0.0078 | lambda_max 1.2604
+
+Epoch 107/120 train start
+Epoch 107/120 validation start
+Epoch 107 | train_loss 0.1782 | val_loss 0.1836 | val_psnr 24.49 | val_lpips 0.0439 | val_lpips_full 0.0568 | edge 0.0191 | dark_noise 0.0087 | chroma 0.0449 | decomp 0.0541 | smooth_enh 0.0188 | lambda_mean 0.8256 | lambda_min 0.0081 | lambda_max 1.2566
+
+Epoch 108/120 train start
+Epoch 108/120 validation start
+Epoch 108 | train_loss 0.1776 | val_loss 0.1822 | val_psnr 24.91 | val_lpips 0.0420 | val_lpips_full 0.0548 | edge 0.0188 | dark_noise 0.0087 | chroma 0.0446 | decomp 0.0583 | smooth_enh 0.0189 | lambda_mean 0.8220 | lambda_min 0.0084 | lambda_max 1.2520
+
+Epoch 109/120 train start
+Epoch 109/120 validation start
+Epoch 109 | train_loss 0.1797 | val_loss 0.1823 | val_psnr 24.50 | val_lpips 0.0417 | val_lpips_full 0.0546 | edge 0.0188 | dark_noise 0.0087 | chroma 0.0438 | decomp 0.0553 | smooth_enh 0.0187 | lambda_mean 0.8229 | lambda_min 0.0077 | lambda_max 1.2546
+
+Epoch 110/120 train start
+Epoch 110/120 validation start
+Epoch 110 | train_loss 0.1788 | val_loss 0.1819 | val_psnr 24.65 | val_lpips 0.0417 | val_lpips_full 0.0550 | edge 0.0189 | dark_noise 0.0087 | chroma 0.0436 | decomp 0.0560 | smooth_enh 0.0191 | lambda_mean 0.8256 | lambda_min 0.0082 | lambda_max 1.2599
+
+Epoch 111/120 train start
+Epoch 111/120 validation start
+Epoch 111 | train_loss 0.1788 | val_loss 0.1851 | val_psnr 24.43 | val_lpips 0.0426 | val_lpips_full 0.0556 | edge 0.0190 | dark_noise 0.0087 | chroma 0.0431 | decomp 0.0561 | smooth_enh 0.0189 | lambda_mean 0.8242 | lambda_min 0.0079 | lambda_max 1.2545
+
+Epoch 112/120 train start
+Epoch 112/120 validation start
+Epoch 112 | train_loss 0.1782 | val_loss 0.1853 | val_psnr 25.19 | val_lpips 0.0412 | val_lpips_full 0.0547 | edge 0.0190 | dark_noise 0.0088 | chroma 0.0432 | decomp 0.0632 | smooth_enh 0.0191 | lambda_mean 0.8134 | lambda_min 0.0074 | lambda_max 1.2540
+
+Epoch 113/120 train start
+Epoch 113/120 validation start
+Epoch 113 | train_loss 0.1761 | val_loss 0.1828 | val_psnr 24.79 | val_lpips 0.0411 | val_lpips_full 0.0542 | edge 0.0189 | dark_noise 0.0087 | chroma 0.0426 | decomp 0.0580 | smooth_enh 0.0189 | lambda_mean 0.8229 | lambda_min 0.0094 | lambda_max 1.2555
+
+Epoch 114/120 train start
+Epoch 114/120 validation start
+Epoch 114 | train_loss 0.1778 | val_loss 0.1834 | val_psnr 24.75 | val_lpips 0.0416 | val_lpips_full 0.0549 | edge 0.0189 | dark_noise 0.0087 | chroma 0.0433 | decomp 0.0577 | smooth_enh 0.0190 | lambda_mean 0.8228 | lambda_min 0.0081 | lambda_max 1.2568
+
+Epoch 115/120 train start
+Epoch 115/120 validation start
+Epoch 115 | train_loss 0.1775 | val_loss 0.1809 | val_psnr 24.78 | val_lpips 0.0411 | val_lpips_full 0.0541 | edge 0.0188 | dark_noise 0.0087 | chroma 0.0429 | decomp 0.0569 | smooth_enh 0.0189 | lambda_mean 0.8252 | lambda_min 0.0081 | lambda_max 1.2578
+
+Epoch 116/120 train start
+Epoch 116/120 validation start
+Epoch 116 | train_loss 0.1776 | val_loss 0.1841 | val_psnr 24.78 | val_lpips 0.0422 | val_lpips_full 0.0553 | edge 0.0190 | dark_noise 0.0087 | chroma 0.0436 | decomp 0.0586 | smooth_enh 0.0189 | lambda_mean 0.8220 | lambda_min 0.0086 | lambda_max 1.2547
+
+Epoch 117/120 train start
+Epoch 117/120 validation start
+Epoch 117 | train_loss 0.1780 | val_loss 0.1819 | val_psnr 24.84 | val_lpips 0.0410 | val_lpips_full 0.0540 | edge 0.0189 | dark_noise 0.0087 | chroma 0.0422 | decomp 0.0575 | smooth_enh 0.0189 | lambda_mean 0.8228 | lambda_min 0.0086 | lambda_max 1.2559
+
+Epoch 118/120 train start
+Epoch 118/120 validation start
+Epoch 118 | train_loss 0.1761 | val_loss 0.1836 | val_psnr 24.62 | val_lpips 0.0423 | val_lpips_full 0.0551 | edge 0.0190 | dark_noise 0.0087 | chroma 0.0431 | decomp 0.0562 | smooth_enh 0.0188 | lambda_mean 0.8244 | lambda_min 0.0096 | lambda_max 1.2553
+
+Epoch 119/120 train start
+Epoch 119/120 validation start
+Epoch 119 | train_loss 0.1776 | val_loss 0.1823 | val_psnr 24.95 | val_lpips 0.0407 | val_lpips_full 0.0540 | edge 0.0189 | dark_noise 0.0087 | chroma 0.0434 | decomp 0.0595 | smooth_enh 0.0188 | lambda_mean 0.8207 | lambda_min 0.0088 | lambda_max 1.2549
+
+Epoch 120/120 train start
+Epoch 120/120 validation start
+Epoch 120 | train_loss 0.1760 | val_loss 0.1854 | val_psnr 24.52 | val_lpips 0.0414 | val_lpips_full 0.0548 | edge 0.0191 | dark_noise 0.0088 | chroma 0.0429 | decomp 0.0585 | smooth_enh 0.0189 | lambda_mean 0.8238 | lambda_min 0.0088 | lambda_max 1.2569
+===== TRAIN FINISHED =====
+Best epoch: 88
+Best psnr: 25.325097585743052
+Best PSNR: 25.325097585743052
+Best LPIPS@loss: 0.041920322029747895
+Best LPIPS full: 0.055909248451805775
+Best checkpoint: /content/retinextapetum_hpo/projects/lol_v2_synthetic/final/hpo_candidate_02_trial_0011_804c8e49a2_seed_42/run/checkpoints/best.pth
+Last checkpoint: /content/retinextapetum_hpo/projects/lol_v2_synthetic/final/hpo_candidate_02_trial_0011_804c8e49a2_seed_42/run/checkpoints/last.pth

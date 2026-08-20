@@ -1,0 +1,15 @@
+{
+  "output_high_clip_ratio": 0.00607604674248079,
+  "target_high_clip_ratio": 0.008495752830429516,
+  "output_low_clip_ratio": 0.0,
+  "luminance_mae": 0.08287649820356266,
+  "luminance_bias": 0.0017457671030728227,
+  "rgb_mae": 0.08696391905887403,
+  "red_bias": -0.0008125006013711834,
+  "green_bias": 0.0018126456593365772,
+  "blue_bias": 0.008616358412168203,
+  "lambda_utilization": 0.863492571131125,
+  "validation_images": 69,
+  "checkpoint_epoch": 27,
+  "lambda_max_configured": 2.1
+}

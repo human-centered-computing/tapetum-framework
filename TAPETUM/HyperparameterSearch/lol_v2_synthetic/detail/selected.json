@@ -1,0 +1,100 @@
+{
+  "dataset": {
+    "key": "lol_v2_synthetic",
+    "data_name": "LOL-v2",
+    "data_variant": "Synthetic",
+    "relative_root": "LOL-v2/Synthetic",
+    "val_ratio": 0.1,
+    "val_max": null,
+    "group_block_size": null,
+    "stage_epochs": {
+      "optimizer": 20,
+      "illumination": 25,
+      "fidelity": 30,
+      "detail": 35
+    },
+    "budget_rationale": "The cumulative epoch targets were prespecified for this dataset profile before validation-based candidate comparison."
+  },
+  "stage": "detail",
+  "study_name": "retinextapetum_lol_v2_synthetic_detail_bc39dfe3ae",
+  "study_context": "bc39dfe3ae",
+  "analysis_generated_search_space": {
+    "W_COLOR": {
+      "type": "float",
+      "low": 0.02,
+      "high": 0.14,
+      "log": false,
+      "explanation": "Observed channel-balance shift or target chroma justifies searching global color consistency.",
+      "step": 0.02
+    },
+    "W_CHROMA": {
+      "type": "float",
+      "low": 0.04,
+      "high": 0.18,
+      "log": false,
+      "explanation": "Observed color/chroma demand justifies searching luminance-normalized chroma consistency.",
+      "step": 0.02
+    },
+    "W_EDGE": {
+      "type": "float",
+      "low": 0.0,
+      "high": 0.08,
+      "log": false,
+      "explanation": "The normal-light targets contain more or stronger edges than the low-light inputs.",
+      "step": 0.01
+    },
+    "W_DARK_NOISE": {
+      "type": "float",
+      "low": 0.0,
+      "high": 0.05,
+      "log": false,
+      "explanation": "Dark-region coverage or high-frequency activity justifies searching the chroma-noise penalty.",
+      "step": 0.01
+    },
+    "W_ATTN": {
+      "type": "float",
+      "low": 0.001,
+      "high": 0.012,
+      "log": false,
+      "explanation": "The amount or spatial variation of darkness justifies tuning attention regularization.",
+      "step": 0.001
+    }
+  },
+  "target_completed_trials": 14,
+  "actual_completed_trials": 14,
+  "selected_trial": 7,
+  "psnr": 23.185153247699482,
+  "ssim": 0.916875856452518,
+  "lpips": 0.056549488421943454,
+  "selection_rule": {
+    "psnr_tolerance_db": 0.15,
+    "ssim_tolerance": 0.002,
+    "then": "minimum_lpips"
+  },
+  "effective_params": {
+    "BATCH_SIZE": 2,
+    "CROP_SIZE": 256,
+    "BASE_CHANNELS": 128,
+    "W_L1": 1.0,
+    "W_RECON_LOW": 1.0,
+    "W_RECON_HIGH": 0.85,
+    "W_REFLECT": 0.06,
+    "W_SMOOTH_LOW": 0.08,
+    "W_SMOOTH_HIGH": 0.08,
+    "W_SMOOTH_ENH": 0.06,
+    "LR": 0.0006991561452271401,
+    "MIN_LR": 5.0237973942179794e-05,
+    "GRAD_CLIP_NORM": 8.0,
+    "LAMBDA_MAX": 1.3,
+    "W_SSIM": 0.65,
+    "W_LPIPS": 0.08,
+    "W_COLOR": 0.13999999999999999,
+    "W_CHROMA": 0.12,
+    "W_EDGE": 0.0,
+    "W_DARK_NOISE": 0.05,
+    "W_ATTN": 0.007
+  },
+  "progressive_stage_resume": true,
+  "selected_checkpoint": "/content/drive/MyDrive/TAPETUM/HyperparameterSearch/lol_v2_synthetic/detail/selected_last.pth",
+  "selected_checkpoint_epoch": 35
+}

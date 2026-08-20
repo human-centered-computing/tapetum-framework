@@ -1,0 +1,15 @@
+
+
+===== PROCESS START 2026-08-10T11:11:31+00:00 =====
+COMMAND: /usr/bin/python3 -u lambda_boundary_diagnostics.py
+Total paired train images: 689
+Train split images: 620
+Val split images: 69
+VAL_RATIO: 0.10
+SPLIT_SEED: 42
+[Dataset] /content/drive/MyDrive/TAPETUM/datasets/LOL-v2/Real_captured/Train/Low
+Mode: val/test
+Split file_list: yes
+Paired samples: 69
+BOUNDARY_DIAGNOSTICS_JSON={"blue_bias": -0.006807830977672036, "checkpoint_epoch": 30, "green_bias": -0.011515948174021922, "lambda_max_configured": 2.0, "lambda_utilization": 0.8637318153312241, "luminance_bias": -0.012364661450956719, "luminance_mae": 0.08249610554480898, "output_high_clip_ratio": 0.0047482891252556055, "output_low_clip_ratio": 0.0, "red_bias": -0.01710691356751393, "rgb_mae": 0.08746965291599433, "target_high_clip_ratio": 0.008495752830429516, "validation_images": 69}
+===== PROCESS END 2026-08-10T11:11:45+00:00 | return_code=0 =====

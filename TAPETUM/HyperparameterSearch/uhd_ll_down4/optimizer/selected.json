@@ -1,0 +1,83 @@
+{
+  "dataset": {
+    "key": "uhd_ll_down4",
+    "data_name": "UHD-LL down4",
+    "data_variant": null,
+    "relative_root": "UHD-LL down4",
+    "val_ratio": 0.05,
+    "val_max": 100,
+    "group_block_size": 25,
+    "stage_epochs": {
+      "optimizer": 8,
+      "illumination": 10,
+      "fidelity": 12,
+      "detail": 15
+    },
+    "budget_rationale": "UHD-LL down4 contains 2,000 paired training images. With a five-percent validation target, approximately 1,900 pairs remain for optimization; therefore, shorter epoch targets provide an optimizer-step budget comparable to the longer schedules used for the smaller LOL datasets."
+  },
+  "stage": "optimizer",
+  "study_name": "retinextapetum_uhd_ll_down4_optimizer_0be7616ef1",
+  "study_context": "0be7616ef1",
+  "analysis_generated_search_space": {
+    "LR": {
+      "type": "float",
+      "low": 0.0001,
+      "high": 0.0008,
+      "log": true,
+      "explanation": "The dataset has a moderate enhancement/noise profile and a standard range around the source baseline is appropriate."
+    },
+    "MIN_LR_RATIO": {
+      "type": "float",
+      "low": 0.02,
+      "high": 0.15,
+      "log": true,
+      "explanation": "The minimum learning rate is searched as a ratio of LR so the cosine schedule remains internally consistent."
+    },
+    "GRAD_CLIP_NORM": {
+      "type": "categorical",
+      "choices": [
+        3.0,
+        5.0,
+        8.0
+      ],
+      "explanation": "Gradient clipping candidates are selected from the observed enhancement severity to control unstable updates."
+    }
+  },
+  "target_completed_trials": 10,
+  "actual_completed_trials": 10,
+  "selected_trial": 8,
+  "psnr": 25.5437438087198,
+  "ssim": 0.9101631790399551,
+  "lpips": 0.06312475778194594,
+  "selection_rule": {
+    "psnr_tolerance_db": 0.15,
+    "ssim_tolerance": 0.002,
+    "then": "minimum_lpips"
+  },
+  "effective_params": {
+    "BATCH_SIZE": 2,
+    "CROP_SIZE": 256,
+    "BASE_CHANNELS": 128,
+    "W_L1": 1.0,
+    "W_RECON_LOW": 1.0,
+    "W_RECON_HIGH": 0.85,
+    "W_REFLECT": 0.06,
+    "W_SMOOTH_LOW": 0.08,
+    "W_SMOOTH_HIGH": 0.08,
+    "W_SMOOTH_ENH": 0.06,
+    "LR": 0.0007873952428969634,
+    "MIN_LR": 1.667796398728883e-05,
+    "GRAD_CLIP_NORM": 8.0,
+    "LAMBDA_MAX": 1.35,
+    "W_SSIM": 0.35,
+    "W_LPIPS": 0.08,
+    "W_COLOR": 0.06,
+    "W_CHROMA": 0.12,
+    "W_EDGE": 0.04,
+    "W_DARK_NOISE": 0.01,
+    "W_ATTN": 0.012
+  },
+  "progressive_stage_resume": true,
+  "selected_checkpoint": "/content/drive/MyDrive/TAPETUM/HyperparameterSearch/uhd_ll_down4/optimizer/selected_last.pth",
+  "selected_checkpoint_epoch": 8
+}

@@ -1,0 +1,76 @@
+{
+  "dataset": {
+    "key": "lol_v2_synthetic",
+    "data_name": "LOL-v2",
+    "data_variant": "Synthetic",
+    "relative_root": "LOL-v2/Synthetic",
+    "val_ratio": 0.1,
+    "val_max": null,
+    "group_block_size": null,
+    "stage_epochs": {
+      "optimizer": 20,
+      "illumination": 25,
+      "fidelity": 30,
+      "detail": 35
+    },
+    "budget_rationale": "The cumulative epoch targets were prespecified for this dataset profile before validation-based candidate comparison."
+  },
+  "stage": "fidelity",
+  "study_name": "retinextapetum_lol_v2_synthetic_fidelity_eddd93551a",
+  "study_context": "eddd93551a",
+  "analysis_generated_search_space": {
+    "W_SSIM": {
+      "type": "float",
+      "low": 0.3,
+      "high": 0.75,
+      "log": false,
+      "explanation": "The SSIM-loss range is raised because target images show substantial structural/detail demand.",
+      "step": 0.05
+    },
+    "W_LPIPS": {
+      "type": "float",
+      "low": 0.02,
+      "high": 0.12,
+      "log": false,
+      "explanation": "Perceptual weight is searched independently because LPIPS is also measured by a separate metric network.",
+      "step": 0.01
+    }
+  },
+  "target_completed_trials": 12,
+  "actual_completed_trials": 12,
+  "selected_trial": 2,
+  "psnr": 22.882560041323845,
+  "ssim": 0.912777246369256,
+  "lpips": 0.06202720599249005,
+  "selection_rule": {
+    "psnr_tolerance_db": 0.15,
+    "ssim_tolerance": 0.002,
+    "then": "minimum_lpips"
+  },
+  "effective_params": {
+    "BATCH_SIZE": 2,
+    "CROP_SIZE": 256,
+    "BASE_CHANNELS": 128,
+    "W_L1": 1.0,
+    "W_RECON_LOW": 1.0,
+    "W_RECON_HIGH": 0.85,
+    "W_REFLECT": 0.06,
+    "W_SMOOTH_LOW": 0.08,
+    "W_SMOOTH_HIGH": 0.08,
+    "W_SMOOTH_ENH": 0.06,
+    "LR": 0.0006991561452271401,
+    "MIN_LR": 5.0237973942179794e-05,
+    "GRAD_CLIP_NORM": 8.0,
+    "LAMBDA_MAX": 1.3,
+    "W_SSIM": 0.65,
+    "W_LPIPS": 0.08,
+    "W_COLOR": 0.06,
+    "W_CHROMA": 0.12,
+    "W_EDGE": 0.04,
+    "W_DARK_NOISE": 0.01,
+    "W_ATTN": 0.012
+  },
+  "progressive_stage_resume": true,
+  "selected_checkpoint": "/content/drive/MyDrive/TAPETUM/HyperparameterSearch/lol_v2_synthetic/fidelity/selected_last.pth",
+  "selected_checkpoint_epoch": 30
+}

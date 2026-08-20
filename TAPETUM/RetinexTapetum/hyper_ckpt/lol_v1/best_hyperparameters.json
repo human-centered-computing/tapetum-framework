@@ -1,0 +1,71 @@
+{
+  "dataset": {
+    "key": "lol_v1",
+    "data_name": "LOL-v1",
+    "data_variant": null,
+    "relative_root": "LOL-v1",
+    "val_ratio": 0.1,
+    "val_max": null,
+    "group_block_size": null,
+    "stage_epochs": {
+      "optimizer": 25,
+      "illumination": 30,
+      "fidelity": 35,
+      "detail": 40
+    },
+    "budget_rationale": "The cumulative epoch targets were prespecified for this dataset profile before validation-based candidate comparison."
+  },
+  "selected_candidate": {
+    "candidate": "hpo_candidate_02_trial_0002_f1bfd5bf87",
+    "is_source_baseline": false,
+    "psnr": 21.90742351139461,
+    "psnr_std": 0.07729875583646746,
+    "ssim": 0.8652237322595385,
+    "ssim_std": 0.0022182341306913613,
+    "lpips": 0.12557528276617327,
+    "lpips_std": 0.00549731751365604,
+    "seeds": [
+      42,
+      123,
+      3407
+    ]
+  },
+  "hyperparameters": {
+    "BATCH_SIZE": 2,
+    "CROP_SIZE": 256,
+    "BASE_CHANNELS": 128,
+    "W_L1": 1.0,
+    "W_RECON_LOW": 1.0,
+    "W_RECON_HIGH": 0.85,
+    "W_REFLECT": 0.06,
+    "W_SMOOTH_LOW": 0.08,
+    "W_SMOOTH_HIGH": 0.08,
+    "W_SMOOTH_ENH": 0.06,
+    "LR": 0.0006906348306112025,
+    "MIN_LR": 1.4628463833389233e-05,
+    "GRAD_CLIP_NORM": 3.0,
+    "LAMBDA_MAX": 1.8,
+    "W_SSIM": 0.5,
+    "W_LPIPS": 0.1,
+    "W_COLOR": 0.04,
+    "W_CHROMA": 0.04,
+    "W_EDGE": 0.07,
+    "W_DARK_NOISE": 0.03,
+    "W_ATTN": 0.009000000000000001
+  },
+  "final_epochs": 120,
+  "final_seeds": [
+    42,
+    123,
+    3407
+  ],
+  "source_baseline_included": true,
+  "hpo_candidates_requested": 2,
+  "expected_trainable_params": 536463,
+  "lpips_resize": 512,
+  "selection_rule": {
+    "psnr_tolerance_db": 0.15,
+    "ssim_tolerance": 0.002,
+    "then": "minimum_mean_lpips"
+  }
+}

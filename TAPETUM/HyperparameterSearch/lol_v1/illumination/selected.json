@@ -1,0 +1,68 @@
+{
+  "dataset": {
+    "key": "lol_v1",
+    "data_name": "LOL-v1",
+    "data_variant": null,
+    "relative_root": "LOL-v1",
+    "val_ratio": 0.1,
+    "val_max": null,
+    "group_block_size": null,
+    "stage_epochs": {
+      "optimizer": 25,
+      "illumination": 30,
+      "fidelity": 35,
+      "detail": 40
+    },
+    "budget_rationale": "The cumulative epoch targets were prespecified for this dataset profile before validation-based candidate comparison."
+  },
+  "stage": "illumination",
+  "study_name": "retinextapetum_lol_v1_illumination_385548ff38",
+  "study_context": "385548ff38",
+  "analysis_generated_search_space": {
+    "LAMBDA_MAX": {
+      "type": "float",
+      "low": 1.25,
+      "high": 2.0,
+      "log": false,
+      "explanation": "The normal-light targets are much brighter than the inputs; the illumination-amplification ceiling therefore needs a strong range.",
+      "step": 0.05
+    }
+  },
+  "target_completed_trials": 10,
+  "actual_completed_trials": 10,
+  "selected_trial": 3,
+  "psnr": 21.400043765749313,
+  "ssim": 0.8507179530958334,
+  "lpips": 0.11235125533615549,
+  "selection_rule": {
+    "psnr_tolerance_db": 0.15,
+    "ssim_tolerance": 0.002,
+    "then": "minimum_lpips"
+  },
+  "effective_params": {
+    "BATCH_SIZE": 2,
+    "CROP_SIZE": 256,
+    "BASE_CHANNELS": 128,
+    "W_L1": 1.0,
+    "W_RECON_LOW": 1.0,
+    "W_RECON_HIGH": 0.85,
+    "W_REFLECT": 0.06,
+    "W_SMOOTH_LOW": 0.08,
+    "W_SMOOTH_HIGH": 0.08,
+    "W_SMOOTH_ENH": 0.06,
+    "LR": 0.0006906348306112025,
+    "MIN_LR": 1.4628463833389233e-05,
+    "GRAD_CLIP_NORM": 3.0,
+    "LAMBDA_MAX": 1.8,
+    "W_SSIM": 0.35,
+    "W_LPIPS": 0.08,
+    "W_COLOR": 0.06,
+    "W_CHROMA": 0.12,
+    "W_EDGE": 0.04,
+    "W_DARK_NOISE": 0.01,
+    "W_ATTN": 0.012
+  },
+  "progressive_stage_resume": true,
+  "selected_checkpoint": "/content/drive/MyDrive/TAPETUM/HyperparameterSearch/lol_v1/illumination/selected_last.pth",
+  "selected_checkpoint_epoch": 30
+}

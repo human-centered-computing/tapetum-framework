@@ -1,0 +1,312 @@
+{
+  "analysis": {
+    "dataset_key": "lol_v2_real",
+    "data_name": "LOL-v2",
+    "data_variant": "Real_captured",
+    "data_root": "/content/drive/MyDrive/TAPETUM/datasets/LOL-v2/Real_captured",
+    "analysis_scope": "fixed training partition only",
+    "paired_count": 689,
+    "train_partition_count": 620,
+    "validation_partition_count": 69,
+    "val_ratio": 0.1,
+    "val_max": null,
+    "group_block_size": null,
+    "analyzed_pair_count": 256,
+    "analysis_max_pairs": 256,
+    "analysis_thumbnail_size": 256,
+    "metrics": {
+      "width": {
+        "mean": 600.0,
+        "median": 600.0,
+        "std": 0.0,
+        "p10": 600.0,
+        "p90": 600.0
+      },
+      "height": {
+        "mean": 400.0,
+        "median": 400.0,
+        "std": 0.0,
+        "p10": 400.0,
+        "p90": 400.0
+      },
+      "pair_size_mismatch": {
+        "mean": 0.0,
+        "median": 0.0,
+        "std": 0.0,
+        "p10": 0.0,
+        "p90": 0.0
+      },
+      "low_luminance_mean": {
+        "mean": 0.061570040598780906,
+        "median": 0.05595994554460049,
+        "std": 0.04101382109668961,
+        "p10": 0.018383669666945934,
+        "p90": 0.11416986584663391
+      },
+      "high_luminance_mean": {
+        "mean": 0.4468914014287293,
+        "median": 0.44641104340553284,
+        "std": 0.10728912426858273,
+        "p10": 0.30825570225715637,
+        "p90": 0.5824357271194458
+      },
+      "brightness_gain": {
+        "mean": 11.92022806731984,
+        "median": 7.707780361175537,
+        "std": 13.58094105996435,
+        "p10": 3.733035445213318,
+        "p90": 24.234627723693848
+      },
+      "dark_pixel_ratio": {
+        "mean": 0.9323898226197003,
+        "median": 0.9957168311403508,
+        "std": 0.14373476646682068,
+        "p10": 0.763374908625731,
+        "p90": 1.0
+      },
+      "shadow_pixel_ratio": {
+        "mean": 0.9871407670584339,
+        "median": 1.0,
+        "std": 0.055430781697216845,
+        "p10": 0.9768937317251463,
+        "p90": 1.0
+      },
+      "target_clip_ratio": {
+        "mean": 0.0029362014859740503,
+        "median": 0.0,
+        "std": 0.010922203364726732,
+        "p10": 0.0,
+        "p90": 0.003255208333333333
+      },
+      "low_contrast": {
+        "mean": 0.03519094036164461,
+        "median": 0.02929061371833086,
+        "std": 0.023484614256500152,
+        "p10": 0.01636804360896349,
+        "p90": 0.05724886618554592
+      },
+      "high_contrast": {
+        "mean": 0.1829018185962923,
+        "median": 0.1795446053147316,
+        "std": 0.04691655367138583,
+        "p10": 0.12517866119742393,
+        "p90": 0.2460915818810463
+      },
+      "low_edge_strength": {
+        "mean": 0.007127288194169523,
+        "median": 0.005369642982259393,
+        "std": 0.0043984669326927305,
+        "p10": 0.0025247103767469525,
+        "p90": 0.013824498280882835
+      },
+      "high_edge_strength": {
+        "mean": 0.022907064249011455,
+        "median": 0.02131105400621891,
+        "std": 0.009288763861628304,
+        "p10": 0.012490750290453434,
+        "p90": 0.03520697541534901
+      },
+      "detail_gain": {
+        "mean": 4.427652246377753,
+        "median": 3.991361775135612,
+        "std": 2.8878216824850105,
+        "p10": 1.3845960803597857,
+        "p90": 7.943739635383855
+      },
+      "color_shift": {
+        "mean": 0.1137575653847307,
+        "median": 0.09054384753108025,
+        "std": 0.09566587149811426,
+        "p10": 0.013268083333969116,
+        "p90": 0.24063727259635925
+      },
+      "target_chroma_strength": {
+        "mean": 0.04948646699449455,
+        "median": 0.04648143798112869,
+        "std": 0.028032968056689835,
+        "p10": 0.01928251702338457,
+        "p90": 0.08881797268986702
+      },
+      "dark_noise_proxy": {
+        "mean": 0.004980821723847839,
+        "median": 0.002779519185423851,
+        "std": 0.00451039781178223,
+        "p10": 0.000750209583202377,
+        "p90": 0.0118529899045825
+      },
+      "spatial_darkness_variation": {
+        "mean": 0.02094704466882155,
+        "median": 0.016099331847493233,
+        "std": 0.016667037564245087,
+        "p10": 0.008306530878589395,
+        "p90": 0.03792540924788303
+      }
+    },
+    "created_at": "2026-08-12T14:28:14"
+  },
+  "adaptive_search_plan": {
+    "stages": {
+      "optimizer": {
+        "LR": {
+          "type": "float",
+          "low": 0.00012,
+          "high": 0.0007,
+          "log": true,
+          "explanation": "The dataset requires strong enhancement or contains substantial dark-region activity. The range covers conservative updates and the known source-profile baseline."
+        },
+        "MIN_LR_RATIO": {
+          "type": "float",
+          "low": 0.02,
+          "high": 0.15,
+          "log": true,
+          "explanation": "The minimum learning rate is searched as a ratio of LR so the cosine schedule remains internally consistent."
+        },
+        "GRAD_CLIP_NORM": {
+          "type": "categorical",
+          "choices": [
+            1.0,
+            3.0,
+            5.0
+          ],
+          "explanation": "Gradient clipping candidates are selected from the observed enhancement severity to control unstable updates."
+        }
+      },
+      "illumination": {
+        "LAMBDA_MAX": {
+          "type": "float",
+          "low": 1.25,
+          "high": 2.0,
+          "log": false,
+          "explanation": "The normal-light targets are much brighter than the inputs; the illumination-amplification ceiling therefore needs a strong range.",
+          "step": 0.05
+        }
+      },
+      "fidelity": {
+        "W_SSIM": {
+          "type": "float",
+          "low": 0.3,
+          "high": 0.75,
+          "log": false,
+          "explanation": "The SSIM-loss range is raised because target images show substantial structural/detail demand.",
+          "step": 0.05
+        },
+        "W_LPIPS": {
+          "type": "float",
+          "low": 0.02,
+          "high": 0.12,
+          "log": false,
+          "explanation": "Perceptual weight is searched independently because LPIPS is also measured by a separate metric network.",
+          "step": 0.01
+        }
+      },
+      "detail": {
+        "W_COLOR": {
+          "type": "float",
+          "low": 0.02,
+          "high": 0.14,
+          "log": false,
+          "explanation": "Observed channel-balance shift or target chroma justifies searching global color consistency.",
+          "step": 0.02
+        },
+        "W_CHROMA": {
+          "type": "float",
+          "low": 0.04,
+          "high": 0.18,
+          "log": false,
+          "explanation": "Observed color/chroma demand justifies searching luminance-normalized chroma consistency.",
+          "step": 0.02
+        },
+        "W_EDGE": {
+          "type": "float",
+          "low": 0.0,
+          "high": 0.08,
+          "log": false,
+          "explanation": "The normal-light targets contain more or stronger edges than the low-light inputs.",
+          "step": 0.01
+        },
+        "W_DARK_NOISE": {
+          "type": "float",
+          "low": 0.0,
+          "high": 0.05,
+          "log": false,
+          "explanation": "Dark-region coverage or high-frequency activity justifies searching the chroma-noise penalty.",
+          "step": 0.01
+        },
+        "W_ATTN": {
+          "type": "float",
+          "low": 0.001,
+          "high": 0.012,
+          "log": false,
+          "explanation": "The amount or spatial variation of darkness justifies tuning attention regularization.",
+          "step": 0.001
+        }
+      }
+    },
+    "searched_parameters": [
+      "GRAD_CLIP_NORM",
+      "LAMBDA_MAX",
+      "LR",
+      "MIN_LR_RATIO",
+      "W_ATTN",
+      "W_CHROMA",
+      "W_COLOR",
+      "W_DARK_NOISE",
+      "W_EDGE",
+      "W_LPIPS",
+      "W_SSIM"
+    ],
+    "fixed_parameters": [
+      "BASE_CHANNELS",
+      "BATCH_SIZE",
+      "CROP_SIZE",
+      "W_L1",
+      "W_RECON_HIGH",
+      "W_RECON_LOW",
+      "W_REFLECT",
+      "W_SMOOTH_ENH",
+      "W_SMOOTH_HIGH",
+      "W_SMOOTH_LOW"
+    ],
+    "decision_flags": {
+      "severe_enhancement": true,
+      "large_dataset": false,
+      "noisy_dataset": false,
+      "structure_demand": true,
+      "color_search": true,
+      "edge_search": true,
+      "noise_search": true,
+      "attention_search": true
+    },
+    "decision_explanations": [
+      "W_COLOR and W_CHROMA enabled by color statistics.",
+      "W_EDGE enabled by measured detail demand.",
+      "W_DARK_NOISE enabled by darkness/noise statistics.",
+      "W_ATTN enabled by spatial darkness statistics."
+    ]
+  },
+  "immutable_values": {
+    "BATCH_SIZE": 2,
+    "CROP_SIZE": 256,
+    "BASE_CHANNELS": 128,
+    "W_L1": 1.0,
+    "W_RECON_LOW": 1.0,
+    "W_RECON_HIGH": 0.85,
+    "W_REFLECT": 0.06,
+    "W_SMOOTH_LOW": 0.08,
+    "W_SMOOTH_HIGH": 0.08,
+    "W_SMOOTH_ENH": 0.06
+  },
+  "mutable_baseline_values": {
+    "LR": 0.00046948014087030786,
+    "MIN_LR": 2.12826357198832e-05,
+    "GRAD_CLIP_NORM": 3.0,
+    "LAMBDA_MAX": 1.35,
+    "W_SSIM": 0.35,
+    "W_LPIPS": 0.08,
+    "W_COLOR": 0.06,
+    "W_CHROMA": 0.12,
+    "W_EDGE": 0.04,
+    "W_DARK_NOISE": 0.01,
+    "W_ATTN": 0.012
+  }
+}
