@@ -1,0 +1,8 @@
+QUALITY TABLE ROW
+RetinexTapetum (Ours) & 0.5365 & 7.94 & 24.52 & 0.915 & 0.089 \\
+
+EFFICIENCY TABLE ROW
+RetinexTapetum (Ours) & 0.5365 & 72.35 & 876.09 & 7.94 \\
+
+INTERNAL BEHAVIOR TABLE ROW
+RetinexTapetum & 0.7659 & 1.0000 & 1.0119 & 1.0119 & 2.0119 \\

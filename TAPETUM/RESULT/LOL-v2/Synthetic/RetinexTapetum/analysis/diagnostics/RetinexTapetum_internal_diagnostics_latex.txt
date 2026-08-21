@@ -1,0 +1,10 @@
+Sigmoid tapetum response T(x) & 1.0000 & 1.0000 \\
+Darkness-regulated response Td(x)=D(x)*T(x) & 0.6489 & 0.7357 \\
+Td(x) in dark regions & 0.7473 & 0.7667 \\
+Td(x) in bright regions & 0.0906 & 0.0780 \\
+Lambda(x) in dark regions & 0.9715 & 0.9966 \\
+Lambda(x) in bright regions & 0.1177 & 0.1014 \\
+Effective boost Lambda(x)*T(x) in dark regions & 0.9715 & 0.9966 \\
+Effective boost Lambda(x)*T(x) in bright regions & 0.1177 & 0.1014 \\
+Corr.(Td(x), darkness) & 1.0000 & 1.0000 \\
+Corr.(Lambda(x)*T(x), darkness) & 1.0000 & 1.0000 \\

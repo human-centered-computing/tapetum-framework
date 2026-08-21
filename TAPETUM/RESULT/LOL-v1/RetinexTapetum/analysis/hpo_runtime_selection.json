@@ -1,0 +1,48 @@
+{
+  "dataset_selection": "LOL-v1",
+  "effective_profile_selection": "LOL-v1",
+  "same_dataset_and_checkpoint": true,
+  "output_routing_mode": "same_dataset_checkpoint_to_RESULT",
+  "result_directory": "/content/drive/MyDrive/TAPETUM/RESULT/LOL-v1/RetinexTapetum/results/Test",
+  "hpo_dataset_key": "lol_v1",
+  "best_hyperparameters_json": "/content/drive/MyDrive/TAPETUM/HyperparameterSearch/lol_v1/final_confirmation/best_hyperparameters.json",
+  "winning_candidate": "hpo_candidate_02_trial_0002_f1bfd5bf87",
+  "selected_seed": 42,
+  "selected_checkpoint": "/content/drive/MyDrive/TAPETUM/HyperparameterSearch/lol_v1/final_confirmation/hpo_candidate_02_trial_0002_f1bfd5bf87/seed_42/best.pth",
+  "selected_seed_validation_metrics": {
+    "psnr": 22.009026048499702,
+    "ssim": 0.8681432579954466,
+    "lpips": 0.11854713984454672
+  },
+  "applied_config_overrides": {
+    "BATCH_SIZE": 2,
+    "CROP_SIZE": 256,
+    "BASE_CHANNELS": 128,
+    "W_L1": 1.0,
+    "W_RECON_LOW": 1.0,
+    "W_RECON_HIGH": 0.85,
+    "W_REFLECT": 0.06,
+    "W_SMOOTH_LOW": 0.08,
+    "W_SMOOTH_HIGH": 0.08,
+    "W_SMOOTH_ENH": 0.06,
+    "LR": 0.0006906348306112025,
+    "MIN_LR": 1.4628463833389233e-05,
+    "GRAD_CLIP_NORM": 3.0,
+    "LAMBDA_MAX": 1.8,
+    "W_SSIM": 0.5,
+    "W_LPIPS": 0.1,
+    "W_COLOR": 0.04,
+    "W_CHROMA": 0.04,
+    "W_EDGE": 0.07,
+    "W_DARK_NOISE": 0.03,
+    "W_ATTN": 0.009000000000000001,
+    "EPOCHS": 120,
+    "SEED": 42
+  },
+  "selection_rule": {
+    "psnr_tolerance_db": 0.15,
+    "ssim_tolerance": 0.002,
+    "then": "minimum_mean_lpips"
+  },
+  "methodological_note": "The winning configuration is taken from the completed multi-seed final confirmation. One checkpoint is selected only from that winning candidate by applying the declared PSNR and SSIM tolerance filters followed by minimum LPIPS. Test metrics are not used for checkpoint selection."
+}

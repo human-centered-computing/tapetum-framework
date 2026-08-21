@@ -1,0 +1,2 @@
+dataset,dataset_variant,matched,dark_threshold,bright_threshold,gain_mean,gain_median,gain_dark_mean,gain_bright_mean,dark_pixels_total,bright_pixels_total
+LOL-v2,Real_captured,100,0.5,0.2,2.664627262353897,2.6950860023498535,2.6663407015800478,1.2572739166872842,23935124,2430

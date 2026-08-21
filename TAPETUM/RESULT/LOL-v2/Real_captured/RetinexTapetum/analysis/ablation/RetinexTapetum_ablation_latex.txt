@@ -1,0 +1,8 @@
+Full RetinexTapetum & 19.92 & 0.843 & 0.126 \\
+Retinex base only & 12.92 & 0.563 & 0.238 \\
+w/o residual refinement & 22.67 & 0.858 & 0.120 \\
+w/o tapetum update & 16.44 & 0.748 & 0.191 \\
+w/o attention modulation & 19.72 & 0.840 & 0.131 \\
+w/o spatial amplification & 16.44 & 0.748 & 0.191 \\
+w/o high-frequency cue & 19.92 & 0.843 & 0.126 \\
+w/o darkness gate & 16.24 & 0.801 & 0.156 \\

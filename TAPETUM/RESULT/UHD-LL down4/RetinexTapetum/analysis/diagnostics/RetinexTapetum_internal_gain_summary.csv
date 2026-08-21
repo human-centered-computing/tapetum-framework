@@ -1,0 +1,2 @@
+dataset,dataset_variant,matched,dark_threshold,bright_threshold,gain_mean,gain_median,gain_dark_mean,gain_bright_mean,dark_pixels_total,bright_pixels_total
+UHD-LL down4,,150,0.5,0.2,1.85416876633962,1.9479916095733643,1.8683082556724548,1.1281974605611853,73509932,216582
