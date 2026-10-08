@@ -1781,7 +1781,7 @@ def evaluate_internal_diagnostics(
 
     table_rows = [
         {
-            "quantity": "Sigmoid tapetum response T(x)",
+            "quantity": "Tapetum Attention Map T(x)",
             "mean": finite_mean(
                 summary_store[
                     "T_mean"
@@ -1794,7 +1794,7 @@ def evaluate_internal_diagnostics(
             ),
         },
         {
-            "quantity": "Darkness-regulated response Td(x)=D(x)*T(x)",
+            "quantity": "Darkness-modulated attention D(x)*T(x)",
             "mean": finite_mean(
                 summary_store[
                     "Td_mean"
