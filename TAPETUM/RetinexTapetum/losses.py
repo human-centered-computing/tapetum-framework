@@ -1,8 +1,8 @@
 """
-Loss functions for RetinexTapetum.
+Loss functions for Retinex-Tapetum.
 
-This file contains both the main enhancement losses and the Retinex
-regularization losses that constrain decomposition quality.
+This file contains the final-output enhancement losses and the task-oriented
+Retinex regularization terms used during paired training.
 """
 
 import torch
@@ -82,10 +82,11 @@ def rgb_to_luminance(x):
 
 def chroma_consistency_loss(pred, target, eps=1e-3):
     """
-    Preserve hue/saturation by comparing luminance-normalized RGB ratios.
+    Preserve relative chromatic relationships by comparing luminance-normalized
+    RGB ratios.
 
-    This discourages the model from making R/G/B channels too similar, which is
-    the usual cause of gray-looking outputs in low-light enhancement.
+    This discourages the model from collapsing the R/G/B relationships toward
+    achromatic outputs.
     """
     pred_chroma = pred / (rgb_to_luminance(pred) + eps)
     target_chroma = target / (rgb_to_luminance(target) + eps)
@@ -96,10 +97,11 @@ def chroma_consistency_loss(pred, target, eps=1e-3):
 
 def attention_regularization(T):
     """
-    Keep attention maps meaningful but not overly aggressive.
+    Mildly regularize the Tapetum Attention Map magnitude.
 
-    Smaller coefficient than the older version so the attention branch is not
-    over-penalized compared with the reference implementation.
+    T is sigmoid-bounded to [0, 1], so |T| = T. This term discourages broad,
+    unnecessarily strong activation; it does not supervise T against a target
+    attention map.
     """
     return torch.mean(torch.abs(T)) + 0.03 * torch.mean(T ** 2)
 
@@ -190,10 +192,10 @@ def decomposition_loss(output, low, high):
     Components:
         - low reconstruction
         - high reconstruction
-        - reflectance consistency between low/high pairs
-        - illumination smoothness on low illumination
-        - illumination smoothness on high illumination
-        - illumination smoothness on enhanced illumination L_t
+        - reflectance-like consistency between paired low/high observations
+        - smoothness of the low-light illumination-like representation
+        - smoothness of the normal-light illumination-like representation
+        - smoothness of the updated illumination L_t
     """
     recon_low = output["recon_low"]
     recon_high = output["recon_high"]
@@ -235,16 +237,16 @@ def total_loss_fn(output, low, gt, perceptual_fn=None, lpips_weight=None):
     """
     Full objective used for training and validation logging.
 
-    The enhancement terms make the final output close to the normal-light
-    target, while decomposition_loss keeps the Retinex factors physically
-    meaningful and prevents arbitrary R/L splits.
+    The enhancement terms supervise the final output against the normal-light
+    target, while decomposition_loss regularizes the task-oriented Retinex
+    representations without claiming a physically unique R/L separation.
     """
     pred = output["enhanced"]
     T = output["tapetum_attention"]
     effective_lpips_weight = W_LPIPS if lpips_weight is None else lpips_weight
 
     # Direct output quality losses.
-    l1 = charbonnier_loss(pred, gt)
+    char_l = charbonnier_loss(pred, gt)
     ssim_l = ssim_loss(pred, gt)
     color_l = color_consistency_loss(pred, gt)
     chroma_l = chroma_consistency_loss(pred, gt)
@@ -257,7 +259,7 @@ def total_loss_fn(output, low, gt, perceptual_fn=None, lpips_weight=None):
     decomp_l, decomp_logs = decomposition_loss(output, low, gt)
 
     total = (
-        W_L1 * l1
+        W_L1 * char_l
         + W_SSIM * ssim_l
         + W_COLOR * color_l
         + W_CHROMA * chroma_l
@@ -270,7 +272,9 @@ def total_loss_fn(output, low, gt, perceptual_fn=None, lpips_weight=None):
 
     logs = {
         "total": total.item(),
-        "l1": l1.item(),
+        # "l1" is retained as a legacy log key for compatibility; the value is
+        # the Charbonnier loss weighted by W_L1 in the total objective.
+        "l1": char_l.item(),
         "ssim": ssim_l.item(),
         "color": color_l.item(),
         "chroma": chroma_l.item(),
