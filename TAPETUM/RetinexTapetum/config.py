@@ -574,10 +574,21 @@ def _load_selected_hpo_profile(profile_key, source_profile):
     if "lpips_resize" in artifact:
         merged["LPIPS_METRIC_RESIZE"] = int(artifact["lpips_resize"])
 
+    dataset_meta = artifact.get("dataset", {})
+    split_manifest_path = os.path.join(
+        WORKSPACE_ROOT,
+        "HyperparameterSearch",
+        profile_dir,
+        "split_manifest.json",
+    )
     metadata = {
         "artifact_path": artifact_path,
         "candidate": artifact.get("selected_candidate", {}).get("candidate"),
         "final_seeds": artifact.get("final_seeds"),
+        "val_ratio": dataset_meta.get("val_ratio"),
+        "val_max": dataset_meta.get("val_max"),
+        "group_block_size": dataset_meta.get("group_block_size"),
+        "split_manifest_path": split_manifest_path,
     }
     return merged, metadata
 
@@ -600,10 +611,10 @@ for _profile_key, _source_profile in list(DATASET_PROFILES.items()):
 # DATA_NAME selects the dataset to read. PROFILE_DATA_NAME and
 # PROFILE_DATA_VARIANT select the trained configuration whose weights and model
 # settings will be used. This separation allows unpaired external test sets
-# such as DCIM, LIME, MEF, NPE, and VV to be evaluated with any trained profile.
+# such as DICM, LIME, MEF, NPE, and VV to be evaluated with any trained profile.
 #
 # Examples:
-#   RETINEX_DATA_NAME=DCIM
+#   RETINEX_DATA_NAME=DICM
 #   RETINEX_PROFILE_DATA_NAME=LOL-v1
 #   RETINEX_PROFILE_DATA_VARIANT=None
 #
@@ -672,6 +683,21 @@ if PROFILE_KEY not in DATASET_PROFILES:
     )
 
 ACTIVE_PROFILE = DATASET_PROFILES[PROFILE_KEY]
+ACTIVE_HPO_METADATA = SELECTED_HPO_METADATA.get(PROFILE_KEY)
+
+# Reuse the exact validation protocol recorded by the paper HPO artifacts.
+# When a split manifest exists, train.py will load its explicit file lists,
+# which is especially important for the grouped UHD-LL down4 split.
+if ACTIVE_HPO_METADATA is not None:
+    if ACTIVE_HPO_METADATA.get("val_ratio") is not None:
+        VAL_RATIO = float(ACTIVE_HPO_METADATA["val_ratio"])
+    VAL_MAX = ACTIVE_HPO_METADATA.get("val_max")
+    GROUP_BLOCK_SIZE = ACTIVE_HPO_METADATA.get("group_block_size")
+    SPLIT_MANIFEST_PATH = ACTIVE_HPO_METADATA.get("split_manifest_path")
+else:
+    VAL_MAX = None
+    GROUP_BLOCK_SIZE = None
+    SPLIT_MANIFEST_PATH = None
 
 EXTERNAL_TEST_DATASETS = {
     "DICM",
@@ -810,6 +836,11 @@ def print_active_profile() -> None:
         "HPO_ARTIFACT         :",
         hpo_meta["artifact_path"] if hpo_meta else "source profile",
     )
+    print(
+        "SPLIT_MANIFEST       :",
+        hpo_meta["split_manifest_path"] if hpo_meta else None,
+    )
+    print(f"VAL_RATIO            : {VAL_RATIO}")
     print(f"SEED                 : {SEED}")
     print(f"EXTERNAL_TEST_ONLY   : {IS_EXTERNAL_TEST_DATASET}")
     print(f"DATA_ROOT       : {DATA_ROOT}")
