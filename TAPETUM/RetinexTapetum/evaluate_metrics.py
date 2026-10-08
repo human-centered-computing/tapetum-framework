@@ -159,8 +159,8 @@ def load_model(device):
         model.load_state_dict(checkpoint["model"])
     except RuntimeError as exc:
         raise RuntimeError(
-            "Checkpoint architecture mismatch. Train a fresh RetinexTapetum "
-            "checkpoint with the current V2-quality config/model.py."
+            "Checkpoint architecture mismatch. Use a checkpoint compatible with "
+            "the current Retinex-Tapetum model definition."
         ) from exc
     model.eval()
 
