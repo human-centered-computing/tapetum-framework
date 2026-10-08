@@ -14,6 +14,7 @@ from torchvision import transforms
 from config import (
     BASE_CHANNELS,
     CKPT_DIR,
+    CHECKPOINT_PATH_OVERRIDE,
     DEVICE,
     LAMBDA_INIT,
     LAMBDA_MAX,
@@ -104,6 +105,20 @@ def calc_lpips(lpips_fn, pred, target, resize=None):
     return lpips_fn(pred_lpips * 2.0 - 1.0, target_lpips * 2.0 - 1.0).mean().item()
 
 
+def resolve_checkpoint_path():
+    """Resolve an explicit checkpoint override or the active run checkpoint."""
+    if CHECKPOINT_PATH_OVERRIDE:
+        return os.path.abspath(os.path.expanduser(CHECKPOINT_PATH_OVERRIDE))
+    return os.path.join(CKPT_DIR, "best.pth")
+
+
+def infer_lambda_max(checkpoint):
+    """Prefer checkpoint metadata; fall back to the active selected HPO profile."""
+    model_config = checkpoint.get("model_config", {}) if isinstance(checkpoint, dict) else {}
+    value = model_config.get("lambda_max")
+    return float(value) if value is not None else float(LAMBDA_MAX)
+
+
 def infer_base_channels(checkpoint):
     state = checkpoint.get("model", checkpoint)
     head_weight = state.get("decom_net.head.weight")
@@ -113,7 +128,7 @@ def infer_base_channels(checkpoint):
 
 
 def load_model(device):
-    ckpt_path = os.path.join(CKPT_DIR, "best.pth")
+    ckpt_path = resolve_checkpoint_path()
     if not os.path.exists(ckpt_path):
         raise FileNotFoundError(f"Checkpoint not found: {ckpt_path}")
 
@@ -126,10 +141,18 @@ def load_model(device):
             "Using checkpoint value.",
         )
 
+    checkpoint_lambda_max = infer_lambda_max(checkpoint)
+    if checkpoint_lambda_max != float(LAMBDA_MAX):
+        print(
+            "LAMBDA_MAX mismatch:",
+            f"config={LAMBDA_MAX}, checkpoint={checkpoint_lambda_max}.",
+            "Using checkpoint value.",
+        )
+
     model = RetinexTapetum(
         base=checkpoint_base,
         lambda_init=LAMBDA_INIT,
-        lambda_max=LAMBDA_MAX,
+        lambda_max=checkpoint_lambda_max,
     ).to(device)
 
     try:
@@ -143,7 +166,7 @@ def load_model(device):
 
     print("Loaded checkpoint:", ckpt_path)
     print("Model BASE_CHANNELS:", checkpoint_base)
-    print("Model LAMBDA_MAX:", LAMBDA_MAX)
+    print("Model LAMBDA_MAX:", checkpoint_lambda_max)
     if "best_epoch" in checkpoint:
         print("Best epoch:", checkpoint["best_epoch"])
     if "best_metric" in checkpoint:
