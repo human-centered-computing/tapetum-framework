@@ -1,5 +1,5 @@
 """
-Training script for RetinexTapetum.
+Training script for Retinex-Tapetum.
 
 This script follows the same training/reporting structure as the reference
 Retinex+Tapetum code so model outputs can be compared more fairly.
