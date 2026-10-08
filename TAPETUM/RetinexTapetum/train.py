@@ -16,6 +16,11 @@ from tqdm import tqdm
 from torch.utils.data import DataLoader
 
 from config import (
+    ACTIVE_PROFILE,
+    DATA_NAME,
+    DATA_VARIANT,
+    PROFILE_DATA_NAME,
+    PROFILE_DATA_VARIANT,
     TRAIN_LOW_DIR,
     TRAIN_HIGH_DIR,
     VAL_LOW_DIR,
@@ -43,6 +48,7 @@ from config import (
     USE_LPIPS_LOSS,
     W_LPIPS,
     LPIPS_NET,
+    LPIPS_LOSS_RESIZE,
     LPIPS_METRIC_RESIZE,
     BEST_MODEL_METRIC,
     RESUME_TRAINING,
@@ -622,10 +628,26 @@ def main():
         print(log_str)
 
         ckpt = {
+            "checkpoint_schema_version": 2,
             "epoch": epoch,
             "model": model.state_dict(),
             "optimizer": optimizer.state_dict(),
             "scheduler": scheduler.state_dict(),
+            "model_config": {
+                "base_channels": BASE_CHANNELS,
+                "lambda_max": LAMBDA_MAX,
+            },
+            "experiment_config": {
+                "data_name": DATA_NAME,
+                "data_variant": DATA_VARIANT,
+                "profile_data_name": PROFILE_DATA_NAME,
+                "profile_data_variant": PROFILE_DATA_VARIANT,
+                "seed": SEED,
+                "split_seed": SPLIT_SEED,
+                "lpips_loss_resize": LPIPS_LOSS_RESIZE,
+                "lpips_metric_resize": LPIPS_METRIC_RESIZE,
+                "active_profile": dict(ACTIVE_PROFILE),
+            },
             "best_metric": BEST_MODEL_METRIC,
             "best_score": best_score,
             "best_psnr": best_psnr,
