@@ -2658,13 +2658,12 @@ PROFILE_DATA_VARIANT = PROFILE.get("variant")
 DATASET_MODE = TARGET["mode"]
 REFERENCE_AVAILABLE = bool(TARGET.get("reference_available", False))
 
-# config.py validates its dataset immediately while it is imported. Some
-# external test datasets are intentionally absent from that older validation
-# table (and DICM is misspelled there as DCIM). Therefore config.py is first
-# bootstrapped with the trained checkpoint/profile dataset. After the import,
-# the runtime layer below replaces every data path with the actual test
-# dataset selected by TEST_DATASET_SELECTION. The on-disk config.py is never
-# edited and the correct public dataset name remains DICM.
+# config.py is first bootstrapped with the trained checkpoint/profile dataset
+# so profile-specific architecture and HPO settings are initialized before the
+# external test target is applied. After the import, the runtime layer below
+# replaces the data paths with the dataset selected by TEST_DATASET_SELECTION.
+# The on-disk config.py remains unchanged and the canonical dataset name is
+# DICM.
 CONFIG_BOOTSTRAP_DATA_NAME = PROFILE_DATA_NAME
 CONFIG_BOOTSTRAP_DATA_VARIANT = PROFILE_DATA_VARIANT
 CONFIG_BOOTSTRAP_DATASET_MODE = PROFILE["mode"]
