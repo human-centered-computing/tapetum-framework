@@ -1,8 +1,8 @@
 """
-RetinexTapetum.
+Retinex-Tapetum model implementation.
 
-Fast Retinex + Tapetum model designed to beat RetinexFormer on parameter
-count and FPS while keeping strong color fidelity.
+Compact darkness-aware Retinex framework with explicit, bounded illumination
+control and bounded residual color-detail refinement.
 """
 
 import torch
@@ -83,9 +83,10 @@ class DecomNet(nn.Module):
     """
     Retinex decomposition network.
 
-    Given a low-light RGB image, it predicts reflectance R and illumination L.
-    Both outputs are RGB maps in [0, 1], so the reconstruction can be written as
-    image ~= R * L.
+    Given a low-light RGB image, it predicts task-oriented reflectance-like
+    and illumination-like RGB representations in [0, 1]. The decomposition is
+    used computationally and is not interpreted as a physically unique scene
+    separation.
     """
 
 
@@ -109,14 +110,14 @@ class DecomNet(nn.Module):
 
 class TapetumAttention(nn.Module):
     """
-    Predict where the tapetum amplification should be active.
+    Predict the three-channel Tapetum Attention Map T.
 
     Input channels:
-        low RGB + RGB L + dark prior = 7 channels.
+        low RGB + illumination-like RGB + darkness prior = 7 channels.
 
     Output:
-        3-channel attention map T in [0, 1]. Larger values mean the model wants
-        more photon-reuse-inspired illumination amplification in that region.
+        T in [0, 1], used as a learned spatial/chromatic modulation map. This is
+        not Transformer self-attention or query-key-value attention.
     """
 
     def __init__(self, in_ch=7, base=32):
@@ -156,9 +157,9 @@ class LambdaMap(nn.Module):
     """
     Predict the spatial amplification strength.
 
-    The lambda map controls how much the illumination is amplified. It is bounded
-    by lambda_max and gated by dark_prior so bright regions are not boosted
-    unnecessarily.
+    The Darkness-Gated Spatial Amplification Map controls the available
+    illumination-update magnitude. It is bounded by lambda_max and explicitly
+    gated by dark_prior so relatively bright regions receive less amplification.
     """
 
     def __init__(self, in_ch=4, base=16, lambda_max=1.65):
@@ -178,10 +179,10 @@ class LambdaMap(nn.Module):
 
 class ColorRefinement(nn.Module):
     """
-    Residual head that repairs color and fine detail after Retinex reconstruction.
+    Residual head for bounded color-detail refinement after base reconstruction.
 
     The tanh output is scaled by 0.08 so this branch makes controlled corrections
-    instead of overwriting the physically motivated R * L_t reconstruction.
+    instead of replacing the explicit Retinex-guided illumination pathway.
     """
 
     def __init__(self, in_ch=13, base=24):
@@ -199,14 +200,14 @@ class ColorRefinement(nn.Module):
 
 class RetinexTapetum(nn.Module):
     """
-    End-to-end RetinexTapetum enhancement model.
+    End-to-end Retinex-Tapetum enhancement model.
 
     Pipeline:
-        1. Decompose low-light input into reflectance R_low and illumination L_low.
-        2. Estimate detail and darkness cues from the input/illumination.
-        3. Predict tapetum attention T and spatial amplification lambda_map.
-        4. Build enhanced illumination L_t = L_low * (1 + lambda_map * T).
-        5. Reconstruct base image R_low * L_t and refine it with a small residual.
+        1. Estimate reflectance-like R_low and illumination-like L_low.
+        2. Derive the high-frequency luminance cue Y_HF and darkness prior D.
+        3. Predict Tapetum Attention Map T and spatial amplification Lambda.
+        4. Update illumination: L_t = L_low * (1 + Lambda * T).
+        5. Reconstruct I_base = R_low * L_t and apply a bounded RGB residual.
     """
 
     def __init__(self, base=32, lambda_init=0.0, lambda_max=1.65):
@@ -226,24 +227,26 @@ class RetinexTapetum(nn.Module):
 
     def forward(self, low, high=None):
         """Run enhancement; when high is provided, also return training-only terms."""
-        # Retinex decomposition separates scene content from illumination.
+        # Task-oriented Retinex decomposition into learned intermediate maps.
         R_low, L_low = self.decom_net(low)
 
-        # Detail and darkness cues guide where amplification should happen.
-        y_high = high_frequency_luminance(low)
+        # Auxiliary guidance cues. Y_HF is used only by the final refinement
+        # branch; D guides the Tapetum attention and amplification branches.
+        y_hf = high_frequency_luminance(low)
         dark_prior = torch.clamp(1.0 - rgb_to_luminance(L_low), 0.0, 1.0)
 
-        # Attention says where to amplify; lambda_map says how strongly.
+        # T modulates the update spatially/chromatically; lambda_map determines
+        # the darkness-gated available amplification magnitude.
         attention_input = torch.cat([low, L_low, dark_prior], dim=1)
         T = self.tapetum_net(attention_input)
         lambda_map = self.lambda_map_net(L_low, dark_prior)
 
-        # Tapetum illumination update: active, spatially adaptive light reuse.
+        # Bounded Tapetum illumination update.
         L_t = L_low * (1.0 + lambda_map * T)
         base_enh = R_low * L_t
 
-        # Final residual correction restores small color/detail errors.
-        refine_input = torch.cat([low, base_enh, T, lambda_map, y_high], dim=1)
+        # Final bounded residual color-detail refinement.
+        refine_input = torch.cat([low, base_enh, T, lambda_map, y_hf], dim=1)
         residual = self.refine_net(refine_input)
         enhanced = torch.clamp(base_enh + residual, 0.0, 1.0)
 
@@ -255,7 +258,7 @@ class RetinexTapetum(nn.Module):
             "reflectance_low": R_low,
             "illumination_low": L_low,
             "tapetum_attention": T,
-            "frequency_high": y_high,
+            "frequency_high": y_hf,
             "dark_prior": dark_prior,
             "illumination_t": L_t,
             "lambda_map": lambda_map,
