@@ -1,4 +1,4 @@
-"""Configuration file for RetinexTapetum."""
+"""Configuration file for Retinex-Tapetum."""
 
 import json
 import os
