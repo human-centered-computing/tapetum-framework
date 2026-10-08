@@ -241,6 +241,12 @@ for the four paired paper benchmarks. This keeps `train.py`, `test.py`, and
 `evaluate_metrics.py` synchronized with the archived HPO artifacts instead of
 duplicating the selected values manually.
 
+When available, `train.py` also reuses the corresponding
+`HyperparameterSearch/<dataset>/split_manifest.json` file. The manifest
+contains the exact train/validation file lists used during HPO and final
+confirmation, including the grouped UHD-LL down4 split; this avoids silently
+regenerating a different validation partition.
+
 For exact inference with an archived representative paper checkpoint, set
 `RETINEX_CKPT_PATH` explicitly. For example:
 
