@@ -5,6 +5,7 @@ This script follows the same training/reporting structure as the reference
 Retinex+Tapetum code so model outputs can be compared more fairly.
 """
 
+import json
 import os
 import random
 import shutil
@@ -27,6 +28,9 @@ from config import (
     VAL_HIGH_DIR,
     USE_TRAIN_VAL_SPLIT,
     VAL_RATIO,
+    VAL_MAX,
+    GROUP_BLOCK_SIZE,
+    SPLIT_MANIFEST_PATH,
     SPLIT_SEED,
     CKPT_DIR,
     DEVICE,
@@ -67,6 +71,48 @@ def mirror_checkpoint_to_drive(src_path, mirror_dir):
     os.makedirs(mirror_dir, exist_ok=True)
     dst_path = os.path.join(mirror_dir, os.path.basename(src_path))
     shutil.copy2(src_path, dst_path)
+
+
+def load_train_val_split_manifest(manifest_path, low_dir, high_dir):
+    """Load and validate the exact file-level split used by the paper HPO runs."""
+    with open(manifest_path, "r", encoding="utf-8") as handle:
+        manifest = json.load(handle)
+
+    train_files = list(manifest.get("train_files", []))
+    val_files = list(manifest.get("val_files", []))
+    if not train_files or not val_files:
+        raise ValueError(
+            f"Split manifest has empty train/validation lists: {manifest_path}"
+        )
+
+    overlap = sorted(set(train_files) & set(val_files))
+    if overlap:
+        raise ValueError(
+            f"Split manifest contains overlapping train/validation files: {overlap[:5]}"
+        )
+
+    missing = []
+    for name in train_files + val_files:
+        if not os.path.exists(os.path.join(low_dir, name)):
+            missing.append(("low", name))
+        if not os.path.exists(os.path.join(high_dir, name)):
+            missing.append(("high", name))
+        if len(missing) >= 10:
+            break
+    if missing:
+        raise FileNotFoundError(
+            "Split manifest does not match the available paired dataset. "
+            f"First missing entries: {missing}"
+        )
+
+    print(f"Loaded split manifest: {manifest_path}")
+    print(f"Train split images: {len(train_files)}")
+    print(f"Val split images: {len(val_files)}")
+    print(f"Manifest VAL_RATIO: {manifest.get('val_ratio')}")
+    print(f"Manifest SPLIT_SEED: {manifest.get('split_seed')}")
+    print(f"Manifest VAL_MAX: {manifest.get('val_max')}")
+    print(f"Manifest GROUP_BLOCK_SIZE: {manifest.get('group_block_size')}")
+    return train_files, val_files
 
 
 def build_train_val_file_split(low_dir, high_dir, val_ratio, split_seed):
@@ -447,6 +493,9 @@ def main():
     print("CKPT_DIR      :", CKPT_DIR)
     print("USE_TRAIN_VAL_SPLIT:", USE_TRAIN_VAL_SPLIT)
     print("VAL_RATIO     :", VAL_RATIO)
+    print("VAL_MAX       :", VAL_MAX)
+    print("GROUP_BLOCK_SIZE:", GROUP_BLOCK_SIZE)
+    print("SPLIT_MANIFEST:", SPLIT_MANIFEST_PATH)
     print("SPLIT_SEED    :", SPLIT_SEED)
     print("BASE_CHANNELS :", BASE_CHANNELS)
     print("BATCH_SIZE    :", BATCH_SIZE)
@@ -469,12 +518,19 @@ def main():
         print("DRIVE_CKPT_MIRROR_DIR:", drive_ckpt_mirror_dir)
 
     if USE_TRAIN_VAL_SPLIT:
-        train_files, val_files = build_train_val_file_split(
-            TRAIN_LOW_DIR,
-            TRAIN_HIGH_DIR,
-            VAL_RATIO,
-            SPLIT_SEED,
-        )
+        if SPLIT_MANIFEST_PATH and os.path.isfile(SPLIT_MANIFEST_PATH):
+            train_files, val_files = load_train_val_split_manifest(
+                SPLIT_MANIFEST_PATH,
+                TRAIN_LOW_DIR,
+                TRAIN_HIGH_DIR,
+            )
+        else:
+            train_files, val_files = build_train_val_file_split(
+                TRAIN_LOW_DIR,
+                TRAIN_HIGH_DIR,
+                VAL_RATIO,
+                SPLIT_SEED,
+            )
         train_dataset = LOLPairDataset(
             low_dir=TRAIN_LOW_DIR,
             high_dir=TRAIN_HIGH_DIR,
@@ -508,6 +564,9 @@ def main():
         "use_train_val_split": USE_TRAIN_VAL_SPLIT,
         "val_ratio": VAL_RATIO,
         "split_seed": SPLIT_SEED,
+        "split_manifest_path": SPLIT_MANIFEST_PATH,
+        "val_max": VAL_MAX,
+        "group_block_size": GROUP_BLOCK_SIZE,
         "train_files_count": len(train_dataset),
         "val_files_count": len(val_dataset),
     }
@@ -644,6 +703,9 @@ def main():
                 "profile_data_variant": PROFILE_DATA_VARIANT,
                 "seed": SEED,
                 "split_seed": SPLIT_SEED,
+                "split_manifest_path": SPLIT_MANIFEST_PATH,
+                "val_max": VAL_MAX,
+                "group_block_size": GROUP_BLOCK_SIZE,
                 "lpips_loss_resize": LPIPS_LOSS_RESIZE,
                 "lpips_metric_resize": LPIPS_METRIC_RESIZE,
                 "active_profile": dict(ACTIVE_PROFILE),
