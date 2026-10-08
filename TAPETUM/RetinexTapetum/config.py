@@ -1,6 +1,9 @@
 """Configuration file for RetinexTapetum."""
 
+import json
 import os
+import warnings
+
 import torch
 
 
@@ -73,6 +76,17 @@ DATA_NAME = os.environ.get(
     "LOL-v2",
 ).strip()
 
+# Backward-compatible normalization for an earlier typo used by standalone
+# config.py. The canonical dataset name used by the workspace and manuscript is
+# DICM.
+if DATA_NAME == "DCIM":
+    warnings.warn(
+        "RETINEX_DATA_NAME=DCIM is deprecated; use DICM instead.",
+        DeprecationWarning,
+        stacklevel=2,
+    )
+    DATA_NAME = "DICM"
+
 _data_variant_env = os.environ.get(
     "RETINEX_DATA_VARIANT",
     "Real_captured",
@@ -96,7 +110,7 @@ VALID_DATASET_SELECTIONS = {
     ("UHD-LL down4", None),
     ("SICE", None),
     ("LoLI-Street", None),
-    ("DCIM", None),
+    ("DICM", None),
     ("LIME", None),
     ("MEF", None),
     ("NPE", None),
@@ -495,6 +509,91 @@ DATASET_PROFILES = {
 }
 
 # -----------------------------------------------------------------------------
+# Selected paper-HPO profile synchronization
+# -----------------------------------------------------------------------------
+
+# The source profiles above provide complete defaults, including fixed settings
+# that are not part of the HPO search. For the four paired paper benchmarks,
+# best_hyperparameters.json is the authoritative record of the selected HPO
+# values. Loading it here prevents standalone train/test scripts from silently
+# drifting away from the configurations used to produce the reported
+# checkpoints.
+HPO_PROFILE_DIRS = {
+    ("LOL-v1", None): "lol_v1",
+    ("LOL-v2", "Real_captured"): "lol_v2_real",
+    ("LOL-v2", "Synthetic"): "lol_v2_synthetic",
+    ("UHD-LL down4", None): "uhd_ll_down4",
+}
+
+
+def _load_selected_hpo_profile(profile_key, source_profile):
+    """Overlay selected paper-HPO values onto a complete source profile."""
+
+    merged = dict(source_profile)
+    profile_dir = HPO_PROFILE_DIRS.get(profile_key)
+    if profile_dir is None:
+        return merged, None
+
+    artifact_path = os.path.join(
+        PROJECT_ROOT,
+        "hyper_ckpt",
+        profile_dir,
+        "best_hyperparameters.json",
+    )
+    if not os.path.isfile(artifact_path):
+        warnings.warn(
+            "Selected HPO artifact was not found for "
+            f"{profile_key!r}; falling back to the source profile: "
+            f"{artifact_path}",
+            RuntimeWarning,
+            stacklevel=2,
+        )
+        return merged, None
+
+    with open(artifact_path, "r", encoding="utf-8") as handle:
+        artifact = json.load(handle)
+
+    selected = artifact.get("hyperparameters")
+    if not isinstance(selected, dict):
+        raise ValueError(
+            f"Invalid HPO artifact (missing hyperparameters object): {artifact_path}"
+        )
+
+    # HPO-controlled values override the source profile. Fixed settings such as
+    # LPIPS training resize, network choice, patience, and decomposition weights
+    # remain available from the source profile unless the artifact explicitly
+    # includes them.
+    merged.update(selected)
+
+    if "final_epochs" in artifact:
+        merged["EPOCHS"] = int(artifact["final_epochs"])
+
+    # The HPO artifact's lpips_resize records the final multi-seed validation
+    # metric resize. Training loss resize remains the source-profile value
+    # (256 in the archived selected runs).
+    if "lpips_resize" in artifact:
+        merged["LPIPS_METRIC_RESIZE"] = int(artifact["lpips_resize"])
+
+    metadata = {
+        "artifact_path": artifact_path,
+        "candidate": artifact.get("selected_candidate", {}).get("candidate"),
+        "final_seeds": artifact.get("final_seeds"),
+    }
+    return merged, metadata
+
+
+SELECTED_HPO_METADATA = {}
+for _profile_key, _source_profile in list(DATASET_PROFILES.items()):
+    _merged_profile, _hpo_metadata = _load_selected_hpo_profile(
+        _profile_key,
+        _source_profile,
+    )
+    DATASET_PROFILES[_profile_key] = _merged_profile
+    if _hpo_metadata is not None:
+        SELECTED_HPO_METADATA[_profile_key] = _hpo_metadata
+
+
+# -----------------------------------------------------------------------------
 # Hyperparameter / checkpoint profile selection
 # -----------------------------------------------------------------------------
 
@@ -575,7 +674,7 @@ if PROFILE_KEY not in DATASET_PROFILES:
 ACTIVE_PROFILE = DATASET_PROFILES[PROFILE_KEY]
 
 EXTERNAL_TEST_DATASETS = {
-    "DCIM",
+    "DICM",
     "LIME",
     "MEF",
     "NPE",
@@ -674,7 +773,15 @@ W_SMOOTH_ENH = profile_value("W_SMOOTH_ENH")
 # -----------------------------------------------------------------------------
 
 PATIENCE = profile_value("PATIENCE")
-SEED = 42
+SEED = int(os.environ.get("RETINEX_SEED", "42"))
+
+# Optional explicit checkpoint path for inference/evaluation. This is useful
+# when reproducing the paper-selected checkpoint stored under hyper_ckpt
+# without changing the training CKPT_DIR.
+CHECKPOINT_PATH_OVERRIDE = os.environ.get(
+    "RETINEX_CKPT_PATH",
+    "",
+).strip() or None
 
 RESUME_TRAINING = env_to_bool(
     "RETINEX_TAPETUM_RESUME",
@@ -698,6 +805,12 @@ def print_active_profile() -> None:
     print(f"PROFILE_DATA_NAME    : {PROFILE_DATA_NAME}")
     print(f"PROFILE_DATA_VARIANT : {PROFILE_DATA_VARIANT}")
     print(f"PROFILE_KEY          : {PROFILE_KEY}")
+    hpo_meta = SELECTED_HPO_METADATA.get(PROFILE_KEY)
+    print(
+        "HPO_ARTIFACT         :",
+        hpo_meta["artifact_path"] if hpo_meta else "source profile",
+    )
+    print(f"SEED                 : {SEED}")
     print(f"EXTERNAL_TEST_ONLY   : {IS_EXTERNAL_TEST_DATASET}")
     print(f"DATA_ROOT       : {DATA_ROOT}")
     print(f"RUN_ROOT        : {RUN_ROOT}")
