@@ -96,7 +96,7 @@ VALID_DATASET_SELECTIONS = {
     ("UHD-LL down4", None),
     ("SICE", None),
     ("LoLI-Street", None),
-    ("DCIM", None),
+    ("DICM", None),
     ("LIME", None),
     ("MEF", None),
     ("NPE", None),
@@ -501,10 +501,10 @@ DATASET_PROFILES = {
 # DATA_NAME selects the dataset to read. PROFILE_DATA_NAME and
 # PROFILE_DATA_VARIANT select the trained configuration whose weights and model
 # settings will be used. This separation allows unpaired external test sets
-# such as DCIM, LIME, MEF, NPE, and VV to be evaluated with any trained profile.
+# such as DICM, LIME, MEF, NPE, and VV to be evaluated with any trained profile.
 #
 # Examples:
-#   RETINEX_DATA_NAME=DCIM
+#   RETINEX_DATA_NAME=DICM
 #   RETINEX_PROFILE_DATA_NAME=LOL-v1
 #   RETINEX_PROFILE_DATA_VARIANT=None
 #
@@ -575,7 +575,7 @@ if PROFILE_KEY not in DATASET_PROFILES:
 ACTIVE_PROFILE = DATASET_PROFILES[PROFILE_KEY]
 
 EXTERNAL_TEST_DATASETS = {
-    "DCIM",
+    "DICM",
     "LIME",
     "MEF",
     "NPE",
