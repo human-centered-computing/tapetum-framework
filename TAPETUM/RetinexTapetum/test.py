@@ -1,5 +1,5 @@
 """
-Inference script for RetinexTapetum.
+Inference script for Retinex-Tapetum.
 
 Loads the best checkpoint, runs the model on all low-light test images, and
 writes every enhanced output to RESULT_DIR as a lossless PNG file.
@@ -18,6 +18,8 @@ from config import (
     DATA_VARIANT,
     TEST_LOW_DIR,
     CKPT_DIR,
+    CHECKPOINT_PATH_OVERRIDE,
+    RESULT_ROOT,
     BASE_CHANNELS,
     LAMBDA_INIT,
     LAMBDA_MAX,
@@ -39,7 +41,6 @@ IMG_EXTS = (".png", ".jpg", ".jpeg", ".bmp", ".tif", ".tiff", ".webp")
 # Dataset with variant:
 #   RESULT/<DATA_NAME>/<DATA_VARIANT>/RetinexTapetum/results/Test
 #
-RESULT_ROOT = "/content/drive/MyDrive/TAPETUM/RESULT"
 MODEL_NAME = "RetinexTapetum"
 
 if DATA_VARIANT is None:
@@ -98,6 +99,20 @@ def list_images(folder):
     return sorted([f for f in os.listdir(folder) if f.lower().endswith(IMG_EXTS)])
 
 
+def resolve_checkpoint_path():
+    """Resolve an explicit checkpoint override or the active run checkpoint."""
+    if CHECKPOINT_PATH_OVERRIDE:
+        return os.path.abspath(os.path.expanduser(CHECKPOINT_PATH_OVERRIDE))
+    return os.path.join(CKPT_DIR, "best.pth")
+
+
+def infer_lambda_max(checkpoint):
+    """Prefer checkpoint metadata; fall back to the active selected HPO profile."""
+    model_config = checkpoint.get("model_config", {}) if isinstance(checkpoint, dict) else {}
+    value = model_config.get("lambda_max")
+    return float(value) if value is not None else float(LAMBDA_MAX)
+
+
 def infer_base_channels(checkpoint):
     """
     Infer the model width from the checkpoint.
@@ -114,7 +129,7 @@ def infer_base_channels(checkpoint):
 
 def load_model():
     """Load the best saved checkpoint and rebuild the model."""
-    ckpt_path = os.path.join(CKPT_DIR, "best.pth")
+    ckpt_path = resolve_checkpoint_path()
     if not os.path.exists(ckpt_path):
         raise FileNotFoundError(f"Checkpoint not found: {ckpt_path}")
 
@@ -127,10 +142,18 @@ def load_model():
             "Using checkpoint value.",
         )
 
+    checkpoint_lambda_max = infer_lambda_max(checkpoint)
+    if checkpoint_lambda_max != float(LAMBDA_MAX):
+        print(
+            "LAMBDA_MAX mismatch:",
+            f"config={LAMBDA_MAX}, checkpoint={checkpoint_lambda_max}.",
+            "Using checkpoint value.",
+        )
+
     model = RetinexTapetum(
         base=checkpoint_base,
         lambda_init=LAMBDA_INIT,
-        lambda_max=LAMBDA_MAX,
+        lambda_max=checkpoint_lambda_max,
     ).to(DEVICE)
 
     try:
@@ -144,7 +167,7 @@ def load_model():
 
     print(f"Loaded checkpoint: {ckpt_path}")
     print("Model BASE_CHANNELS:", checkpoint_base)
-    print("Model LAMBDA_MAX:", LAMBDA_MAX)
+    print("Model LAMBDA_MAX:", checkpoint_lambda_max)
     if "best_psnr" in checkpoint:
         print(f"Best PSNR: {checkpoint['best_psnr']:.4f}")
     if "best_epoch" in checkpoint:
