@@ -1,13 +1,13 @@
 # TAPETUM
 
-**A reproducible low-light image enhancement research workspace centered on RetinexTapetum and standardized multi-model evaluation.**
+**A reproducible low-light image enhancement research workspace centered on Retinex-Tapetum and standardized multi-model evaluation.**
 
 [![Python](https://img.shields.io/badge/Python-3.x-blue.svg)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.x-ee4c2c.svg)](https://pytorch.org/)
 [![Google Colab](https://img.shields.io/badge/Google-Colab-F9AB00.svg)](https://colab.research.google.com/github/human-centered-computing/tapetum-framework/blob/main/TAPETUM/RetinexTapetum_ALL_models.ipynb)
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](LICENSE)
 
-TAPETUM is an experimental framework for low-light image enhancement (LLIE). It brings together the proposed **RetinexTapetum** model, baseline implementations, dataset management, hyperparameter search, checkpoint selection, quantitative and visual evaluation, speed profiling, and paper artifacts under one reproducible workspace.
+TAPETUM is an experimental framework for low-light image enhancement (LLIE). It brings together the proposed **Retinex-Tapetum** model, baseline implementations, dataset management, hyperparameter search, checkpoint selection, quantitative and visual evaluation, speed profiling, and paper artifacts under one reproducible workspace.
 
 The repository intentionally uses a **hybrid GitHub + Google Drive layout**:
 
@@ -20,12 +20,12 @@ The repository intentionally uses a **hybrid GitHub + Google Drive layout**:
 
 - **TAPETUM repository:** https://github.com/human-centered-computing/tapetum-framework/tree/main/TAPETUM
 - **Complete TAPETUM Google Drive archive:** https://drive.google.com/drive/folders/13ayyEC3V1wWdX3AXdfL8y7VqnL8eTPFT?usp=sharing
-- **RetinexTapetum paper artifacts:** [paper_retinextapetum](./paper_retinextapetum)
+- **Retinex-Tapetum paper artifacts:** [paper_retinextapetum](./paper_retinextapetum)
 - **Run the all-model workflow in Google Colab:** [RetinexTapetum_ALL_models.ipynb](./RetinexTapetum_ALL_models.ipynb)
 
-## RetinexTapetum
+## Retinex-Tapetum
 
-**RetinexTapetum: A Bio-Inspired Darkness-Aware Retinex Framework for Low-Light Image Enhancement** is a compact Retinex-based LLIE model inspired by the functional light-reuse principle of the *tapetum lucidum*.
+**Retinex-Tapetum: A Bio-Inspired Darkness-Aware Retinex Framework for Low-Light Image Enhancement** is a compact Retinex-based LLIE model inspired by the functional light-reuse principle of the *tapetum lucidum*.
 
 The framework does **not** attempt to simulate eye anatomy or physical optical light transport. Instead, it translates the biological motivation into an explicit, learnable, darkness-aware image-domain enhancement mechanism.
 
@@ -33,7 +33,7 @@ Given a low-light RGB image, the model:
 
 1. estimates reflectance-like and illumination-like representations,
 2. derives an illumination darkness prior,
-3. predicts a learned three-channel tapetum response `T`,
+3. predicts a learned three-channel Tapetum Attention Map `T`,
 4. predicts a darkness-gated three-channel spatial amplification map `Lambda`,
 5. updates illumination using a bounded multiplicative rule,
 6. recombines the Retinex components, and
@@ -73,7 +73,7 @@ The selected dataset-specific checkpoints reported in the current manuscript obt
 | LOL-v2 Synthetic | 3407 | 25.0530 | 0.9322 | 0.0577 |
 | UHD-LL down4 | 3407 | 24.7107 | 0.9115 | 0.0884 |
 
-Across these four paired benchmarks, the manuscript reports that RetinexTapetum achieves the best SSIM and LPIPS in all four cases, while obtaining the best PSNR on LOL-v2 Synthetic and UHD-LL down4.
+Across these four paired benchmarks, the manuscript reports that Retinex-Tapetum achieves the best SSIM and LPIPS in all four cases, while obtaining the best PSNR on LOL-v2 Synthetic and UHD-LL down4.
 
 ## Compared Methods
 
@@ -235,6 +235,27 @@ RetinexTapetum/hyper_ckpt/<dataset>/
 
 The `selected/` directory is the canonical representative checkpoint location for each dataset-specific model.
 
+The standalone `RetinexTapetum/config.py` loader automatically overlays the
+selected values in `best_hyperparameters.json` on the complete source profile
+for the four paired paper benchmarks. This keeps `train.py`, `test.py`, and
+`evaluate_metrics.py` synchronized with the archived HPO artifacts instead of
+duplicating the selected values manually.
+
+For exact inference with an archived representative paper checkpoint, set
+`RETINEX_CKPT_PATH` explicitly. For example:
+
+```bash
+RETINEX_DATA_NAME=LOL-v1 \
+RETINEX_DATA_VARIANT=None \
+RETINEX_CKPT_PATH="$(pwd)/hyper_ckpt/lol_v1/checkpoints/selected/best.pth" \
+python test.py
+```
+
+Newly trained checkpoints store the model-critical configuration
+(`BASE_CHANNELS` and `LAMBDA_MAX`) plus the active experiment profile inside
+the checkpoint. Inference prefers this embedded metadata when available and
+falls back to the selected HPO profile for legacy checkpoints.
+
 ## Output Organization
 
 In the Colab/Drive workflow, RetinexTapetum uses the common result tree:
@@ -311,6 +332,10 @@ python test.py
 
 Before running locally, ensure the required dataset and checkpoint directories exist under the expected TAPETUM structure. For large assets, restore them from the shared Drive archive.
 
+The training seed can be overridden with `RETINEX_SEED`. The train/validation
+split seed remains fixed independently so final multi-seed confirmation runs
+can change optimization randomness without changing the data partition.
+
 ## Evaluation
 
 The framework uses the following full-reference metrics on paired benchmarks:
@@ -330,13 +355,15 @@ Speed profiling is standardized at FP32, batch size 1, and `256 x 256` input res
 - Prefer dataset-associated checkpoints for same-domain benchmark reporting.
 - Keep test data isolated from hyperparameter, seed, and checkpoint selection.
 - Use `RetinexTapetum/hyper_ckpt/<dataset>/checkpoints/selected/` when reproducing the representative paper checkpoint.
+- The selected `best_hyperparameters.json` artifact is the authoritative runtime HPO record for each paired paper benchmark.
+- Use `RETINEX_CKPT_PATH` to evaluate an archived representative checkpoint without moving it into the active training result directory.
 - Large datasets, baseline repositories, generated images, and auxiliary experiment artifacts may exist only in Google Drive.
 - The Python export and notebook are intended to make missing supported datasets reproducible without manually committing the datasets themselves to Git.
 
 ## Paper
 
 **Murat DELEN and Serdar Ciftci.**  
-*RetinexTapetum: A Bio-Inspired Darkness-Aware Retinex Framework for Low-Light Image Enhancement.*  
+*Retinex-Tapetum: A Bio-Inspired Darkness-Aware Retinex Framework for Low-Light Image Enhancement.*  
 Current manuscript / research artifact, 2026.
 
 A publication DOI or venue is intentionally not listed here until one is available.
@@ -347,7 +374,7 @@ If you use RetinexTapetum in academic work, please cite the project/manuscript. 
 
 ```bibtex
 @article{delen2026retinextapetum,
-  title   = {RetinexTapetum: A Bio-Inspired Darkness-Aware Retinex Framework for Low-Light Image Enhancement},
+  title   = {Retinex-Tapetum: A Bio-Inspired Darkness-Aware Retinex Framework for Low-Light Image Enhancement},
   author  = {Delen, Murat and Ciftci, Serdar},
   year    = {2026},
   note    = {Manuscript}
