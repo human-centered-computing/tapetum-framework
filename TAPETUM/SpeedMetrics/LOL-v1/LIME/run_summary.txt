@@ -1,0 +1,15 @@
+Method: LIME
+Dataset: LOL-v1
+Device: CPU / Tesla T4
+Input: 1x3x256x256 FP32
+Params (M): 0.0
+MACs (G): None
+FLOPs (G): None
+Latency mean (ms): 3.904610
+Latency median (ms): 3.875512
+Latency p95 (ms): 4.450652
+FPS: 256.107557
+Peak GPU memory (MB): None
+Model size (MB): 0.000000
+Checkpoint: 
+Timestamp UTC: 2026-07-16T15:24:45.769059+00:00

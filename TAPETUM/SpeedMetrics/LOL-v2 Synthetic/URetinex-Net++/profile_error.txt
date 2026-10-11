@@ -1,0 +1,29 @@
+Model: URetinex-Net++
+Dataset: LOL-v2 Synthetic
+Time: 2026-07-16T15:52:45.302651+00:00
+
+Traceback (most recent call last):
+  File "/tmp/ipykernel_1138/806045873.py", line 1341, in <cell line: 0>
+    main()
+  File "/tmp/ipykernel_1138/806045873.py", line 1308, in main
+    profile = run_pytorch_profile(local_project, rgb_array)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ipykernel_1138/806045873.py", line 797, in run_pytorch_profile
+    model, checkpoint, extra = load_torch_model(project_dir, device)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ipykernel_1138/806045873.py", line 757, in load_torch_model
+    return loaders[MODEL_NAME](project_dir, device)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ipykernel_1138/806045873.py", line 738, in load_uretinex
+    model = test_module.Inference(opts)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/content/TAPETUM_SPEED_WORK/URetinex-Net-PLUS/test.py", line 70, in __init__
+    self.model_Decom_low, self.model_Decom_high = load_decom(self.fusion_opts)
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/content/TAPETUM_SPEED_WORK/URetinex-Net-PLUS/utils.py", line 271, in load_decom
+    decom_low_model = create_and_load(fusion_opts.Decom_model_low_path)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/content/TAPETUM_SPEED_WORK/URetinex-Net-PLUS/utils.py", line 269, in create_and_load
+    exit()
+    ^^^^
+NameError: name 'exit' is not defined

@@ -1,0 +1,15 @@
+Method: RetinexFormer
+Dataset: UHD-LL down4
+Device: GPU / Tesla T4
+Input: 1x3x256x256 FP32
+Params (M): 1.605683
+MACs (G): 17.01838848
+FLOPs (G): 34.03677696
+Latency mean (ms): 37.962169
+Latency median (ms): 37.933792
+Latency p95 (ms): 38.896085
+FPS: 26.342014
+Peak GPU memory (MB): 175.39584
+Model size (MB): 6.478155
+Checkpoint: /content/drive/MyDrive/TAPETUM/UHD-LL down4/RetinexFormer/checkpoints/best.pth
+Timestamp UTC: 2026-07-16T16:29:50.222578+00:00

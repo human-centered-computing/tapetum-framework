@@ -1,0 +1,15 @@
+Method: Zero-DCE
+Dataset: LOL-v1
+Device: GPU / Tesla T4
+Input: 1x3x256x256 FP32
+Params (M): 0.079416
+MACs (G): 5.1904512
+FLOPs (G): 10.3809024
+Latency mean (ms): 3.841138
+Latency median (ms): 3.852304
+Latency p95 (ms): 3.877774
+FPS: 260.339524
+Peak GPU memory (MB): 84.010496
+Model size (MB): 0.320017
+Checkpoint: /content/TAPETUM_SPEED_WORK/Zero-DCE/Zero-DCE_code/snapshots/Epoch99.pth
+Timestamp UTC: 2026-07-16T15:25:53.276701+00:00

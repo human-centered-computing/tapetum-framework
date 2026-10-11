@@ -1,0 +1,15 @@
+Method: RetinexNet
+Dataset: LOL-v2 Synthetic
+Device: GPU / Tesla T4
+Input: 1x3x256x256 FP32
+Params (M): 0.444613
+MACs (G): 0.0005476265
+FLOPs (G): 0.001095253
+Latency mean (ms): 11.611560
+Latency median (ms): 11.613466
+Latency p95 (ms): 11.950882
+FPS: 86.121071
+Peak GPU memory (MB): 0.0
+Model size (MB): 0.000000
+Checkpoint: /content/TAPETUM_SPEED_WORK/RetinexNet/model/Decom/RetinexNet-tensorflow; /content/TAPETUM_SPEED_WORK/RetinexNet/model/Relight/RetinexNet-tensorflow
+Timestamp UTC: 2026-07-16T15:36:31.724367+00:00

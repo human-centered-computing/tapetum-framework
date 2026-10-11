@@ -1,0 +1,15 @@
+Method: RUAS
+Dataset: LOL-v1
+Device: GPU / Tesla T4
+Input: 1x3x256x256 FP32
+Params (M): 0.003438
+MACs (G): 0.214106112
+FLOPs (G): 0.428212224
+Latency mean (ms): 5.325804
+Latency median (ms): 4.957392
+Latency p95 (ms): 7.094946
+FPS: 187.765078
+Peak GPU memory (MB): 35.313152
+Model size (MB): 0.042989
+Checkpoint: /content/drive/MyDrive/TAPETUM/LOL-v1/RUAS/checkpoints/latest.pt
+Timestamp UTC: 2026-07-16T15:26:22.548926+00:00

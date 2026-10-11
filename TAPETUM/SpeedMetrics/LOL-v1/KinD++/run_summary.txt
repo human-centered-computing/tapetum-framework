@@ -1,0 +1,15 @@
+Method: KinD++
+Dataset: LOL-v1
+Device: GPU / Tesla T4
+Input: 1x3x256x256 FP32
+Params (M): 8.274508
+MACs (G): 371.31853438
+FLOPs (G): 742.63706876
+Latency mean (ms): 187.299443
+Latency median (ms): 186.297579
+Latency p95 (ms): 196.857500
+FPS: 5.339044
+Peak GPU memory (MB): 0.0
+Model size (MB): 0.000000
+Checkpoint: /content/TAPETUM_SPEED_WORK/KinD_plus/checkpoint/decom_model/model.ckpt; /content/TAPETUM_SPEED_WORK/KinD_plus/checkpoint/illu_model/model.ckpt; /content/drive/MyDrive/TAPETUM/LOL-v1/KinD_plus/checkpoints/new_restoration_retrain/model.ckpt-119
+Timestamp UTC: 2026-07-16T15:34:42.861891+00:00

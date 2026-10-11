@@ -1,0 +1,15 @@
+Method: RetinexTapetum (Proposed)
+Dataset: LOL-v1
+Device: GPU / Tesla T4
+Input: 1x3x256x256 FP32
+Params (M): 0.536463
+MACs (G): 19.75679648
+FLOPs (G): 39.51359296
+Latency mean (ms): 33.373425
+Latency median (ms): 33.364927
+Latency p95 (ms): 33.807461
+FPS: 29.963960
+Peak GPU memory (MB): 339.13344
+Model size (MB): 6.608597
+Checkpoint: /content/drive/MyDrive/TAPETUM/LOL-v1/RetinexTapetum/checkpoints/best.pth
+Timestamp UTC: 2026-07-19T10:04:37.710864+00:00

@@ -1,0 +1,15 @@
+Method: KinD++
+Dataset: UHD-LL down4
+Device: GPU / Tesla T4
+Input: 1x3x256x256 FP32
+Params (M): 8.274508
+MACs (G): 371.31853438
+FLOPs (G): 742.63706876
+Latency mean (ms): 208.580421
+Latency median (ms): 206.700759
+Latency p95 (ms): 229.319514
+FPS: 4.794314
+Peak GPU memory (MB): 0.0
+Model size (MB): 0.000000
+Checkpoint: /content/TAPETUM_SPEED_WORK/KinD_plus/checkpoint/decom_model/model.ckpt; /content/TAPETUM_SPEED_WORK/KinD_plus/checkpoint/illu_model/model.ckpt; /content/drive/MyDrive/TAPETUM/UHD-LL down4/KinD_plus/checkpoints/new_restoration_retrain/model.ckpt-119
+Timestamp UTC: 2026-07-16T15:39:36.574482+00:00

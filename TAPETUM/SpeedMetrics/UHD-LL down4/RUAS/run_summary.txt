@@ -1,0 +1,15 @@
+Method: RUAS
+Dataset: UHD-LL down4
+Device: GPU / Tesla T4
+Input: 1x3x256x256 FP32
+Params (M): 0.003438
+MACs (G): 0.214106112
+FLOPs (G): 0.428212224
+Latency mean (ms): 4.450682
+Latency median (ms): 4.358176
+Latency p95 (ms): 5.097408
+FPS: 224.684655
+Peak GPU memory (MB): 27.30752
+Model size (MB): 0.042989
+Checkpoint: /content/drive/MyDrive/TAPETUM/UHD-LL down4/RUAS/checkpoints/latest.pt
+Timestamp UTC: 2026-07-16T15:37:14.100384+00:00

@@ -1,0 +1,26 @@
+Model: URetinex-Net++
+Dataset: LOL-v2 Real-Captured
+Time: 2026-07-16T09:16:50.372969+00:00
+
+Traceback (most recent call last):
+  File "/tmp/ipykernel_798/2816288608.py", line 1208, in <cell line: 0>
+    main()
+  File "/tmp/ipykernel_798/2816288608.py", line 1175, in main
+    profile = run_pytorch_profile(local_project, rgb_array)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ipykernel_798/2816288608.py", line 740, in run_pytorch_profile
+    model, checkpoint, extra = load_torch_model(project_dir, device)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ipykernel_798/2816288608.py", line 700, in load_torch_model
+    return loaders[MODEL_NAME](project_dir, device)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ipykernel_798/2816288608.py", line 661, in load_uretinex
+    test_module = import_file_module("uretinex_profile_test", project_dir / "test.py")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ipykernel_798/2816288608.py", line 386, in import_file_module
+    spec.loader.exec_module(module)
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/content/TAPETUM_SPEED_WORK/URetinex-Net-PLUS/test.py", line 4, in <module>
+    from lib2to3.pgen2.pgen import NFAState
+ModuleNotFoundError: No module named 'lib2to3'

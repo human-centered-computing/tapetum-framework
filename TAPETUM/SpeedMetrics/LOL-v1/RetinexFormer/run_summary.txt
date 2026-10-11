@@ -1,0 +1,15 @@
+Method: RetinexFormer
+Dataset: LOL-v1
+Device: GPU / Tesla T4
+Input: 1x3x256x256 FP32
+Params (M): 1.605683
+MACs (G): 17.01838848
+FLOPs (G): 34.03677696
+Latency mean (ms): 39.837454
+Latency median (ms): 39.990112
+Latency p95 (ms): 40.671368
+FPS: 25.102006
+Peak GPU memory (MB): 175.40608
+Model size (MB): 6.478155
+Checkpoint: /content/drive/MyDrive/TAPETUM/LOL-v1/RetinexFormer/checkpoints/best.pth
+Timestamp UTC: 2026-07-16T15:32:22.421561+00:00

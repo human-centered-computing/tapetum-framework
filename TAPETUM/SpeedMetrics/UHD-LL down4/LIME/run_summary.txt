@@ -1,0 +1,15 @@
+Method: LIME
+Dataset: UHD-LL down4
+Device: CPU / Tesla T4
+Input: 1x3x256x256 FP32
+Params (M): 0.0
+MACs (G): None
+FLOPs (G): None
+Latency mean (ms): 4.273830
+Latency median (ms): 3.991734
+Latency p95 (ms): 6.135293
+FPS: 233.982153
+Peak GPU memory (MB): None
+Model size (MB): 0.000000
+Checkpoint: 
+Timestamp UTC: 2026-07-16T15:35:56.404532+00:00

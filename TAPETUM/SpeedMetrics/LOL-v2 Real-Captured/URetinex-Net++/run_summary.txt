@@ -1,0 +1,15 @@
+Method: URetinex-Net++
+Dataset: LOL-v2 Real-Captured
+Device: GPU / Tesla T4
+Input: 1x3x256x256 FP32
+Params (M): 0.372354
+MACs (G): 57.774621632
+FLOPs (G): 115.549243264
+Latency mean (ms): 44.390318
+Latency median (ms): 44.369984
+Latency p95 (ms): 45.019455
+FPS: 22.527435
+Peak GPU memory (MB): 161.320448
+Model size (MB): 2.220345
+Checkpoint: /content/TAPETUM_SPEED_WORK/URetinex-Net-PLUS/pretrained_model/fusion_enhance/fusion.pth
+Timestamp UTC: 2026-07-16T21:00:55.603282+00:00

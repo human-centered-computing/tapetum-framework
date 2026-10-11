@@ -1,0 +1,13 @@
+Model: KinD++
+Dataset: LOL-v2 Real-Captured
+Time: 2026-07-16T15:25:02.789985+00:00
+
+Traceback (most recent call last):
+  File "/tmp/ipykernel_574/3168405770.py", line 1208, in <cell line: 0>
+    main()
+  File "/tmp/ipykernel_574/3168405770.py", line 1171, in main
+    profile = run_kind_plus_profile(local_project, rgb_array)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ipykernel_574/3168405770.py", line 862, in run_kind_plus_profile
+    raise FileNotFoundError(
+FileNotFoundError: KinD++ checkpoints incomplete: decom=/content/TAPETUM_SPEED_WORK/KinD_plus/checkpoint/decom_model/model.ckpt, adjust=/content/TAPETUM_SPEED_WORK/KinD_plus/checkpoint/illu_model/model.ckpt, restoration=None
