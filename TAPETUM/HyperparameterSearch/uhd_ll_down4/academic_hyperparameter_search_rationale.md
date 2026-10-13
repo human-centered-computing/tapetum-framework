@@ -80,7 +80,7 @@ The source-profile value of every parameter admitted to a stage was included in 
 | `CROP_SIZE` | 256 | Prespecified control retained to preserve the target architecture and the controlled training/loss design. |
 | `W_CHROMA` | 0.12 | The corresponding dataset criterion was not activated; the source-profile baseline was retained. |
 | `W_COLOR` | 0.06 | The corresponding dataset criterion was not activated; the source-profile baseline was retained. |
-| `W_L1` | 1.0 | Prespecified control retained to preserve the target architecture and the controlled training/loss design. |
+| `W_CHAR` | 1.0 | Prespecified control retained to preserve the target architecture and the controlled training/loss design. |
 | `W_RECON_HIGH` | 0.85 | Prespecified control retained to preserve the target architecture and the controlled training/loss design. |
 | `W_RECON_LOW` | 1.0 | Prespecified control retained to preserve the target architecture and the controlled training/loss design. |
 | `W_REFLECT` | 0.06 | Prespecified control retained to preserve the target architecture and the controlled training/loss design. |

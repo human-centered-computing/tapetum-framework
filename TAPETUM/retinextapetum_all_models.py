@@ -10720,7 +10720,7 @@ FIXED_PARAM_NAMES = (
     "BATCH_SIZE",
     "CROP_SIZE",
     "BASE_CHANNELS",
-    "W_L1",
+    "W_CHAR",
     "W_RECON_LOW",
     "W_RECON_HIGH",
     "W_REFLECT",

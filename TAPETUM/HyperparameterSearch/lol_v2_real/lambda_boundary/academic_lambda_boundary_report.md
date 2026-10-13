@@ -33,7 +33,7 @@ The dataset analysis measured a median target-to-input brightness gain of 7.7078
 - W_COLOR: 0.06
 - W_DARK_NOISE: 0.01
 - W_EDGE: 0.04
-- W_L1: 1.0
+- W_CHAR: 1.0
 - W_LPIPS: 0.08
 - W_RECON_HIGH: 0.85
 - W_RECON_LOW: 1.0

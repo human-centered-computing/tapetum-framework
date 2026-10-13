@@ -296,7 +296,7 @@ DATASET_PROFILES = {
         "BASE_CHANNELS": 128,
         "LAMBDA_MAX": 1.35,
         "LAMBDA_INIT": 0.0,
-        "W_L1": 1.0,
+        "W_CHAR": 1.0,
         "W_SSIM": 0.35,
         "W_COLOR": 0.06,
         "W_CHROMA": 0.12,
@@ -328,7 +328,7 @@ DATASET_PROFILES = {
         "BASE_CHANNELS": 128,
         "LAMBDA_MAX": 1.35,
         "LAMBDA_INIT": 0.0,
-        "W_L1": 1.0,
+        "W_CHAR": 1.0,
         "W_SSIM": 0.35,
         "W_COLOR": 0.06,
         "W_CHROMA": 0.12,
@@ -360,7 +360,7 @@ DATASET_PROFILES = {
         "BASE_CHANNELS": 128,
         "LAMBDA_MAX": 1.35,
         "LAMBDA_INIT": 0.0,
-        "W_L1": 1.0,
+        "W_CHAR": 1.0,
         "W_SSIM": 0.35,
         "W_COLOR": 0.06,
         "W_CHROMA": 0.12,
@@ -392,7 +392,7 @@ DATASET_PROFILES = {
         "BASE_CHANNELS": 128,
         "LAMBDA_MAX": 1.35,
         "LAMBDA_INIT": 0.0,
-        "W_L1": 1.0,
+        "W_CHAR": 1.0,
         "W_SSIM": 0.35,
         "W_COLOR": 0.06,
         "W_CHROMA": 0.12,
@@ -424,7 +424,7 @@ DATASET_PROFILES = {
         "BASE_CHANNELS": 128,
         "LAMBDA_MAX": 1.35,
         "LAMBDA_INIT": 0.0,
-        "W_L1": 1.0,
+        "W_CHAR": 1.0,
         "W_SSIM": 0.35,
         "W_COLOR": 0.06,
         "W_CHROMA": 0.12,
@@ -456,7 +456,7 @@ DATASET_PROFILES = {
         "BASE_CHANNELS": 128,
         "LAMBDA_MAX": 1.35,
         "LAMBDA_INIT": 0.0,
-        "W_L1": 1.0,
+        "W_CHAR": 1.0,
         "W_SSIM": 0.35,
         "W_COLOR": 0.06,
         "W_CHROMA": 0.12,
@@ -621,7 +621,7 @@ LAMBDA_INIT = profile_value("LAMBDA_INIT")
 # Active main enhancement loss weights
 # -----------------------------------------------------------------------------
 
-W_L1 = 1.0
+W_CHAR = 1.0
 W_SSIM = 0.5
 W_COLOR = 0.04
 W_CHROMA = 0.04

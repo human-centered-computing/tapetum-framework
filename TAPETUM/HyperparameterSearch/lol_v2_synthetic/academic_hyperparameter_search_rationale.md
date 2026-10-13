@@ -80,7 +80,7 @@ The source-profile value of every parameter admitted to a stage was included in 
 | `BASE_CHANNELS` | 128 | Prespecified control retained to preserve the target architecture and the controlled training/loss design. |
 | `BATCH_SIZE` | 2 | Prespecified control retained to preserve the target architecture and the controlled training/loss design. |
 | `CROP_SIZE` | 256 | Prespecified control retained to preserve the target architecture and the controlled training/loss design. |
-| `W_L1` | 1.0 | Prespecified control retained to preserve the target architecture and the controlled training/loss design. |
+| `W_CHAR` | 1.0 | Prespecified control retained to preserve the target architecture and the controlled training/loss design. |
 | `W_RECON_HIGH` | 0.85 | Prespecified control retained to preserve the target architecture and the controlled training/loss design. |
 | `W_RECON_LOW` | 1.0 | Prespecified control retained to preserve the target architecture and the controlled training/loss design. |
 | `W_REFLECT` | 0.06 | Prespecified control retained to preserve the target architecture and the controlled training/loss design. |
