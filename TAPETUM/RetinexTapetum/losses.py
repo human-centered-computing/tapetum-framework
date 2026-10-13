@@ -8,7 +8,7 @@ regularization losses that constrain decomposition quality.
 import torch
 import torch.nn.functional as F
 from config import (
-    W_L1,
+    W_CHAR,
     W_SSIM,
     W_COLOR,
     W_CHROMA,
@@ -257,7 +257,7 @@ def total_loss_fn(output, low, gt, perceptual_fn=None, lpips_weight=None):
     decomp_l, decomp_logs = decomposition_loss(output, low, gt)
 
     total = (
-        W_L1 * l1
+        W_CHAR * l1
         + W_SSIM * ssim_l
         + W_COLOR * color_l
         + W_CHROMA * chroma_l
