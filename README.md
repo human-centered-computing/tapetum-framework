@@ -10,17 +10,46 @@ This repository documents **Retinex-Tapetum**, a bio-inspired, darkness-aware Re
 
 The approach exposes intermediate representations such as reflectance-like and illumination-like maps, a darkness prior, a learned Tapetum Attention Map, and a Darkness-Gated Spatial Amplification Map. These offer *model inspectability* and support diagnostic interventions; they are **not** independently validated causal explanations or a substitute for user-centered studies.
 
-## Visual overview
+## Visual overview — from perception and camera imaging to bio-inspired enhancement
 
-**Four-stage processing architecture**
+### 1. Retinex perception, camera acquisition, and the observed RGB image
 
-![Retinex-Tapetum processing architecture from decomposition and guidance to illumination modulation and bounded residual refinement](TAPETUM/paper_retinextapetum/figures/tapetum_architecture_diagram.png)
+<p align="center">
+  <img src="TAPETUM/paper_retinextapetum/figures/from_real_to_enhancement_retinex_tapetum.png" alt="Conceptual relation between Retinex theories of human scene perception, camera image formation and processing, and the resulting RGB image with acquisition-related effects" width="960">
+</p>
 
-**Low-light to enhanced-image illustration**
+**Read the composite from left to right:**
 
-![Retinex-Tapetum visual low-light enhancement illustration](TAPETUM/paper_retinextapetum/figures/from_real_to_enhancement_retinex_tapetum.png)
+1. **Retinex and human scene perception:** The first part introduces the idea that our perception of scene lightness and color depends on illumination, surface reflectance, and visual context, rather than being a direct copy of measured RGB values. In the simplified Retinex image model, illumination and reflectance are useful conceptual factors, not uniquely measured physical quantities.
+2. **Camera image formation and processing:** The middle part represents how the physical scene becomes a camera signal through image acquisition and camera processing. Depending on the imaging system, this can include optics, exposure, sensing, color processing, and other image-signal-processing (ISP) steps.
+3. **Observed RGB image:** The last part represents the resulting RGB image as a combination of scene-dependent information and camera-pipeline effects, which can include sensor noise, processing artifacts, and other acquisition distortions. Thus, recorded RGB pixels are **not** a direct, noise-free representation of the physical scene.
 
-The images are illustrative research artifacts; qualitative examples do not establish consistent image quality or a human preference advantage on their own. See the [annotated figure gallery](./TAPETUM/paper_retinextapetum/figures/README.md) for the full set, including the tapetum lucidum inspiration illustration.
+**Türkçe özet:** İlk bölüm Retinex'in insanın gerçek sahnede renk ve aydınlığı nasıl algıladığını açıklayan kuramsal yaklaşımını, orta bölüm fotoğraf makinesinin görüntü oluşturma ve işleme aşamalarını, son bölüm ise fiziksel sahnenin kamera işlemleri ve gürültü gibi etkilerle birlikte kaydedilmiş RGB görüntüye dönüşmesini anlatır.
+
+### 2. Retinex and the biological tapetum lucidum
+
+<p align="center">
+  <img src="TAPETUM/paper_retinextapetum/figures/tapedum_lucidum.png" alt="Conceptual comparison of Retinex scene perception and the biological tapetum lucidum light-return mechanism that motivates Retinex-Tapetum" width="900">
+</p>
+
+The second illustration connects **two related but distinct ideas**:
+
+- **Retinex:** a theory-inspired computational view of human lightness and color perception, using the relationship between scene illumination and reflectance.
+- **Biological tapetum lucidum:** a reflective structure found behind the retina in many animals that returns some incident light through the photoreceptor layer, providing another opportunity for light detection in dim conditions.
+
+**Retinex-Tapetum bridges these ideas computationally:** It learns reflectance-like and illumination-like representations, estimates a darkness prior, and uses learned attention and darkness-gated amplification to modulate illumination. It **does not** reproduce the eye's physical reflective layer, optical photon transport, or biological photoreceptor processes.
+
+**Türkçe özet:** Görsel, Retinex'in ışık–yansıtım ve insan görsel algısı yaklaşımını biyolojik *tapetum lucidum* katmanının düşük ışıkta ışığı geri yansıtma işleviyle ilişkilendirir. Önerilen yöntem bu ilişkiyi fiziksel göz simülasyonu olarak değil, görüntü uzayında öğrenilebilir bir iyileştirme mekanizması olarak ele alır.
+
+### 3. Retinex-Tapetum model architecture
+
+<p align="center">
+  <img src="TAPETUM/paper_retinextapetum/figures/tapetum_architecture_diagram.png" alt="Four-stage Retinex-Tapetum model architecture showing decomposition, auxiliary guidance, darkness-aware illumination enhancement, and bounded residual refinement" width="960">
+</p>
+
+This architecture implements the conceptual motivation using **Retinex Decomposition**, **Auxiliary Guidance Cues**, **Tapetum-Guided Illumination Enhancement**, and **Reconstruction and Bounded Residual Refinement**. The learned intermediate representations support diagnostic inspection; they are not independently verified causal explanations.
+
+The figures provide a **conceptual research narrative**, not a complete physical camera simulator or proof of human-perceived image quality. See the [annotated figure gallery](./TAPETUM/paper_retinextapetum/figures/README.md) for interpretation details and original files.
 
 ## Research focus
 
