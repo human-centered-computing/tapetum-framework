@@ -1,13 +1,13 @@
 # TAPETUM
 
-**A reproducible low-light image enhancement research workspace centered on RetinexTapetum and standardized multi-model evaluation.**
+**A reproducible low-light image enhancement research workspace centered on Retinex-Tapetum and standardized multi-model evaluation.**
 
 [![Python](https://img.shields.io/badge/Python-3.x-blue.svg)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.x-ee4c2c.svg)](https://pytorch.org/)
 [![Google Colab](https://img.shields.io/badge/Google-Colab-F9AB00.svg)](https://colab.research.google.com/github/human-centered-computing/tapetum-framework/blob/main/TAPETUM/RetinexTapetum_ALL_models.ipynb)
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](LICENSE)
 
-TAPETUM is an experimental framework for low-light image enhancement (LLIE). It brings together the proposed **RetinexTapetum** model, baseline implementations, dataset management, hyperparameter search, checkpoint selection, quantitative and visual evaluation, speed profiling, and paper artifacts under one reproducible workspace.
+TAPETUM is an experimental framework for low-light image enhancement (LLIE). It brings together the proposed **Retinex-Tapetum** model, baseline implementations, dataset management, hyperparameter search, checkpoint selection, quantitative and visual evaluation, speed profiling, and paper artifacts under one reproducible workspace.
 
 The repository intentionally uses a **hybrid GitHub + Google Drive layout**:
 
@@ -20,12 +20,12 @@ The repository intentionally uses a **hybrid GitHub + Google Drive layout**:
 
 - **TAPETUM repository:** https://github.com/human-centered-computing/tapetum-framework/tree/main/TAPETUM
 - **Complete TAPETUM Google Drive archive:** https://drive.google.com/drive/folders/13ayyEC3V1wWdX3AXdfL8y7VqnL8eTPFT?usp=sharing
-- **RetinexTapetum paper artifacts:** [paper_retinextapetum](./paper_retinextapetum)
+- **Retinex-Tapetum paper artifacts:** [paper_retinextapetum](./paper_retinextapetum)
 - **Run the all-model workflow in Google Colab:** [RetinexTapetum_ALL_models.ipynb](./RetinexTapetum_ALL_models.ipynb)
 
-## RetinexTapetum
+## Retinex-Tapetum
 
-**RetinexTapetum: A Bio-Inspired Darkness-Aware Retinex Framework for Low-Light Image Enhancement** is a compact Retinex-based LLIE model inspired by the functional light-reuse principle of the *tapetum lucidum*.
+**Retinex-Tapetum: A Bio-Inspired Darkness-Aware Retinex Framework for Low-Light Image Enhancement** is a compact Retinex-based LLIE model inspired by the functional light-reuse principle of the *tapetum lucidum*.
 
 The framework does **not** attempt to simulate eye anatomy or physical optical light transport. Instead, it translates the biological motivation into an explicit, learnable, darkness-aware image-domain enhancement mechanism.
 
@@ -48,21 +48,23 @@ L_t = L_low * (1 + Lambda * T)
 where the amplification magnitude is explicitly bounded and reduced in relatively bright regions by darkness gating.
 
 <p align="center">
-  <img src="paper_retinextapetum/figures/tapetum_architecture_diagram.png" alt="RetinexTapetum architecture" width="95%">
+  <img src="paper_retinextapetum/figures/tapetum_architecture_diagram.png" alt="Retinex-Tapetum architecture" width="95%">
 </p>
 
 ### Model characteristics
 
 - **Trainable parameters:** 536,463 (~0.5365 M)
 - **Reported complexity:** 19.757 GMACs
-- **Reported average throughput:** 29.72 FPS
+- **Reported mean latency:** 33.47 ms (mean of four selected checkpoint profiling runs)
+- **Reported mean throughput:** 29.88 FPS (mean of four reported FPS measurements)
+- **Mean checkpoint file size:** 6.613 MB across the four profiled checkpoints
 - **Runtime protocol:** FP32, batch size 1, `256 x 256`, NVIDIA Tesla T4
 - **Training crop:** `256 x 256`
 - **Optimizer:** Adam
 - **Maximum training horizon:** 120 epochs
 - **Final confirmation seeds:** `42`, `123`, `3407`
 
-## Reported RetinexTapetum Results
+## Reported Retinex-Tapetum Results
 
 The selected dataset-specific checkpoints reported in the current manuscript obtain the following independent test-set results:
 
@@ -73,7 +75,7 @@ The selected dataset-specific checkpoints reported in the current manuscript obt
 | LOL-v2 Synthetic | 3407 | 25.0530 | 0.9322 | 0.0577 |
 | UHD-LL down4 | 3407 | 24.7107 | 0.9115 | 0.0884 |
 
-Across these four paired benchmarks, the manuscript reports that RetinexTapetum achieves the best SSIM and LPIPS in all four cases, while obtaining the best PSNR on LOL-v2 Synthetic and UHD-LL down4.
+Across these four paired benchmarks, the manuscript reports that Retinex-Tapetum achieves the best SSIM and LPIPS in all four cases, while obtaining the best PSNR on LOL-v2 Synthetic and UHD-LL down4.
 
 ## Compared Methods
 
@@ -87,7 +89,7 @@ The TAPETUM workspace contains or references the following comparison methods:
 - Zero-DCE
 - LIME
 
-The common evaluation pipeline recomputes metrics from generated output images rather than mixing values copied from different publications or incompatible evaluation settings.
+The common evaluation pipeline recomputes metrics from generated output images rather than mixing values copied from different publications or incompatible evaluation settings. **Protocol qualification:** The paired KinD++ results use reference-guided illumination-ratio inference and are not strictly blind-inference equivalents of the other methods. In the paired URetinex-Net++ evaluations, the illumination ratio is calibrated using training-set information without test-time normal-light ground truth.
 
 ## Repository / Drive Structure
 
@@ -181,7 +183,7 @@ TAPETUM/
 
 ## Dataset Organization
 
-Paired datasets follow the standard structure expected by the RetinexTapetum training and test code:
+Paired datasets follow the standard structure expected by the Retinex-Tapetum training and test code:
 
 ```text
 datasets/<DATASET>/
@@ -216,7 +218,16 @@ Hyperparameter optimization is performed independently for the four paired train
 - LOL-v2 Synthetic
 - UHD-LL down4
 
-The final configuration-selection protocol uses validation data only. Candidate configurations are confirmed with seeds `42`, `123`, and `3407`; the representative checkpoint is then selected using validation PSNR, SSIM, and LPIPS tolerances. Official test partitions are kept out of configuration, seed, and checkpoint selection.
+The final configuration-selection protocol uses validation data only. The four Optuna-TPE HPO stages (optimizer, illumination, fidelity, and detail) target 10, 10, 12, and 14 completed trials, using search/split seed `42`. The original dataset-specific `config.py` profile is retained as the **source-profile baseline**. From the completed final-stage trials, candidates are ranked repeatedly by the PSNR-tolerance / SSIM-tolerance / minimum-LPIPS rule; duplicated hyperparameter settings (including the baseline) are removed, and the top two distinct HPO settings enter confirmation alongside the baseline. The three independent confirmation seeds are `42`, `123`, and `3407`. The selected representative checkpoint is chosen using validation metrics only; official test partitions are excluded from configuration, seed, and checkpoint selection.
+
+| Paired benchmark | Optimization pairs | Validation pairs | Independent test pairs |
+|---|---:|---:|---:|
+| LOL-v1 | 437 | 48 | 15 |
+| LOL-v2 Real-Captured | 620 | 69 | 100 |
+| LOL-v2 Synthetic | 810 | 90 | 100 |
+| UHD-LL down4 | 1,884 | 116 | 150 |
+
+UHD-LL down4 uses filename-based numeric ID blocks of size 25 to prevent closely related image IDs from crossing the optimization/validation boundary. This grouping results in 116 validation pairs. Dataset split manifests and HPO summaries are stored under [HyperparameterSearch](./HyperparameterSearch).
 
 Selected checkpoint material is organized under:
 
@@ -237,7 +248,7 @@ The `selected/` directory is the canonical representative checkpoint location fo
 
 ## Output Organization
 
-In the Colab/Drive workflow, RetinexTapetum uses the common result tree:
+In the Colab/Drive workflow, Retinex-Tapetum uses the common result tree:
 
 ```text
 /content/drive/MyDrive/TAPETUM/RESULT/
@@ -268,9 +279,19 @@ The Colab workflow is designed around:
 /content/drive/MyDrive/TAPETUM
 ```
 
-The notebook mounts Google Drive, manages the dataset workspace, and contains the multi-model evaluation pipeline. If a large folder is not present in GitHub, use the shared Drive archive as the authoritative workspace copy.
+This notebook is the **Google Colab workflow used to generate the manuscript experiments**. It mounts Google Drive, supports dataset/workspace management, and includes multi-model training and evaluation logic.
 
-### Option 2 — RetinexTapetum training/testing from Python
+To rerun supported experiments:
+
+1. Open the notebook above in Google Colab; choose a GPU runtime for model training and GPU profiling.
+2. Follow its setup cells and authorize the Google Drive mount.
+3. Make the complete TAPETUM workspace available at `/content/drive/MyDrive/TAPETUM`. Large datasets, some baseline repositories, checkpoints and other artifacts may need to be copied/restored from the [shared Drive archive](https://drive.google.com/drive/folders/13ayyEC3V1wWdX3AXdfL8y7VqnL8eTPFT?usp=sharing). **Viewing the shared folder does not automatically mount it at the expected `MyDrive` path**; keep the directory structure intact, with access and dataset-license requirements respected.
+4. In the notebook, select the intended model, dataset and operation, then execute the appropriate setup, training/HPO, inference and metric cells. A complete fresh HPO + three-seed training rerun is computationally expensive.
+5. For reproduction of the reported evaluation numbers without retraining, use the selected dataset-specific checkpoints and official test subsets; use the fixed split manifests and recorded hyperparameters when repeating the training protocol.
+
+**Reproducibility scope:** The executable notebook and related source code are public, but not all large assets are stored in GitHub. An empty Colab session is not guaranteed to regenerate all reported results without the required datasets, checkpoints, software dependencies and computational resources. Exact numbers can also vary with software versions and nondeterministic GPU operations. This README update is a documentation change, not a fresh full rerun of the notebook.
+
+### Option 2 — Retinex-Tapetum training/testing from Python
 
 Clone the repository and enter the model directory:
 
@@ -321,11 +342,23 @@ The framework uses the following full-reference metrics on paired benchmarks:
 
 The paper-oriented evaluation additionally uses no-reference criteria including NIQE, BRISQUE, PIQE, MUSIQ, MANIQA, CLIPIQA, and LOE.
 
-Speed profiling is standardized at FP32, batch size 1, and `256 x 256` input resolution, with GPU synchronization and repeated timed inference.
+Speed profiling uses FP32, batch size 1, `256 x 256` input resolution and an NVIDIA Tesla T4, with 50 warm-up passes and 500 timed passes. Values are directly traceable to each checkpoint's [SpeedMetrics](./SpeedMetrics) `speed_metrics.json` record:
+
+| Checkpoint | Mean latency (ms) | FPS |
+|---|---:|---:|
+| LOL-v1 | 33.373 | 29.964 |
+| LOL-v2 Real-Captured | 33.677 | 29.694 |
+| LOL-v2 Synthetic | 33.817 | 29.571 |
+| UHD-LL down4 | 32.997 | 30.306 |
+| **Arithmetic mean** | **33.466** | **29.884** |
+
+Latency and FPS are averaged separately across the four runs (the FPS mean is not calculated by taking the inverse of the latency mean).
 
 ## Reproducibility Notes
 
 - Keep the full Drive workspace hierarchy intact when reproducing Colab experiments.
+- Preserve a record of the Git commit (`git rev-parse HEAD`), Python/PyTorch/CUDA and metric-library versions, GPU details, dataset file signatures, hyperparameters and random seeds; these variables affect exact reproduction.
+- Use the executable Colab notebook as the primary entry point and restore any Drive-only datasets or large files before running dependent cells.
 - Do not use `YEDEK/` as an experiment source; it is outside the canonical structure.
 - Prefer dataset-associated checkpoints for same-domain benchmark reporting.
 - Keep test data isolated from hyperparameter, seed, and checkpoint selection.
@@ -336,18 +369,18 @@ Speed profiling is standardized at FP32, batch size 1, and `256 x 256` input res
 ## Paper
 
 **Murat DELEN and Serdar Ciftci.**  
-*RetinexTapetum: A Bio-Inspired Darkness-Aware Retinex Framework for Low-Light Image Enhancement.*  
+*Retinex-Tapetum: A Bio-Inspired Darkness-Aware Retinex Framework for Low-Light Image Enhancement.*  
 Current manuscript / research artifact, 2026.
 
 A publication DOI or venue is intentionally not listed here until one is available.
 
 ## Citation
 
-If you use RetinexTapetum in academic work, please cite the project/manuscript. Until a final publication record is available, the following provisional BibTeX entry can be used:
+If you use Retinex-Tapetum in academic work, please cite the project/manuscript. Until a final publication record is available, the following provisional BibTeX entry can be used:
 
 ```bibtex
 @article{delen2026retinextapetum,
-  title   = {RetinexTapetum: A Bio-Inspired Darkness-Aware Retinex Framework for Low-Light Image Enhancement},
+  title   = {Retinex-Tapetum: A Bio-Inspired Darkness-Aware Retinex Framework for Low-Light Image Enhancement},
   author  = {Delen, Murat and Ciftci, Serdar},
   year    = {2026},
   note    = {Manuscript}
@@ -358,4 +391,4 @@ If you use RetinexTapetum in academic work, please cite the project/manuscript. 
 
 This TAPETUM directory is distributed under the **GNU Affero General Public License v3.0 (AGPL-3.0)**. See [LICENSE](./LICENSE) for the complete license text.
 
-Please preserve the applicable copyright and license notices when redistributing or modifying the code. Academic citation of RetinexTapetum is also requested when the framework contributes to published research.
+Please preserve the applicable copyright and license notices when redistributing or modifying the code. Academic citation of Retinex-Tapetum is also requested when the framework contributes to published research.
