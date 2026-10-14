@@ -1,8 +1,12 @@
 # Tapetum Framework
 
-**Human-Centered AI · Inspectable Computer Vision · Reproducible Low-Light Image Enhancement**
+**Human-Centered AI · Interpretable Intermediate Representations · Auditable Experimental Protocols**
 
-This repository documents **Retinex-Tapetum**, a bio-inspired, darkness-aware Retinex research framework. The work is presented as part of a **human-centered and explainability-oriented AI research direction**: making image-enhancement decisions easier for researchers and practitioners to inspect, diagnose, reproduce, and critically evaluate.
+**Research objective:** To advance **Human-Centered AI** by developing **interpretable intermediate representations and auditable experimental protocols** for low-light image enhancement.
+
+**Türkçe araştırma odağı:** İnsan merkezli yapay zekâ (Human-Centered AI) hedefi doğrultusunda, düşük ışık görüntü iyileştirme için yorumlanabilir ara temsiller ve denetlenebilir deney protokolleri geliştirmeye yönelik bir araştırma.
+
+This repository documents **Retinex-Tapetum**, a bio-inspired, darkness-aware Retinex framework that investigates how explicit enhancement stages, inspectable guidance maps, and reproducible experimental records can support more transparent development and critical assessment of computer-vision systems. The human-centered framing is a **research goal and design orientation**, not a claim of validated human-user benefit or formally proven explanations.
 
 The approach exposes intermediate representations such as reflectance-like and illumination-like maps, a darkness prior, a learned Tapetum Attention Map, and a Darkness-Gated Spatial Amplification Map. These offer *model inspectability* and support diagnostic interventions; they are **not** independently validated causal explanations or a substitute for user-centered studies.
 
@@ -21,8 +25,8 @@ The images are illustrative research artifacts; qualitative examples do not esta
 ## Research focus
 
 - **Human-oriented visual quality:** improving low-light image legibility while assessing fidelity, structural quality, and perceptual differences.
-- **Inspectable intermediate representations:** exposing learned guidance and amplification maps rather than describing the enhancer solely as a black box.
-- **Reproducible research:** publicly accessible Colab workflows, dataset split manifests, HPO records, and benchmark diagnostics.
+- **Interpretable intermediate representations:** exposing reflectance-like and illumination-like components, darkness estimates, learned guidance and amplification maps, and bounded residual adjustments for inspection and diagnostic interpretation.
+- **Auditable experimental protocols:** documenting the data splits, hyperparameter-search stages, candidate/seed/checkpoint selection, evaluation procedures, and speed-profiling conditions alongside publicly accessible Colab workflows.
 - **Responsible interpretation:** treating attention and learned maps as diagnostic signals, not as proof of feature-level causal explanations.
 
 ## Reproduce the experiments
