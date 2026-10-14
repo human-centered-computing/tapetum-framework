@@ -23,6 +23,26 @@ The repository intentionally uses a **hybrid GitHub + Google Drive layout**:
 - **Retinex-Tapetum paper artifacts:** [paper_retinextapetum](./paper_retinextapetum)
 - **Run the all-model workflow in Google Colab:** [RetinexTapetum_ALL_models.ipynb](./RetinexTapetum_ALL_models.ipynb)
 
+## Human-Centered and Inspectable AI Perspective
+
+Retinex-Tapetum can be presented within a **human-centered, explainability-oriented AI research agenda** because it combines low-light visual enhancement with explicit, observable intermediate representations and reproducible diagnostic experiments. The intended human-facing value is greater inspectability for researchers and practitioners evaluating when and where enhancement occurs; the experiments in this repository do **not** constitute a formal user study, a causal explanation benchmark, or a certified trustworthy-AI evaluation.
+
+The model makes several signals available for examination: the reflectance-like representation `R_low`, illumination-like representation `L_low`, illumination-derived darkness prior `D`, learned Tapetum Attention Map `T`, Darkness-Gated Spatial Amplification Map `Lambda`, high-frequency luminance cue `Y_HF`, and bounded residual correction `Delta I`. Taken together, these support **mechanism-oriented inspection** of the enhancement pipeline. Attention values and learned feature maps should not be equated with independently validated causal explanations.
+
+### Visual research artifacts
+
+| Research view | What it is intended to communicate |
+|---|---|
+| [Four-stage architecture](./paper_retinextapetum/figures/tapetum_architecture_diagram.png) | Traceable processing stages, signals, and bounded output refinement |
+| [Low-light enhancement illustration](./paper_retinextapetum/figures/from_real_to_enhancement_retinex_tapetum.png) | A qualitative depiction of low-light to enhanced image processing |
+| [Tapetum lucidum inspiration](./paper_retinextapetum/figures/tapedum_lucidum.png) | Biological motivation for the abstract light-reuse analogy, not physical simulation |
+
+![Retinex-Tapetum example illustrating low-light image enhancement](paper_retinextapetum/figures/from_real_to_enhancement_retinex_tapetum.png)
+
+For a figure-by-figure description and interpretation limits, see the **[annotated research figure gallery](./paper_retinextapetum/figures/README.md)**.
+
+**Interpretation boundary.** The reported PSNR/SSIM/LPIPS results measure image fidelity and perceptual similarity under the defined protocols; they do not measure individual user satisfaction, task performance, or explanation faithfulness. Fixed-checkpoint branch interventions are informative diagnostics but do not establish retrained component indispensability.
+
 ## Retinex-Tapetum
 
 **Retinex-Tapetum: A Bio-Inspired Darkness-Aware Retinex Framework for Low-Light Image Enhancement** is a compact Retinex-based LLIE model inspired by the functional light-reuse principle of the *tapetum lucidum*.
