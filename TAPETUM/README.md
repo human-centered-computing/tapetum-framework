@@ -25,7 +25,13 @@ The repository intentionally uses a **hybrid GitHub + Google Drive layout**:
 
 ## Human-Centered and Inspectable AI Perspective
 
-Retinex-Tapetum can be presented within a **human-centered, explainability-oriented AI research agenda** because it combines low-light visual enhancement with explicit, observable intermediate representations and reproducible diagnostic experiments. The intended human-facing value is greater inspectability for researchers and practitioners evaluating when and where enhancement occurs; the experiments in this repository do **not** constitute a formal user study, a causal explanation benchmark, or a certified trustworthy-AI evaluation.
+**Research objective:** Advance **Human-Centered AI** through the development of **interpretable intermediate representations and auditable experimental protocols** for low-light image enhancement.
+
+This research direction examines how explicit model stages and accessible intermediate signals can make enhancement behavior easier to inspect and question, while documented data partitions, HPO trials, multi-seed confirmation, representative-checkpoint selection, test metrics, and runtime profiling enable reproducible, critically auditable evaluation.
+
+**Türkçe tanım:** İnsan merkezli yapay zekâ hedefi doğrultusunda yorumlanabilir ara temsiller ve denetlenebilir deney protokolleri geliştirmeye yönelik bir araştırma.
+
+The intended human-facing value is greater inspectability and experimental transparency for researchers and practitioners. These are **research aims and available workflow properties**; the reported experiments do **not** constitute a formal human-subject study, validated causal explanation benchmark, or certified trustworthy-AI evaluation.
 
 The model makes several signals available for examination: the reflectance-like representation `R_low`, illumination-like representation `L_low`, illumination-derived darkness prior `D`, learned Tapetum Attention Map `T`, Darkness-Gated Spatial Amplification Map `Lambda`, high-frequency luminance cue `Y_HF`, and bounded residual correction `Delta I`. Taken together, these support **mechanism-oriented inspection** of the enhancement pipeline. Attention values and learned feature maps should not be equated with independently validated causal explanations.
 
