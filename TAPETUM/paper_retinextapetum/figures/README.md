@@ -1,39 +1,61 @@
-# Retinex-Tapetum — Research Figure Gallery
+# Retinex-Tapetum — Visual Research Gallery
 
-These figures are existing research artifacts associated with **Retinex-Tapetum**, an inspectable, darkness-aware Retinex approach for low-light image enhancement. The gallery supports the research objective of advancing **Human-Centered AI through interpretable intermediate representations and auditable experimental protocols**. It illustrates biological motivation, explicit model stages, and qualitative image enhancement; the associated source code, split manifests, HPO records, and evaluation outputs support methodological inspection. These figures do not establish human-user benefit, validated explanation fidelity, or causal feature attribution.
+These three existing figures connect **Retinex-based human scene perception**, **camera image acquisition and RGB observation**, **biological tapetum lucidum**, and the proposed **Retinex-Tapetum** computational pipeline. They support the research aim of **Human-Centered AI through interpretable intermediate representations and auditable experimental protocols**.
 
 [← TAPETUM README](../../README.md) · [Repository homepage](../../../README.md) · [Open Colab notebook](https://colab.research.google.com/github/human-centered-computing/tapetum-framework/blob/main/TAPETUM/RetinexTapetum_ALL_models.ipynb)
 
-## 1. Four-stage architecture and inspectable representations
+## 1. Retinex perception, camera processing, and physical-scene information in RGB
 
-![Four-stage Retinex-Tapetum architecture, including Retinex decomposition, auxiliary guidance, darkness-gated illumination enhancement, and bounded residual refinement](./tapetum_architecture_diagram.png)
+![Conceptual diagram connecting human scene perception under Retinex, camera acquisition and image-signal processing, and resulting RGB observations](./from_real_to_enhancement_retinex_tapetum.png)
 
-**Figure file:** [`tapetum_architecture_diagram.png`](./tapetum_architecture_diagram.png)
+**Source file:** [`from_real_to_enhancement_retinex_tapetum.png`](./from_real_to_enhancement_retinex_tapetum.png)
 
-The model explicitly separates Retinex decomposition, auxiliary cues, Tapetum-guided illumination enhancement, and reconstruction plus bounded residual refinement. Key intermediate values are `R_low`, `L_low`, `D`, `T`, `Lambda`, `Y_HF`, and `Delta I`. This visibility aids **model inspection**, debugging, and hypothesis-driven diagnostic analysis. Such maps are learned signals, not measured causal feature-attributions or direct physical quantities.
+**Read from left to right:**
 
-## 2. Low-light enhancement illustration
+| Part of the composite | Intended scientific meaning |
+|---|---|
+| **First / left — Retinex and perception** | Introduces theories of how humans perceive lightness and color in real scenes. Perception depends on illumination, surface reflectance and spatial/contextual relationships, rather than on raw sensor RGB values alone. The classical simplified Retinex model separates illumination and reflectance conceptually. |
+| **Middle — camera image formation and processing** | Represents the imaging chain between the physical scene and stored digital image: optical acquisition, exposure/sensing and camera image processing (such as color processing and other ISP operations, depending on the system). |
+| **Last / right — recorded RGB observation** | Represents the image available to computer-vision methods. Its RGB values reflect scene appearance **together with** effects of the camera pipeline, including possible sensor noise, ISP modifications and acquisition artifacts. It is neither a noise-free copy of the physical scene nor a uniquely separated reflectance/illumination representation. |
 
-![Retinex-Tapetum qualitative low-light image enhancement illustration](./from_real_to_enhancement_retinex_tapetum.png)
+**Türkçe:** İlk bölüm gerçek sahnedeki renk ve aydınlık algısını açıklamakta kullanılan Retinex yaklaşımlarını; orta bölüm fotoğraf makinesinin görüntü oluşturma ve işleme adımlarını; son bölüm ise fiziksel sahne bilgisinin kameradaki işleme ve gürültü gibi etkilerle birleşerek kaydedilen RGB görüntüye dönüşmesini anlatır.
 
-**Figure file:** [`from_real_to_enhancement_retinex_tapetum.png`](./from_real_to_enhancement_retinex_tapetum.png)
+### Why this figure matters to Retinex-Tapetum
 
-A qualitative illustration associated with Retinex-Tapetum low-light image enhancement. Treat the image as a visual research example, **not** as evidence of a universally better result or a controlled human preference evaluation. Quantitative performance should be interpreted using the independent test metrics and evaluation protocol in the manuscript and project README.
+The framework operates on the **observed RGB image**, not on an unobservable ideal physical-scene image. Retinex decomposition estimates *learned reflectance-like and illumination-like representations* from the observed input. This factorization is modeling-dependent and should not be interpreted as a guaranteed physical recovery of scene reflectance or illumination. The diagram is a conceptual visual account, not a complete validated forward model of a particular camera's hardware or ISP.
 
-## 3. Bio-inspired motivation: tapetum lucidum
+## 2. Retinex and the biological tapetum lucidum
 
-![Tapetum lucidum biological inspiration illustration used with Retinex-Tapetum](./tapedum_lucidum.png)
+![Illustration linking Retinex-inspired visual perception with the biological tapetum lucidum low-light light-return mechanism](./tapedum_lucidum.png)
 
-**Figure file:** [`tapedum_lucidum.png`](./tapedum_lucidum.png)
+**Source file:** [`tapedum_lucidum.png`](./tapedum_lucidum.png)
 
-The biological *tapetum lucidum* motivates a **functional light-reuse analogy**. The model operates entirely in the image domain and does not reconstruct animal-eye anatomy, simulate optical photon transport, or claim physiological equivalence. The filename `tapedum_lucidum.png` is retained exactly as stored in the repository.
+This illustration links two **different layers of inspiration**:
 
-## Human-centered and explainability-oriented interpretation
+1. **Retinex / perceptual foundation:** Illumination and reflectance provide a computational conceptualization of how a scene can appear under changing light, motivated by human color and lightness perception.
+2. **Biological tapetum lucidum / low-light adaptation:** In many animals, a reflective layer behind the retina returns a portion of incident light through retinal photoreceptors, potentially improving light capture under dim illumination.
+3. **Retinex-Tapetum / algorithmic abstraction:** The proposed method combines learned Retinex-like decomposition with a learned tapetum response `T` and spatial amplification map `Lambda`, gated by illumination darkness `D`. The illumination update is performed digitally: `L_t = L_low * (1 + Lambda * T)`.
 
-The repository contributes an **inspectable workflow for vision research**: interpretable-by-design *structure* (explicit model stages), accessible intermediate *signals* (learned maps and cues), reproducible *experiments* (Colab, split manifests, and HPO records), and *diagnostic interventions* on existing checkpoints. These support transparency and critical examination of the enhancement behavior.
+**Türkçe:** Görselde Retinex'in aydınlatma–yansıtım ve görsel algı yaklaşımı, biyolojik *tapetum lucidum*'un düşük ışıkta ışığı fotoreseptörlere geri yönlendirme özelliği ve bu işlevden soyut düzeyde esinlenen Retinex-Tapetum yöntemi birlikte ele alınmaktadır.
 
-**Important limits:** No end-user human-subject evaluation, validated explanation-faithfulness study, or causal attribution guarantee is claimed here. Fixed-weight interventions do not substitute for training new ablated models. The artifacts should be used with appropriate dataset licenses and the project license.
+**Essential distinction:** Retinex theory concerns scene perception/computational image modeling; tapetum lucidum is an optical biological structure. Retinex-Tapetum **does not** simulate photon transport, retinal physiology, or the physical reflective layer. The repository preserves the original filename `tapedum_lucidum.png` exactly.
+
+## 3. How the conceptual ideas become a model
+
+![Four-stage Retinex-Tapetum architecture with decomposition, guidance, illumination enhancement, and bounded refinement](./tapetum_architecture_diagram.png)
+
+**Source file:** [`tapetum_architecture_diagram.png`](./tapetum_architecture_diagram.png)
+
+The computation is organized into **Retinex Decomposition**, **Auxiliary Guidance Cues**, **Tapetum-Guided Illumination Enhancement**, and **Reconstruction and Bounded Residual Refinement**. Its observable model-generated intermediate quantities include `R_low`, `L_low`, `D`, `T`, `Lambda`, `Y_HF`, and bounded `Delta I`.
+
+These representations support **mechanism-oriented inspection** and fixed-checkpoint diagnostic experiments. The maps are learned model signals; they are not direct physical measurements, formal causal attributions or independently validated explanations.
+
+## Human-Centered AI: interpretation and evidence boundaries
+
+This set of diagrams communicates a **research goal**: develop more inspectable intermediate representations and more auditable experimental protocols for computer vision. Source code, Colab workflows, fixed split manifests, hyperparameter-search records, test metrics and intervention scripts support this transparency objective.
+
+The figures alone do **not** demonstrate formally validated explanation faithfulness, human-subject/user-centered evaluation, physiological equivalence, or superiority of a particular image for human viewers. Fixed-weight interventions also do not replace architectural ablations that retrain the networks.
 
 ## Reproduction and citation
 
-See [the TAPETUM reproducibility instructions](../../README.md#quick-start), the [training and HPO artifacts](../../HyperparameterSearch), and the [manuscript information](../../README.md#paper). Images should be cited as project research figures; they are not a substitute for reading the experimental protocol.
+See [TAPETUM reproducibility instructions](../../README.md#quick-start), [HPO records](../../HyperparameterSearch), and [manuscript details](../../README.md#paper). Respect applicable dataset and image-use licenses and cite the research artifacts appropriately.
