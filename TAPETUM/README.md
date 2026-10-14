@@ -47,19 +47,37 @@ The **interpretable intermediate representations and auditable experimental prot
 
 This documentation supports **transparent scrutiny and experimental auditability**; it does not claim validated explanation faithfulness or completed human-subject studies.
 
-### Visual research artifacts
+### Visual research artifacts — perception, acquisition, and biological inspiration
 
-| Research view | What it is intended to communicate |
+The figures serve different explanatory purposes. They should not all be described as generic “before/after enhancement” comparisons.
+
+| Figure | Interpretation |
 |---|---|
-| [Four-stage architecture](./paper_retinextapetum/figures/tapetum_architecture_diagram.png) | Traceable processing stages, signals, and bounded output refinement |
-| [Low-light enhancement illustration](./paper_retinextapetum/figures/from_real_to_enhancement_retinex_tapetum.png) | A qualitative depiction of low-light to enhanced image processing |
-| [Tapetum lucidum inspiration](./paper_retinextapetum/figures/tapedum_lucidum.png) | Biological motivation for the abstract light-reuse analogy, not physical simulation |
+| [Retinex perception → camera pipeline → RGB observation](./paper_retinextapetum/figures/from_real_to_enhancement_retinex_tapetum.png) | **Left:** Retinex and human scene/color perception through illumination, reflectance, and visual context. **Middle:** camera image formation and image-signal processing. **Right:** the recorded RGB image shaped by physical scene information, camera processing, and possible noise/artifacts. |
+| [Retinex and biological tapetum lucidum](./paper_retinextapetum/figures/tapedum_lucidum.png) | Relates Retinex's illumination/reflectance understanding of vision to biological low-light light-return in animals; this is the motivation for an *abstract learned* enhancement operator, **not** a biological optics simulation. |
+| [Four-stage Retinex-Tapetum architecture](./paper_retinextapetum/figures/tapetum_architecture_diagram.png) | Shows how Retinex decomposition and auxiliary guidance lead to darkness-aware illumination modulation and bounded output refinement. |
 
-![Retinex-Tapetum example illustrating low-light image enhancement](paper_retinextapetum/figures/from_real_to_enhancement_retinex_tapetum.png)
+**Retinex perception and camera imaging**
 
-For a figure-by-figure description and interpretation limits, see the **[annotated research figure gallery](./paper_retinextapetum/figures/README.md)**.
+![Conceptual schematic of Retinex human perception, camera image-signal processing, and the resulting RGB scene image](paper_retinextapetum/figures/from_real_to_enhancement_retinex_tapetum.png)
 
-**Interpretation boundary.** The reported PSNR/SSIM/LPIPS results measure image fidelity and perceptual similarity under the defined protocols; they do not measure individual user satisfaction, task performance, or explanation faithfulness. Fixed-checkpoint branch interventions are informative diagnostics but do not establish retrained component indispensability.
+The first schematic is read **left → center → right**: (i) how illumination and surface reflectance contribute to perceived scene appearance under Retinex-inspired thinking, (ii) how camera acquisition and processing transform incoming scene information, and (iii) how the saved RGB image contains both scene-derived information and acquisition-dependent effects such as noise. A recorded RGB image is not a direct physical scene measurement, and a Retinex-like decomposition is not uniquely recoverable from a single RGB image without modeling assumptions.
+
+**Retinex and biological tapetum lucidum**
+
+![Retinex visual perception and biological tapetum lucidum conceptual illustration](paper_retinextapetum/figures/tapedum_lucidum.png)
+
+The companion figure links the **Retinex model of visual perception** with a distinct **biological low-light adaptation**: the *tapetum lucidum* reflects some incoming light back toward retinal photoreceptors in many animals. Retinex-Tapetum abstracts this functional motivation through a learned tapetum response and darkness-gated illumination amplification in the image domain. It does not physically return photons or reconstruct an animal's visual system.
+
+**Model realization**
+
+![Retinex-Tapetum four-stage neural architecture](paper_retinextapetum/figures/tapetum_architecture_diagram.png)
+
+For original image files, more detailed left/middle/right readings and interpretive limits, see the **[annotated research figure gallery](./paper_retinextapetum/figures/README.md)**.
+
+**Türkçe açıklama:** İlk görsel Retinex'in sahne algısı yaklaşımı, kameradaki görüntü işleme zinciri ve gürültü/işleme etkilerini taşıyan RGB görüntü arasındaki ilişkiyi; ikinci görsel ise Retinex yaklaşımı ile biyolojik *tapetum lucidum* ışık geri yansıtma işlevi arasındaki esinlenme ilişkisini göstermektedir.
+
+**Interpretation boundary.** The reported PSNR/SSIM/LPIPS results measure image fidelity and perceptual similarity under defined protocols; they do not measure end-user satisfaction, task performance, or explanation faithfulness. Fixed-checkpoint branch interventions provide diagnostics but do not establish retrained component indispensability.
 
 ## Retinex-Tapetum
 
