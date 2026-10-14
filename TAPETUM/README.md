@@ -35,6 +35,18 @@ The intended human-facing value is greater inspectability and experimental trans
 
 The model makes several signals available for examination: the reflectance-like representation `R_low`, illumination-like representation `L_low`, illumination-derived darkness prior `D`, learned Tapetum Attention Map `T`, Darkness-Gated Spatial Amplification Map `Lambda`, high-frequency luminance cue `Y_HF`, and bounded residual correction `Delta I`. Taken together, these support **mechanism-oriented inspection** of the enhancement pipeline. Attention values and learned feature maps should not be equated with independently validated causal explanations.
 
+### Auditing the research workflow
+
+The **interpretable intermediate representations and auditable experimental protocols** objective can be examined through a traceable set of artifacts:
+
+1. **Model stages and intermediate signals:** [`RetinexTapetum/model.py`](./RetinexTapetum/model.py) and the [architecture figure](./paper_retinextapetum/figures/tapetum_architecture_diagram.png). These learned representations facilitate mechanism-oriented inspection, but they are not validated causal feature attributions.
+2. **Data partitioning:** [LOL-v1](./HyperparameterSearch/lol_v1/split_manifest.json), [LOL-v2 Real-Captured](./HyperparameterSearch/lol_v2_real/split_manifest.json), [LOL-v2 Synthetic](./HyperparameterSearch/lol_v2_synthetic/split_manifest.json), and [UHD-LL down4](./HyperparameterSearch/uhd_ll_down4/split_manifest.json) split manifests.
+3. **Hyperparameter and checkpoint selection:** [HPO records](./HyperparameterSearch) contain the staged search and three-seed confirmation summaries. Paired test results represent four separately selected dataset-specific checkpoints.
+4. **Functional diagnostics:** [Fixed-checkpoint intervention code](./RetinexTapetum/RetinexTapetum_Ablation_Diagnostics_Dataset_Aware.py) supports diagnostic forward-path comparisons; it does not constitute retrained architecture ablation.
+5. **Evaluation and reproducibility:** [Comparison outputs](./paper_retinextapetum/comparison_results), [speed records](./SpeedMetrics), and the [Colab notebook](./RetinexTapetum_ALL_models.ipynb) allow independent examination and supported re-execution when the required Drive assets and runtime dependencies are available.
+
+This documentation supports **transparent scrutiny and experimental auditability**; it does not claim validated explanation faithfulness or completed human-subject studies.
+
 ### Visual research artifacts
 
 | Research view | What it is intended to communicate |
