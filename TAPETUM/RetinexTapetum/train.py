@@ -83,7 +83,7 @@ def build_train_val_file_split(low_dir, high_dir, val_ratio, split_seed):
     rng = random.Random(split_seed)
     rng.shuffle(files)
 
-    val_count = max(1, int(len(files) * val_ratio))
+    val_count = max(1, int(round(len(files) * val_ratio)))
     val_count = min(val_count, len(files) - 1)
     val_files = sorted(files[:val_count])
     train_files = sorted(files[val_count:])
