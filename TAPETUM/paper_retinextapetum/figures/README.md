@@ -1,6 +1,6 @@
 # Retinex-Tapetum — Research Figure Gallery
 
-These figures are existing research artifacts associated with **Retinex-Tapetum**, an inspectable, darkness-aware Retinex approach for low-light image enhancement. The gallery supports a human-centered / explainability-oriented research presentation by showing the biological motivation, model architecture, and visual enhancement examples without implying that a user study or formal explanation-fidelity validation has been conducted.
+These figures are existing research artifacts associated with **Retinex-Tapetum**, an inspectable, darkness-aware Retinex approach for low-light image enhancement. The gallery supports the research objective of advancing **Human-Centered AI through interpretable intermediate representations and auditable experimental protocols**. It illustrates biological motivation, explicit model stages, and qualitative image enhancement; the associated source code, split manifests, HPO records, and evaluation outputs support methodological inspection. These figures do not establish human-user benefit, validated explanation fidelity, or causal feature attribution.
 
 [← TAPETUM README](../../README.md) · [Repository homepage](../../../README.md) · [Open Colab notebook](https://colab.research.google.com/github/human-centered-computing/tapetum-framework/blob/main/TAPETUM/RetinexTapetum_ALL_models.ipynb)
 
