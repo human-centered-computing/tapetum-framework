@@ -80,20 +80,17 @@ The model has **four canonical stages**:
 
 The central update is:
 
-$
-L_t(x)=L_{\\mathrm{low}}(x)\\odot
-\\left[1+\\Lambda(x)\\odot T(x)\\right],
-\\qquad
-I_{\\mathrm{base}}(x)=R_{\\mathrm{low}}(x)\\odot L_t(x).
-$
+```math
+L_t(x) = L_{\mathrm{low}}(x) \odot \left[1 + \Lambda(x) \odot T(x)\right],
+I_{\mathrm{base}}(x) = R_{\mathrm{low}}(x) \odot L_t(x).
+```
 
 The final output is:
 
-$
-\\Delta I(x)=0.08\\tanh\\left(F_{\\mathrm{ref}}(X_{\\mathrm{ref}})\\right),
-\\qquad
-I_{\\mathrm{enh}}(x)=\\operatorname{clip}\\left(I_{\\mathrm{base}}(x)+\\Delta I(x),0,1\\right).
-$
+```math
+\Delta I(x) = 0.08 \tanh\left(F_{\mathrm{ref}}(X_{\mathrm{ref}})\right),
+I_{\mathrm{enh}}(x) = \operatorname{clip}\left(I_{\mathrm{base}}(x) + \Delta I(x), 0, 1\right).
+```
 
 Here `X_ref = [I_low, I_base, T, Λ, Y_HF]` contains **13 channels**. The multiplicative illumination gain is bounded between **1** and **1 + λ_max**, while each residual correction is bounded to **[−0.08, +0.08]**. These constraints limit the update magnitude; they do **not** guarantee restored image quality.
 
