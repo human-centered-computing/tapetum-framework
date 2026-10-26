@@ -10,6 +10,24 @@ This repository documents **Retinex-Tapetum**, a bio-inspired, darkness-aware Re
 
 The approach exposes intermediate representations such as reflectance-like and illumination-like maps, a darkness prior, a learned Tapetum Attention Map, and a Darkness-Gated Spatial Amplification Map. These offer *model inspectability* and support diagnostic interventions; they are **not** independently validated causal explanations or a substitute for user-centered studies.
 
+## Research at a glance
+
+**Retinex-Tapetum** is a compact, bio-inspired low-light image enhancement (LLIE) model operating on **already captured RGB images**. It uses learned Retinex-like decomposition, explicit darkness gating, bounded illumination amplification, and a bounded RGB residual. Normal-light reference images are required for **paired training**, not for inference.
+
+| Manuscript-reported characteristic | Value / protocol |
+|---|---|
+| Trainable parameters | **536,463** (approximately 0.5365 M) |
+| Computational complexity | **19.757 GMACs / 39.514 GFLOPs** at 256 × 256 |
+| Mean GPU inference latency | **33.73 ms** |
+| Mean GPU throughput | **29.72 FPS** |
+| Runtime measurement | NVIDIA Tesla T4, FP32, batch size 1, 256 × 256, 50 warm-up and 500 timed iterations |
+| Paired evaluation | LOL-v1, LOL-v2 Real-Captured, LOL-v2 Synthetic, UHD-LL down4 |
+| Additional reference-free evaluation | DICM, LIME, MEF, NPE, VV |
+
+**Reported headline result:** The four **separately trained, dataset-specific checkpoints** achieve the highest **SSIM** and lowest **LPIPS** among seven compared methods on all four paired benchmarks. They also achieve the highest **PSNR** on LOL-v2 Synthetic and UHD-LL down4—not on LOL-v1 or LOL-v2 Real-Captured. Full values and qualifications appear in [Benchmark results](#benchmark-results).
+
+> The numbers above are taken from the accompanying research manuscript; this documentation update does **not** constitute an independent rerun. Runtime results are hardware-, software-, and protocol-dependent. The detailed [TAPETUM workspace README](./TAPETUM/README.md) also provides checkpoint-level speed-log summaries, whose arithmetic aggregates may differ slightly from the manuscript's reported summary.
+
 ## Visual overview — from perception and camera imaging to bio-inspired enhancement
 
 ### 1. Retinex perception, camera acquisition, and the observed RGB image
@@ -51,6 +69,38 @@ This architecture implements the conceptual motivation using **Retinex Decomposi
 
 The figures provide a **conceptual research narrative**, not a complete physical camera simulator or proof of human-perceived image quality. See the [annotated figure gallery](./TAPETUM/paper_retinextapetum/figures/README.md) for interpretation details and original files.
 
+## Method: explicit, bounded illumination control
+
+The model has **four canonical stages**:
+
+1. **Retinex Decomposition:** `DecomNet` estimates the **Reflectance-Like Representation** `R_low` and **Illumination-Like Representation** `L_low` from the low-light image `I_low`. This is a task-oriented factorization, **not** a physically unique decomposition.
+2. **Auxiliary Guidance Cues:** an **Illumination-Derived Darkness Prior** `D` is computed from `L_low`; the **High-Frequency Luminance Cue** `Y_HF` is derived from `I_low`.
+3. **Tapetum-Guided Illumination Enhancement:** the **Tapetum Attention Network** `F_T` predicts a three-channel **Tapetum Attention Map** `T` from `[I_low, L_low, D]`. The **Tapetum Amplification Network** `F_Λ` predicts a three-channel **Darkness-Gated Spatial Amplification Map** `Λ` from `[L_low, D]`.
+4. **Reconstruction and Bounded Residual Refinement:** the updated illumination is combined with `R_low` into a **Retinex-Guided Base Reconstruction**; the **Residual Color–Detail Refinement Network** `F_ref` then applies a bounded correction.
+
+The central update is:
+
+$
+L_t(x)=L_{\\mathrm{low}}(x)\\odot
+\\left[1+\\Lambda(x)\\odot T(x)\\right],
+\\qquad
+I_{\\mathrm{base}}(x)=R_{\\mathrm{low}}(x)\\odot L_t(x).
+$
+
+The final output is:
+
+$
+\\Delta I(x)=0.08\\tanh\\left(F_{\\mathrm{ref}}(X_{\\mathrm{ref}})\\right),
+\\qquad
+I_{\\mathrm{enh}}(x)=\\operatorname{clip}\\left(I_{\\mathrm{base}}(x)+\\Delta I(x),0,1\\right).
+$
+
+Here `X_ref = [I_low, I_base, T, Λ, Y_HF]` contains **13 channels**. The multiplicative illumination gain is bounded between **1** and **1 + λ_max**, while each residual correction is bounded to **[−0.08, +0.08]**. These constraints limit the update magnitude; they do **not** guarantee restored image quality.
+
+**Important routing and terminology details:** `Y_HF` is supplied **only** to final residual refinement—not to `F_T` or `F_Λ`. The learned `T` map performs spatial/chromatic **attention modulation**; it is **not** Transformer self-attention, multi-head attention, or query–key–value attention. In the source code, some legacy identifiers and filenames retain `RetinexTapetum`; **Retinex-Tapetum** is the canonical name in scientific documentation.
+
+See the [implementation](./TAPETUM/RetinexTapetum/model.py) and [four-stage architecture figure](./TAPETUM/paper_retinextapetum/figures/tapetum_architecture_diagram.png).
+
 ## Research focus
 
 - **Human-oriented visual quality:** improving low-light image legibility while assessing fidelity, structural quality, and perceptual differences.
@@ -72,6 +122,42 @@ The Human-Centered AI research objective is supported by **inspectable intermedi
 
 **Evidence boundary:** Model-generated maps support inspection and diagnosis, but causal explanation faithfulness and benefits for human users have not been independently validated. The four paired benchmarks use **four dataset-specific selected checkpoints**, not one fixed universal model.
 
+## Benchmark results
+
+The following **independent test-set** metrics are reported in the research manuscript for the **selected dataset-specific checkpoints**. PSNR and SSIM: higher is better; LPIPS: lower is better.
+
+| Paired benchmark | Selected seed | PSNR ↑ (dB) | SSIM ↑ | LPIPS ↓ |
+|---|---:|---:|---:|---:|
+| LOL-v1 (15 test pairs) | 42 | 21.0392 | **0.8316** | **0.1357** |
+| LOL-v2 Real-Captured (100) | 123 | 20.0190 | **0.8405** | **0.1258** |
+| LOL-v2 Synthetic (100) | 3407 | **25.0530** | **0.9322** | **0.0577** |
+| UHD-LL down4 (150) | 3407 | **24.7107** | **0.9115** | **0.0884** |
+
+**Comparison context:** seven representative baselines—LIME, Zero-DCE, RUAS, RetinexNet, KinD++, URetinex-Net++, and RetinexFormer—were evaluated using a shared metric-calculation pipeline on stored outputs. RetinexFormer has the highest reported PSNR on LOL-v1 (21.6829 dB) and LOL-v2 Real-Captured (20.7071 dB). **KinD++'s compared inference configuration uses a normal-light-dependent adjustment ratio**, so it should not be described as strictly reference-free. URetinex-Net++ uses a train-calibrated blind protocol on the applicable paired evaluations.
+
+### Evaluation design and selection integrity
+
+| Dataset | Optimization pairs | Validation pairs | Independent test pairs |
+|---|---:|---:|---:|
+| LOL-v1 | 437 | 48 | 15 |
+| LOL-v2 Real-Captured | 620 | 69 | 100 |
+| LOL-v2 Synthetic | 810 | 90 | 100 |
+| UHD-LL down4 | 1,884 | 116 | 150 |
+
+Dataset-adaptive hyperparameter search has **four progressive stages** (optimizer, illumination, fidelity, and detail) with **10 / 10 / 12 / 14** target trials. The source-profile baseline and two distinct leading HPO configurations undergo independently initialized **three-seed confirmation** (`42`, `123`, `3407`). Configuration and representative-checkpoint decisions use validation metrics only, with a PSNR tolerance of **0.15 dB**, an SSIM tolerance of **0.002**, and LPIPS as the last selection criterion. Official test sets are excluded from these selection steps.
+
+Relevant artifacts: [dataset split manifests and HPO records](./TAPETUM/HyperparameterSearch), [checkpoint metadata](./TAPETUM/RetinexTapetum/hyper_ckpt), [comparison outputs](./TAPETUM/paper_retinextapetum/comparison_results), and [speed-profiling records](./TAPETUM/SpeedMetrics).
+
+### What the diagnostics show—and do not show
+
+The reported experiments include **inference-time interventions on already trained checkpoints**, **not** separately retrained architecture ablations.
+
+- Disabling the entire illumination update or spatial amplification strongly degrades results on all four paired benchmarks; **darkness-gated amplification is the principal functional enhancement pathway** in these checkpoints.
+- Removing the learned Tapetum Attention Map's modulation has a smaller, sometimes nearly negligible, independent effect; the high-frequency cue likewise offers no consistently demonstrated benefit.
+- Removing residual refinement **improves** the LOL-v2 Real-Captured checkpoint from **20.02 to 22.69 dB PSNR** (and also improves SSIM and LPIPS). Residual refinement is therefore **not uniformly beneficial** across selected checkpoints.
+
+Cross-domain, no-reference evaluation on **DICM, LIME, MEF, NPE, and VV** produces mixed metric- and source-dependent rankings. These findings **do not** establish universal zero-shot superiority or prove the physical correctness or causal faithfulness of intermediate maps.
+
 ## Reproduce the experiments
 
 The research experiments were run using the publicly accessible Google Colab workflow:
@@ -88,9 +174,35 @@ The research experiments were run using the publicly accessible Google Colab wor
 
 The workflow expects supporting files at `/content/drive/MyDrive/TAPETUM`. Some large datasets, baselines, checkpoints, and experiment artifacts are Drive-backed rather than committed to GitHub. Follow the [reproduction instructions](./TAPETUM/README.md#quick-start); an empty Colab session does not by itself guarantee identical numerical results.
 
+### Practical reproducibility notes
+
+The [Colab notebook](./TAPETUM/RetinexTapetum_ALL_models.ipynb) is the main experiment entry point. A local clone provides code and compact records, but **not necessarily the datasets, baseline repositories, trained weights, or generated outputs** needed for complete reproduction. The [TAPETUM README](./TAPETUM/README.md#quick-start) documents the expected directory layout, environment selectors, and training/test commands.
+
+**Do not assume that the default values in** [`config.py`](./TAPETUM/RetinexTapetum/config.py) **are the manuscript-selected HPO parameters.** Use the dataset-specific selection records and the corresponding selected checkpoint when trying to reproduce a reported benchmark result. Dataset distribution conditions and GPU/software differences can also affect repeatability.
+
 ## Scope and research limitations
 
 Retinex-Tapetum is motivated by the functional light-reuse analogy of the *tapetum lucidum*, not a physically faithful simulation of the eye. The provided diagnostic maps are model-generated representations, and fixed-checkpoint interventions should not be interpreted as evidence from retrained architectural ablations. Formal explanation-faithfulness tests and studies with end users remain opportunities for future research.
+
+## Publication, citation, and future direction
+
+**Manuscript (2026):** Murat Delen and Serdar Ciftci, *Retinex-Tapetum: A Bio-Inspired Darkness-Aware Retinex Framework for Low-Light Image Enhancement*. The paper's results should be treated as **reported experimental findings**; no journal acceptance, publication venue, or DOI is asserted here.
+
+Provisional BibTeX, until a formal publication record is available:
+
+```bibtex
+@misc{delen2026retinextapetum,
+  title  = {Retinex-Tapetum: A Bio-Inspired Darkness-Aware Retinex Framework for Low-Light Image Enhancement},
+  author = {Delen, Murat and Ciftci, Serdar},
+  year   = {2026},
+  note   = {Research manuscript and open-source framework},
+  url    = {https://github.com/human-centered-computing/tapetum-framework}
+}
+```
+
+**Planned—not yet validated in this repository:** offline enhancement of prerecorded drone/field video; temporal consistency and flicker assessment; and potential integration into **Tapetum Sentinel** for human-centered video analysis, including disaster-response imagery. These are future research directions, not demonstrated video or downstream detection results.
+
+**Türkçe kısa özet:** Retinex-Tapetum, düşük ışıklı RGB görüntülerde Retinex ayrıştırmasını karanlıkla kapılanan, sınırlandırılmış aydınlatma güçlendirmesiyle birleştirir. Dört eşleştirilmiş test kümesinin tamamında karşılaştırılan yöntemler arasında en yüksek SSIM ve en düşük LPIPS değerleri raporlanmıştır. Bu sonuçlar veri kümesine özgü ayrı modellerden elde edilmiştir; insan kullanıcılarla doğrulanmış açıklanabilirlik ya da tüm veri kümelerine genellenebilir üstünlük iddiası değildir.
 
 ## License
 
