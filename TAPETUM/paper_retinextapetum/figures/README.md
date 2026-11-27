@@ -1,5 +1,7 @@
 # Retinex-Tapetum — Visual Research Gallery
 
+[English](README.md) · [Türkçe](README.tr.md) · [Deutsch](README.de.md) · [العربية](README.ar.md)
+
 These three existing figures connect **Retinex-based human scene perception**, **camera image acquisition and RGB observation**, **biological tapetum lucidum**, and the proposed **Retinex-Tapetum** computational pipeline. They support the research aim of **Human-Centered AI through interpretable intermediate representations and auditable experimental protocols**.
 
 [← TAPETUM README](../../README.md) · [Repository homepage](../../../README.md) · [Open Colab notebook](https://colab.research.google.com/github/human-centered-computing/tapetum-framework/blob/main/TAPETUM/RetinexTapetum_ALL_models.ipynb)

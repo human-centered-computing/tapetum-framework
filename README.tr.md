@@ -1,5 +1,7 @@
 # Tapetum Framework
 
+> Çeviri durumu: Yapay zekâ destekli taslak; insan dil incelemesi bekliyor.
+
 [English](README.md) · [Türkçe](README.tr.md) · [Deutsch](README.de.md) · [العربية](README.ar.md)
 
 **İnsan merkezli yapay zekâ · yorumlanabilir ara temsiller · denetlenebilir deney protokolleri**

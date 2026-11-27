@@ -1,5 +1,7 @@
 # Tapetum Framework
 
+> Übersetzungsstatus: KI-unterstützter Entwurf, menschliche Sprachprüfung ausstehend.
+
 [English](README.md) · [Türkçe](README.tr.md) · [Deutsch](README.de.md) · [العربية](README.ar.md)
 
 **Menschenzentrierte KI · interpretierbare Zwischenrepräsentationen · überprüfbare Versuchsprotokolle**
